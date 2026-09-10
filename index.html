@@ -649,13 +649,21 @@ function startRecord(){
   if(voiceApiLocked || !speechSupported){ alert('当前浏览器不支持语音识别'); return; }
   if(isTTSPlaying){ alert('请等待句子朗读完毕，再点击录音'); return; }
   if(recordState==='recording') return;
-  debugLog('【录音】开始录音，清理旧实例');
+  debugLog('【录音】开始录音，温和清理旧实例（不调用abort）');
 
-  // 彻底清理旧实例
+  // 温和清理旧实例：只断开回调，不调用abort（避免异步abort事件干掉新实例）
   if(recognition){
-    try{ recognition.onend = null; recognition.onerror = null; recognition.onresult = null; recognition.abort(); }catch(e){}
+    try{ recognition.onend = null; recognition.onerror = null; recognition.onresult = null; }catch(e){}
     recognition = null;
   }
+
+  // 延迟500ms再启动，确保旧实例完全释放（安卓Edge需要更长时间）
+  setTimeout(doStartRecord, 500);
+}
+
+let startRetryCount = 0;
+function doStartRecord(){
+  if(recordState!=='idle') return;
 
   document.querySelectorAll('#wordsContainer .word-card').forEach(c=>c.classList.remove('lit','wrong','practicing'));
   litCount=0; finalTranscript='';
@@ -682,7 +690,19 @@ function startRecord(){
 
   recognition.onerror = (e) => {
     debugLog('【录音】语音识别错误: '+e.error);
-    if(e.error==='aborted') return; // 主动abort不报错
+    if(e.error==='aborted'){
+      // 如果是启动后立刻abort，可能是浏览器没准备好，重试一次
+      if(startRetryCount < 1 && recordState==='recording'){
+        startRetryCount++;
+        debugLog('【录音】启动后abort，500ms后重试第'+startRetryCount+'次');
+        try{ recognition.onend=null; recognition.onerror=null; recognition.onresult=null; }catch(e2){}
+        recognition = null;
+        recordState = 'idle';
+        setTimeout(doStartRecord, 500);
+        return;
+      }
+      return;
+    }
     let msg = '';
     if(e.error==='not-allowed'||e.error==='service-not-allowed'){ msg='❌ 麦克风被拒绝，请在浏览器设置中允许麦克风'; }
     else if(e.error==='no-speech'){ msg='没有听到声音，请大声一点'; }
@@ -700,6 +720,7 @@ function startRecord(){
   recognition.onend = () => {
     debugLog('【录音】语音识别结束，recordState='+recordState);
     clearTimeout(forceStopTimer);
+    startRetryCount = 0;
     if(recordState==='recording'||recordState==='stopping'){
       recordState='idle';
       resetRecordBtn();
@@ -721,9 +742,19 @@ function startRecord(){
     forceStopTimer=setTimeout(()=>{ if(recordState==='recording'){ status.textContent='⏰ 时间到，自动结束…'; stopRecord(); } },8000);
   }catch(e){
     debugLog('【录音】recognition.start() 失败: '+e.message);
+    // 启动失败，500ms后重试一次
+    if(startRetryCount < 1){
+      startRetryCount++;
+      debugLog('【录音】启动失败，500ms后重试第'+startRetryCount+'次');
+      try{ recognition.onend=null; recognition.onerror=null; recognition.onresult=null; }catch(e2){}
+      recognition = null;
+      setTimeout(doStartRecord, 500);
+      return;
+    }
     status.textContent='启动失败：'+e.message;
     recordState='idle';
     recognition = null;
+    startRetryCount = 0;
   }
 }
 function stopRecord(){
@@ -739,9 +770,9 @@ function stopRecord(){
 function resetRecordBtn(){ const b=document.getElementById('recordBtn'); b.textContent='🎤 开始录音'; b.className='btn btn-red'; b.disabled=false; }
 function resetRecordUI(){
   recordState='idle'; clearTimeout(forceStopTimer);
-  // 彻底清理旧识别实例
+  // 温和清理旧识别实例：只断开回调，不调用abort
   if(recognition){
-    try{ recognition.onend=null; recognition.onerror=null; recognition.onresult=null; recognition.abort(); }catch(e){}
+    try{ recognition.onend=null; recognition.onerror=null; recognition.onresult=null; }catch(e){}
     recognition=null;
   }
   const s=document.getElementById('recordStatus'); s.className='record-status record-idle'; s.textContent='等待开始录音…';

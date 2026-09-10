@@ -124,6 +124,17 @@
   .point-log-item { padding:6px 0; border-bottom:1px solid #f0f0f0; }
   .point-log-item .log-amt { color:#2e7d32; font-weight:bold; }
   .empty-tip { text-align:center; color:#999; padding:20px; font-size:16px; }
+
+  /* 调试面板 */
+  .debug-toggle { position:fixed; right:8px; bottom:70px; width:36px; height:36px; border-radius:50%; background:rgba(0,0,0,0.3); color:#fff; font-size:14px; display:flex; align-items:center; justify-content:center; cursor:pointer; z-index:999; border:none; }
+  .debug-panel { position:fixed; left:0; right:0; bottom:0; background:rgba(0,0,0,0.92); color:#0f0; font-size:12px; font-family:monospace; padding:10px; max-height:45vh; overflow-y:auto; z-index:1000; border-top:2px solid #0f0; }
+  .debug-panel.hidden { display:none; }
+  .debug-panel .debug-title { font-size:14px; font-weight:bold; color:#ff0; margin-bottom:6px; display:flex; justify-content:space-between; align-items:center; }
+  .debug-panel .debug-close { background:#f00; color:#fff; border:none; padding:2px 8px; border-radius:4px; cursor:pointer; font-size:12px; }
+  .debug-panel .debug-row { padding:2px 0; border-bottom:1px solid #333; word-break:break-all; }
+  .debug-panel .debug-label { color:#0ff; }
+  .debug-panel .debug-log { color:#aaa; margin-top:6px; max-height:150px; overflow-y:auto; }
+  .debug-panel .debug-log-item { padding:1px 0; border-bottom:1px solid #222; }
 </style>
 </head>
 <body>
@@ -638,6 +649,7 @@ function startRecord(){
   if(voiceApiLocked || !speechSupported){ alert('当前浏览器不支持语音识别'); return; }
   if(isTTSPlaying){ alert('请等待句子朗读完毕，再点击录音'); return; }
   if(recordState==='recording') return;
+  debugLog('【录音】开始录音，清理旧实例');
 
   // 彻底清理旧实例
   if(recognition){
@@ -668,6 +680,7 @@ function startRecord(){
   };
 
   recognition.onerror = (e) => {
+    debugLog('【录音】语音识别错误: '+e.error);
     if(e.error==='aborted') return; // 主动abort不报错
     let msg = '';
     if(e.error==='not-allowed'||e.error==='service-not-allowed'){ msg='❌ 麦克风被拒绝，请在浏览器设置中允许麦克风'; }
@@ -684,6 +697,7 @@ function startRecord(){
   };
 
   recognition.onend = () => {
+    debugLog('【录音】语音识别结束，recordState='+recordState);
     clearTimeout(forceStopTimer);
     if(recordState==='recording'||recordState==='stopping'){
       recordState='idle';
@@ -695,6 +709,7 @@ function startRecord(){
 
   try{
     recognition.start();
+    debugLog('【录音】recognition.start() 成功，进入录音状态');
     recordState='recording';
     btn.textContent='⏹ 结束录音'; btn.className='btn btn-gray'; btn.disabled=false;
     status.className='record-status record-recording'; status.textContent='🔴 正在录音，大声读句子（读对的词会变绿）';
@@ -704,6 +719,7 @@ function startRecord(){
     clearTimeout(forceStopTimer);
     forceStopTimer=setTimeout(()=>{ if(recordState==='recording'){ status.textContent='⏰ 时间到，自动结束…'; stopRecord(); } },20000);
   }catch(e){
+    debugLog('【录音】recognition.start() 失败: '+e.message);
     status.textContent='启动失败：'+e.message;
     recordState='idle';
     recognition = null;
@@ -711,6 +727,7 @@ function startRecord(){
 }
 function stopRecord(){
   if(recordState!=='recording') return;
+  debugLog('【录音】停止录音，调用recognition.stop()');
   recordState='stopping';
   const btn=document.getElementById('recordBtn');
   btn.textContent='⏳ 处理中…'; btn.disabled=true;
@@ -1110,14 +1127,86 @@ window.__app = {
 };
 
 // ================================================================
-// 初始化（方案A：页面加载时初始化语音识别全局单例）
+// 内置调试面板
+// ================================================================
+let debugPanelVisible = false;
+let debugLogs = [];
+function toggleDebugPanel(){
+  debugPanelVisible = !debugPanelVisible;
+  document.getElementById('debugPanel').classList.toggle('hidden', !debugPanelVisible);
+  if(debugPanelVisible) updateDebugPanel();
+}
+function debugLog(msg){
+  const time = new Date().toLocaleTimeString();
+  debugLogs.unshift(`[${time}] ${msg}`);
+  if(debugLogs.length > 50) debugLogs = debugLogs.slice(0, 50);
+  const logEl = document.getElementById('debugLog');
+  if(logEl) logEl.innerHTML = debugLogs.map(l=>`<div class="debug-log-item">${l}</div>`).join('');
+}
+function updateDebugPanel(){
+  if(!debugPanelVisible) return;
+  const store = getStore();
+  const sec = currentSection();
+  const sents = currentSentences();
+  const curSent = sents[currentIdx] ? sents[currentIdx].cn : '无';
+  const html = `
+    <div class="debug-row"><span class="debug-label">学期/单元/小节:</span> ${currentCourseId}/${currentUnitId}/${currentSectionId} (${sec?sec.name:'无'})</div>
+    <div class="debug-row"><span class="debug-label">当前句:</span> ${currentIdx+1}/${sents.length} - ${curSent}</div>
+    <div class="debug-row"><span class="debug-label">录音状态:</span> ${recordState}</div>
+    <div class="debug-row"><span class="debug-label">recognition对象:</span> ${recognition ? '存在(未释放!)' : 'null(已释放)'}</div>
+    <div class="debug-row"><span class="debug-label">TTS播放中:</span> ${isTTSPlaying}</div>
+    <div class="debug-row"><span class="debug-label">语音API锁死:</span> ${voiceApiLocked}</div>
+    <div class="debug-row"><span class="debug-label">听读通过:</span> ${sessionProgress.readDone.size}/${sents.length}</div>
+    <div class="debug-row"><span class="debug-label">跟写通过:</span> ${sessionProgress.writeDone.size}/${sents.length}</div>
+    <div class="debug-row"><span class="debug-label">总积分:</span> ${store.totalPoints||0}</div>
+    <div class="debug-row"><span class="debug-label">协议:</span> ${location.protocol} | 安全上下文: ${window.isSecureContext?'是':'否'}</div>
+    <div class="debug-row"><span class="debug-label">浏览器:</span> ${navigator.userAgent.slice(0,80)}</div>
+    <div class="debug-row" style="margin-top:6px;"><span class="debug-label">操作日志:</span></div>
+  `;
+  document.getElementById('debugContent').innerHTML = html;
+  const logEl = document.getElementById('debugLog');
+  if(logEl) logEl.innerHTML = debugLogs.map(l=>`<div class="debug-log-item">${l}</div>`).join('');
+}
+setInterval(updateDebugPanel, 1000);
+
+// 长按"我的"按钮5秒切换调试面板
+let minePressTimer = null;
+document.addEventListener('DOMContentLoaded', ()=>{
+  const mineBtn = document.getElementById('navMine');
+  if(mineBtn){
+    mineBtn.addEventListener('touchstart', ()=>{
+      minePressTimer = setTimeout(toggleDebugPanel, 1500);
+    });
+    mineBtn.addEventListener('touchend', ()=>{ clearTimeout(minePressTimer); });
+    mineBtn.addEventListener('mousedown', ()=>{
+      minePressTimer = setTimeout(toggleDebugPanel, 1500);
+    });
+    mineBtn.addEventListener('mouseup', ()=>{ clearTimeout(minePressTimer); });
+    mineBtn.addEventListener('mouseleave', ()=>{ clearTimeout(minePressTimer); });
+  }
+});
+
+// ================================================================
+// 初始化
 // ================================================================
 window.addEventListener('load',()=>{
   updateTopPoints();
   renderCourses();
   showPage('page-courses');
   initVoiceRecognition();
+  debugLog('页面加载完成，语音API初始化');
 });
 </script>
+<!-- 调试面板 -->
+<button class="debug-toggle" id="debugToggle" onclick="toggleDebugPanel()" title="调试面板">🐞</button>
+<div class="debug-panel hidden" id="debugPanel">
+  <div class="debug-title">
+    <span>🔧 调试面板（长按"我的"5秒可隐藏/显示）</span>
+    <button class="debug-close" onclick="toggleDebugPanel()">✕ 关闭</button>
+  </div>
+  <div id="debugContent"></div>
+  <div class="debug-log" id="debugLog"></div>
+</div>
+
 </body>
 </html>

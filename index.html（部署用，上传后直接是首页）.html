@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>普通话学习 - 种牙篇</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  body {
+    font-family: "PingFang SC","Microsoft YaHei","Heiti SC",sans-serif;
+    background:#f5f7fa; color:#1a1a1a; font-size:22px; line-height:1.6;
+    padding:16px; max-width:850px; margin:0 auto;
+  }
+  h1 { font-size:30px; text-align:center; margin:10px 0 16px; color:#1565c0; }
+  h2 { font-size:26px; margin:20px 0 12px; color:#1565c0; border-left:6px solid #1565c0; padding-left:12px; }
+
+  .card {
+    background:#fff; border-radius:16px; padding:20px; margin-bottom:16px;
+    box-shadow:0 2px 12px rgba(0,0,0,0.06);
+  }
+
+  /* 环境警告 */
+  .env-warn {
+    background:#fff3e0; border:3px solid #e65100; border-radius:14px;
+    padding:20px; margin-bottom:16px;
+  }
+  .env-warn h3 { color:#e65100; font-size:24px; margin-bottom:10px; }
+  .env-warn p { font-size:20px; margin-bottom:8px; }
+  .env-warn ol { padding-left:24px; font-size:20px; line-height:1.8; }
+  .env-warn code { background:#ffe0b2; padding:2px 8px; border-radius:4px; font-size:18px; }
+
+  /* 权限状态条 */
+  .perm-bar {
+    padding:16px; border-radius:12px; margin-bottom:16px; font-size:22px;
+    display:flex; align-items:center; gap:12px;
+  }
+  .perm-ok { background:#e8f5e9; color:#2e7d32; }
+  .perm-warn { background:#fff3e0; color:#e65100; }
+  .perm-denied { background:#ffebee; color:#c62828; }
+  .perm-icon { font-size:32px; flex-shrink:0; }
+
+  .guide-box { background:#fff8e1; border:2px solid #f9a825; border-radius:12px; padding:18px; margin:12px 0; }
+  .guide-box h3 { color:#e65100; font-size:22px; margin-bottom:10px; }
+  .guide-box ol { padding-left:24px; font-size:20px; line-height:1.8; }
+  .guide-box li { margin-bottom:6px; }
+  .guide-box .hl { background:#ffe0b2; padding:2px 6px; border-radius:4px; font-weight:bold; }
+
+  .btn {
+    display:block; width:100%; padding:18px; font-size:24px; font-weight:bold;
+    border:none; border-radius:14px; margin:10px 0; cursor:pointer;
+    transition:transform 0.1s, opacity 0.1s;
+  }
+  .btn:active { transform:scale(0.97); opacity:0.85; }
+  .btn:disabled { opacity:0.4; cursor:not-allowed; transform:none; }
+  .btn-primary { background:#1565c0; color:#fff; }
+  .btn-green { background:#2e7d32; color:#fff; }
+  .btn-orange { background:#e65100; color:#fff; }
+  .btn-gray { background:#757575; color:#fff; }
+  .btn-red { background:#c62828; color:#fff; }
+  .btn-yellow { background:#f9a825; color:#fff; }
+  .btn-small { padding:12px 20px; font-size:20px; width:auto; display:inline-block; margin:6px; }
+  .btn-row { display:flex; gap:10px; }
+  .btn-row .btn { flex:1; margin:6px 0; }
+
+  select {
+    width:100%; padding:14px; font-size:22px; border:2px solid #1565c0;
+    border-radius:10px; background:#fff; margin-bottom:12px;
+  }
+
+  .sentence-box { background:#e3f2fd; border-radius:14px; padding:20px; margin:12px 0; }
+  .sentence-cn { font-size:30px; font-weight:bold; margin-bottom:8px; line-height:1.5; }
+  .sentence-pinyin { font-size:20px; color:#1565c0; }
+
+  .words-container { display:flex; flex-wrap:wrap; gap:10px; margin:12px 0; }
+  .word-card {
+    background:#fff; border:2px solid #1565c0; border-radius:10px;
+    padding:12px 16px; cursor:pointer; text-align:center; min-width:70px;
+    transition:background 0.15s;
+  }
+  .word-card:active { background:#bbdefb; }
+  .word-card .w-cn { font-size:24px; font-weight:bold; display:block; }
+  .word-card .w-py { font-size:16px; color:#1565c0; display:block; margin-top:2px; }
+  .word-card .w-note {
+    font-size:13px; color:#e65100; display:block; margin-top:2px;
+    background:#fff3e0; border-radius:4px; padding:1px 4px;
+  }
+  .word-card.keyword { border-color:#e65100; background:#fff3e0; }
+  .word-card.correct { border-color:#2e7d32; background:#e8f5e9; }
+  .word-card.wrong { border-color:#c62828; background:#ffebee; }
+
+  .speed-row { display:flex; align-items:center; gap:12px; margin:12px 0; }
+  .speed-row label { font-size:22px; white-space:nowrap; }
+  .speed-row input[type=range] { flex:1; height:10px; }
+  .speed-val { font-size:26px; font-weight:bold; color:#1565c0; min-width:70px; text-align:center; }
+
+  .record-status {
+    text-align:center; padding:18px; font-size:22px; border-radius:12px;
+    margin:12px 0; min-height:60px; display:flex; align-items:center; justify-content:center;
+  }
+  .record-idle { background:#f5f5f5; color:#757575; }
+  .record-recording { background:#ffebee; color:#c62828; animation:pulse 1s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.6;} }
+  .record-done { background:#e8f5e9; color:#2e7d32; }
+
+  .result-box { background:#fff; border-radius:12px; padding:16px; margin:12px 0; border:2px solid #e0e0e0; }
+  .result-label { font-size:18px; color:#666; margin-bottom:6px; }
+  .result-text { font-size:24px; line-height:1.5; }
+
+  .score-box { text-align:center; padding:16px; }
+  .stars { font-size:40px; letter-spacing:6px; }
+  .score-text { font-size:22px; margin-top:8px; }
+
+  .write-input {
+    width:100%; min-height:100px; padding:16px; font-size:26px;
+    border:3px solid #1565c0; border-radius:12px; margin:12px 0;
+    font-family:inherit; line-height:1.5;
+  }
+  .write-result { padding:16px; border-radius:12px; margin:12px 0; font-size:24px; line-height:1.6; }
+  .write-correct { background:#e8f5e9; color:#2e7d32; border:2px solid #2e7d32; }
+  .write-wrong { background:#ffebee; color:#c62828; border:2px solid #c62828; }
+  .write-wrong .char-err { background:#ffcdd2; text-decoration:line-through; padding:2px 4px; border-radius:4px; }
+  .write-wrong .char-ok { color:#2e7d32; }
+  .write-answer { background:#e3f2fd; padding:12px; border-radius:8px; margin-top:10px; font-size:22px; }
+
+  .tip { background:#fff3e0; border-left:5px solid #e65100; padding:14px; border-radius:8px; margin:12px 0; font-size:20px; }
+  .tip strong { color:#e65100; }
+
+  .hidden { display:none !important; }
+
+  .tab-bar { display:flex; gap:0; margin:12px 0; border-radius:12px; overflow:hidden; border:2px solid #1565c0; }
+  .tab-bar button { flex:1; padding:16px; font-size:24px; font-weight:bold; border:none; cursor:pointer; background:#fff; color:#1565c0; }
+  .tab-bar button.active { background:#1565c0; color:#fff; }
+
+  .env-info { font-size:16px; color:#999; text-align:center; margin-top:8px; }
+</style>
+</head>
+<body>
+
+<h1>📖 普通话学习（第一单元：种牙篇）</h1>
+
+<!-- ========== 环境检查：非HTTPS直接警告 ========== -->
+<div id="envWarn" class="env-warn hidden">
+  <h3>⚠️ 当前环境无法使用录音功能</h3>
+  <p>检测到你是通过 <code id="envProtocol">file://</code> 打开的，这不是安全上下文，浏览器会禁止访问麦克风。</p>
+  <p><strong>解决方法：把这个文件部署到 HTTPS 网站上，3分钟搞定：</strong></p>
+  <ol>
+    <li>把这个文件改名为 <code>index.html</code></li>
+    <li>打开 <code>https://app.netlify.com/drop</code>，把文件拖进去</li>
+    <li>得到一个 <code>https://xxx.netlify.app</code> 地址</li>
+    <li>平板用 Edge / Chrome 打开这个 HTTPS 地址，点录音就会弹授权框</li>
+  </ol>
+  <p style="margin-top:10px;">或者用你之前的 GitHub Pages：上传到仓库 → Settings → Pages → 选分支 → 得到 <code>https://用户名.github.io/仓库名/</code></p>
+  <p style="margin-top:10px;font-size:18px;color:#666;">TTS发音、跟写练习在本地也能用，只有录音跟读需要HTTPS。</p>
+</div>
+
+<!-- ========== 权限状态条 ========== -->
+<div id="permBar" class="perm-bar perm-warn">
+  <span class="perm-icon">⏳</span>
+  <span>正在检测环境…</span>
+</div>
+
+<div id="permGuide" class="guide-box hidden">
+  <h3>⚠️ 麦克风权限被拒绝了，需要手动重置</h3>
+  <p style="font-size:20px;margin-bottom:10px;">你之前点过"拒绝"，浏览器记住了这个选择。请按以下步骤重置：</p>
+  <ol>
+    <li>点击浏览器底部的 <span class="hl">「...」菜单</span></li>
+    <li>进入 <span class="hl">设置</span> → <span class="hl">站点设置</span></li>
+    <li>找到 <span class="hl">麦克风</span></li>
+    <li>在「已拒绝」里找到本网站，点 <span class="hl">清除并重置</span></li>
+    <li>回到本页面，<span class="hl">从上往下拉刷新</span>，再点录音会重新弹授权框</li>
+  </ol>
+  <button class="btn btn-yellow" onclick="location.reload()" style="margin-top:14px;">🔄 我已经重置好了，刷新重试</button>
+</div>
+
+<!-- ========== 学习模式切换 ========== -->
+<div class="tab-bar">
+  <button id="tabRead" class="active" onclick="switchTab('read')">👂 听读学习</button>
+  <button id="tabWrite" onclick="switchTab('write')">✍️ 跟写练习</button>
+</div>
+
+<!-- ========== 听读学习 ========== -->
+<div id="panelRead">
+  <div class="card">
+    <h2>句子学习</h2>
+    <label style="font-size:20px;color:#666;">选择句子：</label>
+    <select id="sentenceSelect" onchange="loadSentence()"></select>
+
+    <div class="sentence-box">
+      <div class="sentence-cn" id="sentenceCn"></div>
+      <div class="sentence-pinyin" id="sentencePy"></div>
+    </div>
+
+    <div class="words-container" id="wordsContainer"></div>
+
+    <div class="speed-row">
+      <label>播放速度：</label>
+      <input type="range" id="speedRange" min="0.5" max="1.5" step="0.1" value="1.0" oninput="updateSpeed()">
+      <span class="speed-val" id="speedVal">1.0x</span>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-green" onclick="playSentence()">🔊 播放整句</button>
+      <button class="btn btn-orange" onclick="playSlow()">🐢 慢速逐词</button>
+    </div>
+    <button class="btn btn-gray" onclick="stopSpeak()">⏹ 停止播放</button>
+  </div>
+
+  <!-- 跟读录音 -->
+  <div class="card">
+    <h2>跟读录音 + 纠错</h2>
+    <div class="tip">
+      <strong>操作：</strong>先听一遍示范 → 点"开始录音" → 大声读出句子 → 点"结束录音" → 自动标出错词
+    </div>
+    <button id="recordBtn" class="btn btn-red" onclick="toggleRecord()" disabled>🎤 开始录音（需HTTPS环境）</button>
+    <div id="recordStatus" class="record-status record-idle">等待开始录音…</div>
+
+    <div id="resultArea" class="hidden">
+      <div class="result-box">
+        <div class="result-label">📝 你说的是：</div>
+        <div class="result-text" id="userSpeech"></div>
+      </div>
+      <div class="result-box">
+        <div class="result-label">✅ 标准句子（绿色=读对，红色=读错/漏读，橙色边框=重点词）：</div>
+        <div class="words-container" id="compareWords"></div>
+      </div>
+      <div class="score-box">
+        <div class="stars" id="scoreStars"></div>
+        <div class="score-text" id="scoreText"></div>
+      </div>
+      <button class="btn btn-primary" onclick="retryWrong()">🔁 只练读错的词</button>
+    </div>
+  </div>
+</div>
+
+<!-- ========== 跟写练习 ========== -->
+<div id="panelWrite" class="hidden">
+  <div class="card">
+    <h2>跟写练习（只考汉字写法）</h2>
+    <div class="tip">
+      <strong>规则：</strong>听句子读音 → 写出这句话（可以打字，也可以用平板手写） → 提交判断对错。只看汉字，不考拼音。
+    </div>
+
+    <label style="font-size:20px;color:#666;">选择句子：</label>
+    <select id="writeSelect" onchange="loadWrite()"></select>
+
+    <div class="sentence-box">
+      <div class="sentence-pinyin" id="writePy" style="font-size:22px;"></div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-green" onclick="playWriteSentence()">🔊 再听一遍</button>
+      <button class="btn btn-orange" onclick="playWriteSlow()">🐢 慢速听</button>
+    </div>
+
+    <textarea id="writeInput" class="write-input" placeholder="在这里写出你听到的句子…"></textarea>
+
+    <button class="btn btn-primary" onclick="submitWrite()">✅ 提交判断</button>
+    <button class="btn btn-gray" onclick="clearWrite()">🗑 清空重写</button>
+
+    <div id="writeResult" class="hidden"></div>
+  </div>
+</div>
+
+<div class="env-info" id="envInfo"></div>
+
+<script>
+// ==================== 数据：第一单元 种牙篇 ====================
+const sentences = [
+  {
+    cn: "我叫刘秀文，今年55岁，今天来准备种牙。",
+    py: "wǒ jiào liú xiù wén, jīn nián wǔ shí wǔ suì, jīn tiān lái zhǔn bèi zhǒng yá.",
+    words: [
+      {cn:"我", py:"wǒ"}, {cn:"叫", py:"jiào"}, {cn:"刘秀文", py:"liú xiù wén"},
+      {cn:"今年", py:"jīn nián"}, {cn:"55岁", py:"wǔ shí wǔ suì"},
+      {cn:"今天", py:"jīn tiān"}, {cn:"来", py:"lái"},
+      {cn:"准备", py:"zhǔn bèi", keyword:true},
+      {cn:"种牙", py:"zhǒng yá", keyword:true, note:"种读zhǒng"}
+    ]
+  },
+  {
+    cn: "我没有糖尿病，没有麻药过敏，最近没有吃药。",
+    py: "wǒ méi yǒu táng niào bìng, méi yǒu má yào guò mǐn, zuì jìn méi yǒu chī yào.",
+    words: [
+      {cn:"我", py:"wǒ"}, {cn:"没有", py:"méi yǒu"},
+      {cn:"糖尿病", py:"táng niào bìng", keyword:true},
+      {cn:"没有", py:"méi yǒu"},
+      {cn:"麻药过敏", py:"má yào guò mǐn", keyword:true},
+      {cn:"最近", py:"zuì jìn"}, {cn:"没有", py:"méi yǒu"},
+      {cn:"吃药", py:"chī yào", keyword:true}
+    ]
+  },
+  {
+    cn: "我偶尔低血压，今天早上量了，正常。",
+    py: "wǒ ǒu ěr dī xuè yā, jīn tiān zǎo shang liáng le, zhèng cháng.",
+    words: [
+      {cn:"我", py:"wǒ"}, {cn:"偶尔", py:"ǒu ěr"},
+      {cn:"低血压", py:"dī xuè yā", keyword:true},
+      {cn:"今天早上", py:"jīn tiān zǎo shang"},
+      {cn:"量了", py:"liáng le", note:"量读liáng"},
+      {cn:"正常", py:"zhèng cháng", keyword:true}
+    ]
+  },
+  {
+    cn: "我今天没有感冒、发烧、咳嗽，也没有头晕、头痛。",
+    py: "wǒ jīn tiān méi yǒu gǎn mào, fā shāo, ké sou, yě méi yǒu tóu yūn, tóu tòng.",
+    words: [
+      {cn:"我", py:"wǒ"}, {cn:"今天", py:"jīn tiān"}, {cn:"没有", py:"méi yǒu"},
+      {cn:"感冒", py:"gǎn mào", keyword:true},
+      {cn:"发烧", py:"fā shāo", keyword:true},
+      {cn:"咳嗽", py:"ké sou", keyword:true},
+      {cn:"也没有", py:"yě méi yǒu"},
+      {cn:"头晕", py:"tóu yūn", keyword:true},
+      {cn:"头痛", py:"tóu tòng", keyword:true}
+    ]
+  },
+  {
+    cn: "我今天早上吃饭了。",
+    py: "wǒ jīn tiān zǎo shang chī fàn le.",
+    words: [
+      {cn:"我", py:"wǒ"}, {cn:"今天早上", py:"jīn tiān zǎo shang"},
+      {cn:"吃饭", py:"chī fàn", keyword:true}, {cn:"了", py:"le"}
+    ]
+  },
+  {
+    cn: "我口腔没有溃疡、没有牙疼。",
+    py: "wǒ kǒu qiāng méi yǒu kuì yáng, méi yǒu yá téng.",
+    words: [
+      {cn:"我", py:"wǒ"}, {cn:"口腔", py:"kǒu qiāng"}, {cn:"没有", py:"méi yǒu"},
+      {cn:"溃疡", py:"kuì yáng", keyword:true},
+      {cn:"没有", py:"méi yǒu"},
+      {cn:"牙疼", py:"yá téng", keyword:true}
+    ]
+  },
+  {
+    cn: "牙龈有点红肿但没出血，旁边牙齿有点疼。",
+    py: "yá yín yǒu diǎn hóng zhǒng dàn méi chū xuè, páng biān yá chǐ yǒu diǎn téng.",
+    words: [
+      {cn:"牙龈", py:"yá yín", keyword:true},
+      {cn:"有点", py:"yǒu diǎn"},
+      {cn:"红肿", py:"hóng zhǒng", keyword:true},
+      {cn:"但没", py:"dàn méi"},
+      {cn:"出血", py:"chū xuè", keyword:true, note:"血读xuè"},
+      {cn:"旁边", py:"páng biān"}, {cn:"牙齿", py:"yá chǐ"},
+      {cn:"有点", py:"yǒu diǎn"}, {cn:"疼", py:"téng"}
+    ]
+  },
+  {
+    cn: "我心里有点紧张，有点怕疼，麻烦医生动作轻一点、慢一点。",
+    py: "wǒ xīn lǐ yǒu diǎn jǐn zhāng, yǒu diǎn pà téng, má fan yī shēng dòng zuò qīng yì diǎn, màn yì diǎn.",
+    words: [
+      {cn:"我", py:"wǒ"}, {cn:"心里", py:"xīn lǐ"}, {cn:"有点", py:"yǒu diǎn"},
+      {cn:"紧张", py:"jǐn zhāng", keyword:true},
+      {cn:"有点", py:"yǒu diǎn"},
+      {cn:"怕疼", py:"pà téng", keyword:true},
+      {cn:"麻烦", py:"má fan"}, {cn:"医生", py:"yī shēng"}, {cn:"动作", py:"dòng zuò"},
+      {cn:"轻一点", py:"qīng yì diǎn"}, {cn:"慢一点", py:"màn yì diǎn"}
+    ]
+  },
+  {
+    cn: "我没听清，可以再说一遍吗？",
+    py: "wǒ méi tīng qīng, kě yǐ zài shuō yī biàn ma?",
+    words: [
+      {cn:"我", py:"wǒ"},
+      {cn:"没听清", py:"méi tīng qīng", keyword:true},
+      {cn:"可以", py:"kě yǐ"}, {cn:"再说", py:"zài shuō"},
+      {cn:"一遍", py:"yī biàn"}, {cn:"吗", py:"ma"}
+    ]
+  },
+  {
+    cn: "有什么风险和注意事项，麻烦您提前告诉我。",
+    py: "yǒu shén me fēng xiǎn hé zhù yì shì xiàng, má fan nín tí qián gào sù wǒ.",
+    words: [
+      {cn:"有什么", py:"yǒu shén me"},
+      {cn:"风险", py:"fēng xiǎn", keyword:true},
+      {cn:"和", py:"hé"},
+      {cn:"注意事项", py:"zhù yì shì xiàng", keyword:true},
+      {cn:"麻烦", py:"má fan"}, {cn:"您", py:"nín"}, {cn:"提前", py:"tí qián"},
+      {cn:"告诉", py:"gào sù"}, {cn:"我", py:"wǒ"}
+    ]
+  },
+  {
+    cn: "手术是莫志伟医生本人做吗？大概要做多久？",
+    py: "shǒu shù shì mò zhì wěi yī shēng běn rén zuò ma? dà gài yào zuò duō jiǔ?",
+    words: [
+      {cn:"手术", py:"shǒu shù", keyword:true},
+      {cn:"是", py:"shì"}, {cn:"莫志伟", py:"mò zhì wěi"}, {cn:"医生", py:"yī shēng"},
+      {cn:"本人", py:"běn rén"}, {cn:"做", py:"zuò"}, {cn:"吗", py:"ma"},
+      {cn:"大概", py:"dà gài"}, {cn:"要做", py:"yào zuò"},
+      {cn:"多久", py:"duō jiǔ", keyword:true}
+    ]
+  },
+  {
+    cn: "做完需要等多久才能回家？",
+    py: "zuò wán xū yào děng duō jiǔ cái néng huí jiā?",
+    words: [
+      {cn:"做完", py:"zuò wán"}, {cn:"需要", py:"xū yào"}, {cn:"等", py:"děng"},
+      {cn:"多久", py:"duō jiǔ", keyword:true},
+      {cn:"才能", py:"cái néng"},
+      {cn:"回家", py:"huí jiā", keyword:true}
+    ]
+  },
+  {
+    cn: "我今天是一个人来的，术后能不能自己回家？需要注意什么？",
+    py: "wǒ jīn tiān shì yī gè rén lái de, shù hòu néng bù néng zì jǐ huí jiā? xū yào zhù yì shén me?",
+    words: [
+      {cn:"我", py:"wǒ"}, {cn:"今天", py:"jīn tiān"}, {cn:"是", py:"shì"},
+      {cn:"一个人", py:"yī gè rén"}, {cn:"来的", py:"lái de"},
+      {cn:"术后", py:"shù hòu", keyword:true},
+      {cn:"能不能", py:"néng bù néng"}, {cn:"自己", py:"zì jǐ"},
+      {cn:"回家", py:"huí jiā", keyword:true},
+      {cn:"需要", py:"xū yào"}, {cn:"注意", py:"zhù yì"}, {cn:"什么", py:"shén me"}
+    ]
+  }
+];
+
+// ==================== 状态 ====================
+let currentIdx = 0;
+let currentSpeed = 1.0;
+let recognition = null;
+let isRecording = false;
+let finalTranscript = '';
+let micStream = null;
+let isSecure = false;
+
+// ==================== 初始化 ====================
+window.addEventListener('load', () => {
+  initSentenceSelect();
+  loadSentence();
+  loadWrite();
+  checkEnvironment();
+});
+
+// ================================================================
+// 【核心】环境检查 + 安全上下文检测（参考文件的方案）
+// ================================================================
+function checkEnvironment() {
+  const warn = document.getElementById('envWarn');
+  const bar = document.getElementById('permBar');
+  const recordBtn = document.getElementById('recordBtn');
+  const info = document.getElementById('envInfo');
+
+  isSecure = window.isSecureContext;
+  const protocol = location.protocol;
+  info.textContent = `当前协议：${protocol} | 安全上下文：${isSecure ? '是 ✅' : '否 ❌'} | 地址：${location.href}`;
+
+  if (!isSecure) {
+    // 非安全上下文：显示大警告，禁用录音
+    document.getElementById('envProtocol').textContent = protocol;
+    warn.classList.remove('hidden');
+    bar.className = 'perm-bar perm-denied';
+    bar.innerHTML = '<span class="perm-icon">🚫</span><span>非HTTPS环境，录音功能不可用（请看上方部署方法）</span>';
+    recordBtn.disabled = true;
+    recordBtn.textContent = '🎤 开始录音（需部署到HTTPS）';
+    return;
+  }
+
+  // 安全上下文：继续检测麦克风权限
+  bar.className = 'perm-bar perm-warn';
+  bar.innerHTML = '<span class="perm-icon">🎤</span><span>环境正常，点击"开始录音"时会弹出授权框</span>';
+  recordBtn.disabled = false;
+  recordBtn.textContent = '🎤 开始录音';
+
+  // 异步查询权限状态
+  queryMicrophonePermission().then(state => {
+    updatePermUI(state);
+  });
+}
+
+// ================================================================
+// 第一步：检查录音环境（来自参考文件）
+// ================================================================
+function checkRecordingEnvironment() {
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+    return { supported: false, reason: '您的浏览器不支持录音功能，请使用 Chrome 或 Edge 浏览器。' };
+  }
+  if (!window.isSecureContext) {
+    return { supported: false, reason: '当前页面不是 HTTPS 环境，浏览器禁止访问麦克风。请部署到 https:// 后访问。' };
+  }
+  return { supported: true, reason: '' };
+}
+
+// ================================================================
+// 第二步：查询麦克风权限状态（来自参考文件）
+// ================================================================
+async function queryMicrophonePermission() {
+  if (!navigator.permissions || !navigator.permissions.query) {
+    return 'unknown';
+  }
+  try {
+    const result = await navigator.permissions.query({name: 'microphone'});
+    // 监听变化
+    result.onchange = () => updatePermUI(result.state);
+    return result.state;
+  } catch (e) {
+    return 'unknown';
+  }
+}
+
+function updatePermUI(state) {
+  const bar = document.getElementById('permBar');
+  const guide = document.getElementById('permGuide');
+  const recordBtn = document.getElementById('recordBtn');
+
+  if (!isSecure) return;
+
+  if (state === 'granted') {
+    bar.className = 'perm-bar perm-ok';
+    bar.innerHTML = '<span class="perm-icon">✅</span><span>麦克风权限正常，可以录音跟读！</span>';
+    guide.classList.add('hidden');
+    recordBtn.disabled = false;
+    recordBtn.textContent = '🎤 开始录音';
+  } else if (state === 'denied') {
+    bar.className = 'perm-bar perm-denied';
+    bar.innerHTML = '<span class="perm-icon">🚫</span><span>麦克风权限被拒绝，请看下方重置方法</span>';
+    guide.classList.remove('hidden');
+    recordBtn.disabled = true;
+    recordBtn.textContent = '🎤 开始录音（权限被拒绝）';
+  } else {
+    bar.className = 'perm-bar perm-warn';
+    bar.innerHTML = '<span class="perm-icon">🎤</span><span>点击"开始录音"时会弹出授权框，请点"允许"</span>';
+    guide.classList.add('hidden');
+    recordBtn.disabled = false;
+    recordBtn.textContent = '🎤 开始录音';
+  }
+}
+
+// ================================================================
+// 第三步：请求麦克风 + 错误分类处理（来自参考文件）
+// ================================================================
+async function requestMicrophone() {
+  const env = checkRecordingEnvironment();
+  if (!env.supported) {
+    alert(env.reason);
+    return null;
+  }
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({
+      audio: {
+        echoCancellation: true,
+        noiseSuppression: true,
+        autoGainControl: true
+      }
+    });
+    return stream;
+  } catch (error) {
+    handleRecordingError(error);
+    return null;
+  }
+}
+
+function handleRecordingError(error) {
+  const status = document.getElementById('recordStatus');
+  let msg = '';
+  switch (error.name) {
+    case 'NotAllowedError':
+    case 'PermissionDeniedError':
+      msg = '❌ 麦克风权限被拒绝。请按页面上的指引去浏览器设置重置权限，然后刷新页面。';
+      updatePermUI('denied');
+      break;
+    case 'NotFoundError':
+      msg = '❌ 未检测到麦克风设备，请检查平板麦克风是否正常。';
+      break;
+    case 'NotReadableError':
+      msg = '❌ 麦克风被其他应用占用，请关闭其他录音/通话应用后重试。';
+      break;
+    case 'OverconstrainedError':
+      msg = '❌ 麦克风不支持所需的音频参数。';
+      break;
+    case 'SecurityError':
+      msg = '❌ 当前环境不安全，浏览器禁止访问麦克风。请部署到 HTTPS。';
+      break;
+    case 'AbortError':
+      msg = '❌ 录音被中断，请重试。';
+      break;
+    default:
+      msg = '❌ 录音失败：' + error.message;
+  }
+  status.className = 'record-status record-recording';
+  status.textContent = msg;
+}
+
+// ==================== Tab切换 ====================
+function switchTab(tab) {
+  document.getElementById('tabRead').classList.toggle('active', tab==='read');
+  document.getElementById('tabWrite').classList.toggle('active', tab==='write');
+  document.getElementById('panelRead').classList.toggle('hidden', tab!=='read');
+  document.getElementById('panelWrite').classList.toggle('hidden', tab!=='write');
+  stopSpeak();
+}
+
+// ==================== 句子选择 ====================
+function initSentenceSelect() {
+  const opts = sentences.map((s,i) =>
+    `<option value="${i}">第${i+1}句：${s.cn.length>22?s.cn.slice(0,22)+'…':s.cn}</option>`
+  ).join('');
+  document.getElementById('sentenceSelect').innerHTML = opts;
+  document.getElementById('writeSelect').innerHTML = opts;
+}
+
+function loadSentence() {
+  currentIdx = parseInt(document.getElementById('sentenceSelect').value);
+  const s = sentences[currentIdx];
+  document.getElementById('sentenceCn').textContent = s.cn;
+  document.getElementById('sentencePy').textContent = '拼音：' + s.py;
+
+  const container = document.getElementById('wordsContainer');
+  container.innerHTML = s.words.map((w,i) =>
+    `<div class="word-card ${w.keyword?'keyword':''}" onclick="playWord(${i})" data-idx="${i}">
+      <span class="w-cn">${w.cn}</span>
+      <span class="w-py">${w.py}</span>
+      ${w.note?`<span class="w-note">${w.note}</span>`:''}
+    </div>`
+  ).join('');
+
+  document.getElementById('resultArea').classList.add('hidden');
+}
+
+// ==================== TTS 播放 ====================
+function getMandarinVoice() {
+  const voices = speechSynthesis.getVoices();
+  return voices.find(v => /zh-CN|zh_CN|cmn|mandarin|普通话|中文|中国/i.test(v.lang+v.name))
+      || voices.find(v => /zh|chinese|中文/i.test(v.lang+v.name));
+}
+
+function speak(text, rate) {
+  return new Promise((resolve) => {
+    if (!('speechSynthesis' in window)) { resolve(); return; }
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    const v = getMandarinVoice();
+    if (v) u.voice = v;
+    u.lang = 'zh-CN';
+    u.rate = rate || currentSpeed;
+    u.pitch = 1.0;
+    u.onend = resolve;
+    u.onerror = resolve;
+    speechSynthesis.speak(u);
+  });
+}
+
+async function playWord(idx) {
+  const w = sentences[currentIdx].words[idx];
+  document.querySelectorAll('#wordsContainer .word-card').forEach(c => c.style.background='');
+  const card = document.querySelector(`#wordsContainer .word-card[data-idx="${idx}"]`);
+  if (card) card.style.background = '#bbdefb';
+  await speak(w.cn, currentSpeed);
+  if (card) card.style.background = '';
+}
+
+async function playSentence() {
+  await speak(sentences[currentIdx].cn, currentSpeed);
+}
+
+async function playSlow() {
+  const s = sentences[currentIdx];
+  const slowRate = Math.min(currentSpeed * 0.7, 0.8);
+  for (let i = 0; i < s.words.length; i++) {
+    document.querySelectorAll('#wordsContainer .word-card').forEach(c => c.style.background='');
+    const card = document.querySelector(`#wordsContainer .word-card[data-idx="${i}"]`);
+    if (card) card.style.background = '#ffe0b2';
+    await speak(s.words[i].cn, slowRate);
+    await new Promise(r => setTimeout(r, 400));
+  }
+  document.querySelectorAll('#wordsContainer .word-card').forEach(c => c.style.background='');
+}
+
+function stopSpeak() {
+  if ('speechSynthesis' in window) speechSynthesis.cancel();
+}
+
+function updateSpeed() {
+  currentSpeed = parseFloat(document.getElementById('speedRange').value);
+  document.getElementById('speedVal').textContent = currentSpeed.toFixed(1) + 'x';
+}
+
+// ==================== ASR 录音识别（整合 getUserMedia + SpeechRecognition） ====================
+function toggleRecord() {
+  if (isRecording) {
+    stopRecord();
+  } else {
+    startRecord();
+  }
+}
+
+async function startRecord() {
+  // 【关键】先手动请求麦克风，触发权限弹窗 + 错误分类
+  micStream = await requestMicrophone();
+  if (!micStream) {
+    return; // 请求失败，错误已在 handleRecordingError 中提示
+  }
+
+  // 权限拿到了，启动语音识别
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) {
+    alert('当前浏览器不支持语音识别！请使用 Chrome 或 Edge 浏览器。');
+    releaseMic();
+    return;
+  }
+
+  recognition = new SR();
+  recognition.lang = 'zh-CN';
+  recognition.continuous = false;
+  recognition.interimResults = true;
+  recognition.maxAlternatives = 1;
+  finalTranscript = '';
+
+  const btn = document.getElementById('recordBtn');
+  const status = document.getElementById('recordStatus');
+
+  recognition.onstart = () => {
+    isRecording = true;
+    btn.textContent = '⏹ 结束录音';
+    btn.className = 'btn btn-gray';
+    status.className = 'record-status record-recording';
+    status.textContent = '🔴 正在录音，请大声读句子…';
+    document.getElementById('resultArea').classList.add('hidden');
+    // 15秒超时
+    setTimeout(() => { if (isRecording) stopRecord(); }, 15000);
+  };
+
+  recognition.onresult = (e) => {
+    let interim = '';
+    for (let i = e.resultIndex; i < e.results.length; i++) {
+      if (e.results[i].isFinal) {
+        finalTranscript += e.results[i][0].transcript;
+      } else {
+        interim += e.results[i][0].transcript;
+      }
+    }
+    status.textContent = '听到：' + (finalTranscript + interim);
+  };
+
+  recognition.onerror = (e) => {
+    let msg = '识别出错：' + e.error;
+    if (e.error === 'not-allowed' || e.error === 'service-not-allowed') {
+      msg = '❌ 麦克风被拒绝，请按页面指引重置权限';
+      updatePermUI('denied');
+    } else if (e.error === 'no-speech') {
+      msg = '没有听到声音，请大声一点再试';
+    } else if (e.error === 'audio-capture') {
+      msg = '找不到麦克风设备';
+    }
+    status.className = 'record-status record-recording';
+    status.textContent = msg;
+    resetRecordBtn();
+    releaseMic();
+  };
+
+  recognition.onend = () => {
+    if (isRecording) {
+      isRecording = false;
+      resetRecordBtn();
+      releaseMic();
+      if (finalTranscript) {
+        showResult(finalTranscript);
+      } else {
+        status.className = 'record-status record-idle';
+        status.textContent = '没有识别到声音，请再试一次，大声一点';
+      }
+    }
+  };
+
+  try {
+    recognition.start();
+  } catch(e) {
+    status.textContent = '启动失败：' + e.message;
+    releaseMic();
+  }
+}
+
+function stopRecord() {
+  if (recognition) {
+    isRecording = false;
+    recognition.stop();
+    resetRecordBtn();
+  }
+}
+
+function resetRecordBtn() {
+  const btn = document.getElementById('recordBtn');
+  btn.textContent = '🎤 开始录音';
+  btn.className = 'btn btn-red';
+}
+
+function releaseMic() {
+  if (micStream) {
+    micStream.getTracks().forEach(t => t.stop());
+    micStream = null;
+  }
+}
+
+// ==================== 纠错对比 ====================
+function normalize(text) {
+  return text.replace(/[，。、；：？！,.?;:\s"'""''（）()【】\[\]…—]/g, '');
+}
+
+function showResult(userText) {
+  const s = sentences[currentIdx];
+  const status = document.getElementById('recordStatus');
+  status.className = 'record-status record-done';
+  status.textContent = '✅ 识别完成！';
+
+  document.getElementById('resultArea').classList.remove('hidden');
+  document.getElementById('userSpeech').textContent = userText;
+
+  const userNorm = normalize(userText);
+  const compareBox = document.getElementById('compareWords');
+
+  let correctCount = 0;
+  let keywordCorrect = 0;
+  let keywordTotal = 0;
+
+  compareBox.innerHTML = s.words.map(w => {
+    const wNorm = normalize(w.cn);
+    const found = userNorm.includes(wNorm);
+    if (found) correctCount++;
+    if (w.keyword) {
+      keywordTotal++;
+      if (found) keywordCorrect++;
+    }
+    return `<div class="word-card ${found?'correct':'wrong'} ${w.keyword?'keyword':''}">
+      <span class="w-cn">${w.cn}</span>
+      <span class="w-py">${w.py}</span>
+    </div>`;
+  }).join('');
+
+  const wordScore = correctCount / s.words.length;
+  const kwScore = keywordTotal > 0 ? keywordCorrect / keywordTotal : 1;
+  const totalScore = wordScore * 0.4 + kwScore * 0.6;
+
+  let stars = '', scoreText = '';
+  if (totalScore >= 0.9) { stars = '⭐⭐⭐⭐⭐'; scoreText = '非常棒！读得很标准'; }
+  else if (totalScore >= 0.75) { stars = '⭐⭐⭐⭐'; scoreText = '不错，有几个词再练练'; }
+  else if (totalScore >= 0.5) { stars = '⭐⭐⭐'; scoreText = '继续加油，红色词语重点练'; }
+  else if (totalScore >= 0.3) { stars = '⭐⭐'; scoreText = '再听一遍示范，慢慢读'; }
+  else { stars = '⭐'; scoreText = '没关系，先听慢速逐词，再跟读'; }
+
+  document.getElementById('scoreStars').textContent = stars;
+  document.getElementById('scoreText').textContent = scoreText;
+}
+
+async function retryWrong() {
+  const wrongCards = document.querySelectorAll('#compareWords .word-card.wrong');
+  if (wrongCards.length === 0) { alert('没有读错的词，太棒了！'); return; }
+  for (const card of wrongCards) {
+    const text = card.querySelector('.w-cn').textContent;
+    card.style.background = '#ffe0b2';
+    await speak(text, 0.6);
+    await new Promise(r => setTimeout(r, 500));
+    card.style.background = '';
+  }
+}
+
+// ==================== 跟写练习 ====================
+function loadWrite() {
+  const idx = parseInt(document.getElementById('writeSelect').value);
+  document.getElementById('writePy').textContent = '拼音提示：' + sentences[idx].py;
+  document.getElementById('writeResult').classList.add('hidden');
+  document.getElementById('writeInput').value = '';
+}
+
+function playWriteSentence() {
+  const idx = parseInt(document.getElementById('writeSelect').value);
+  speak(sentences[idx].cn, 1.0);
+}
+
+function playWriteSlow() {
+  const idx = parseInt(document.getElementById('writeSelect').value);
+  speak(sentences[idx].cn, 0.6);
+}
+
+function clearWrite() {
+  document.getElementById('writeInput').value = '';
+  document.getElementById('writeResult').classList.add('hidden');
+}
+
+function submitWrite() {
+  const idx = parseInt(document.getElementById('writeSelect').value);
+  const standard = sentences[idx].cn;
+  const userInput = document.getElementById('writeInput').value.trim();
+  const resultBox = document.getElementById('writeResult');
+
+  if (!userInput) {
+    resultBox.className = 'write-result write-wrong';
+    resultBox.innerHTML = '请先写出句子再提交哦';
+    resultBox.classList.remove('hidden');
+    return;
+  }
+
+  const stdChars = standard.replace(/[，。、；：？！,.?;:\s"'""''（）()【】\[\]]/g, '').split('');
+  const userChars = userInput.replace(/[，。、；：？！,.?;:\s"'""''（）()【】\[\]]/g, '').split('');
+
+  let allCorrect = (stdChars.length === userChars.length);
+  let comparison = '';
+
+  for (let i = 0; i < Math.max(stdChars.length, userChars.length); i++) {
+    if (i < stdChars.length && i < userChars.length && stdChars[i] === userChars[i]) {
+      comparison += `<span class="char-ok">${stdChars[i]}</span>`;
+    } else {
+      allCorrect = false;
+      if (i < userChars.length) {
+        comparison += `<span class="char-err">${userChars[i]}</span>`;
+      }
+      if (i < stdChars.length && (i >= userChars.length || stdChars[i] !== userChars[i])) {
+        comparison += `<span style="color:#1565c0;font-weight:bold;">【${stdChars[i]}】</span>`;
+      }
+    }
+  }
+
+  if (allCorrect) {
+    resultBox.className = 'write-result write-correct';
+    resultBox.innerHTML = `✅ 完全正确！写得很棒！<br><span style="font-size:20px;">${standard}</span>`;
+  } else {
+    resultBox.className = 'write-result write-wrong';
+    resultBox.innerHTML = `
+      ❌ 有写错的地方（红色=你写错的字，蓝色=正确的字）：<br>
+      <div style="margin:10px 0;font-size:26px;">${comparison}</div>
+      <div class="write-answer">正确写法：${standard}</div>
+    `;
+  }
+  resultBox.classList.remove('hidden');
+}
+</script>
+
+</body>
+</html>

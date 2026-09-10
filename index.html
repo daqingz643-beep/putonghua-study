@@ -669,11 +669,18 @@ function initVoiceRecognition(){
 // ================================================================
 // 跟读录音（方案A：TTS互斥锁检查，复用全局单例）
 // ================================================================
+let startRetryCount = 0;
 function toggleRecord(){ if(recordState==='recording')stopRecord(); else if(recordState==='idle')startRecord(); }
 function startRecord(){
   if(voiceApiLocked || !recognition){ alert('当前浏览器不支持语音识别'); return; }
   if(isTTSPlaying){ alert('请等待句子朗读完毕，再点击录音'); return; }
   if(recordState==='recording') return;
+  // 防御：如果上一次还没完全停止，先等它停止再启动
+  if(recordState==='stopping'){
+    try{ recognition.stop(); }catch(e){}
+    setTimeout(()=>{ recordState='idle'; startRecord(); }, 400);
+    return;
+  }
 
   document.querySelectorAll('#wordsContainer .word-card').forEach(c=>c.classList.remove('lit','wrong','practicing'));
   litCount=0; finalTranscript='';
@@ -681,6 +688,7 @@ function startRecord(){
   const btn=document.getElementById('recordBtn'); const status=document.getElementById('recordStatus');
   try{
     recognition.start();
+    startRetryCount = 0;
     recordState='recording';
     btn.textContent='⏹ 结束录音'; btn.className='btn btn-gray'; btn.disabled=false;
     status.className='record-status record-recording'; status.textContent='🔴 正在录音，大声读句子（读对的词会变绿）';
@@ -690,8 +698,18 @@ function startRecord(){
     clearTimeout(forceStopTimer);
     forceStopTimer=setTimeout(()=>{ if(recordState==='recording'){ status.textContent='⏰ 时间到，自动结束…'; stopRecord(); } },20000);
   }catch(e){
+    // 安卓Edge常见错误：recognition has already started
+    // 自动重试一次：先stop，等400ms再start
+    if(e.message && e.message.includes('already started') && startRetryCount < 2){
+      startRetryCount++;
+      try{ recognition.stop(); }catch(e2){}
+      status.textContent='⏳ 正在重新启动录音…';
+      setTimeout(()=>{ startRecord(); }, 400);
+      return;
+    }
     status.textContent='启动失败：'+e.message;
     recordState='idle';
+    startRetryCount = 0;
   }
 }
 function stopRecord(){

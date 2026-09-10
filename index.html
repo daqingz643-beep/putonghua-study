@@ -666,7 +666,7 @@ function startRecord(){
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
   recognition = new SR();
   recognition.lang = 'zh-CN';
-  recognition.continuous = false;
+  recognition.continuous = true;
   recognition.interimResults = true;
   recognition.maxAlternatives = 1;
 
@@ -718,7 +718,7 @@ function startRecord(){
     document.getElementById('liveTextArea').classList.remove('hidden');
     document.getElementById('liveText').textContent='听到：…';
     clearTimeout(forceStopTimer);
-    forceStopTimer=setTimeout(()=>{ if(recordState==='recording'){ status.textContent='⏰ 时间到，自动结束…'; stopRecord(); } },20000);
+    forceStopTimer=setTimeout(()=>{ if(recordState==='recording'){ status.textContent='⏰ 时间到，自动结束…'; stopRecord(); } },8000);
   }catch(e){
     debugLog('【录音】recognition.start() 失败: '+e.message);
     status.textContent='启动失败：'+e.message;
@@ -1199,7 +1199,7 @@ window.addEventListener('load',()=>{
 });
 </script>
 <!-- 调试面板 -->
-<button class="debug-toggle" id="debugToggle" onclick="toggleDebugPanel()" title="调试面板">🔧</button>
+<button class="debug-toggle" id="debugToggle" onclick="toggleDebugPanel()" title="调试面板">⚙️</button>
 <div class="debug-panel hidden" id="debugPanel">
   <div class="debug-title">
     <span>🔧 调试面板（长按"我的"5秒可隐藏/显示）</span>

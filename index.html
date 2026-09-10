@@ -666,7 +666,7 @@ function startRecord(){
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
   recognition = new SR();
   recognition.lang = 'zh-CN';
-  recognition.continuous = true;
+  recognition.continuous = false;
   recognition.interimResults = true;
   recognition.maxAlternatives = 1;
 
@@ -675,6 +675,7 @@ function startRecord(){
     for(let i=0;i<e.results.length;i++){ if(e.results[i].isFinal) final+=e.results[i][0].transcript; else interim+=e.results[i][0].transcript; }
     finalTranscript = final;
     const all = final + interim;
+    debugLog('【录音】识别到文字: "'+all+'" (final:"'+final+'", interim:"'+interim+'")');
     document.getElementById('liveText').textContent = '听到：' + (all || '…');
     lightUpWords(all);
   };
@@ -1198,7 +1199,7 @@ window.addEventListener('load',()=>{
 });
 </script>
 <!-- 调试面板 -->
-<button class="debug-toggle" id="debugToggle" onclick="toggleDebugPanel()" title="调试面板">🐞</button>
+<button class="debug-toggle" id="debugToggle" onclick="toggleDebugPanel()" title="调试面板">🔧</button>
 <div class="debug-panel hidden" id="debugPanel">
   <div class="debug-title">
     <span>🔧 调试面板（长按"我的"5秒可隐藏/显示）</span>

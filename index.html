@@ -22,12 +22,11 @@
   .nav-card .nav-progress-fill { height:100%; background:linear-gradient(90deg,#2563eb,#9333ea); border-radius:8px; transition:width 0.3s; }
   .nav-card .nav-progress-text { font-size:16px; color:#888; margin-top:6px; text-align:right; }
   .nav-card.locked { opacity:0.5; cursor:not-allowed; }
-  .section-tag { display:inline-block; background:#e3f2fd; color:#1565c0; font-size:14px; padding:2px 8px; border-radius:6px; margin-left:8px; }
+  .section-info { font-size:16px; color:#888; text-align:center; margin-bottom:6px; }
   .sentence-nav { display:flex; align-items:center; gap:10px; margin-bottom:10px; }
   .sentence-nav button { background:#1565c0; color:#fff; border:none; font-size:28px; width:56px; height:56px; border-radius:12px; cursor:pointer; flex-shrink:0; transition:transform 0.3s, box-shadow 0.3s, background 0.3s; }
   .sentence-nav button:disabled { opacity:0.3; }
   .sentence-nav .sentence-counter { flex:1; text-align:center; font-size:20px; color:#1565c0; font-weight:bold; }
-  .section-info { font-size:16px; color:#888; text-align:center; margin-bottom:6px; }
   .sentence-box { background:#e3f2fd; border-radius:14px; padding:20px; margin:10px 0; min-height:80px; display:flex; flex-direction:column; align-items:center; justify-content:center; }
   .sentence-cn { font-size:30px; font-weight:bold; line-height:1.5; text-align:center; }
   .words-container { display:flex; flex-wrap:wrap; gap:10px; margin:12px 0; }
@@ -39,9 +38,8 @@
   .word-card.keyword { border-color:#e65100; background:#fff3e0; }
   .word-card.lit { border-color:#2e7d32; background:#c8e6c9; box-shadow:0 0 12px rgba(46,125,50,0.4); transform:scale(1.05); }
   .word-card.lit .w-py { color:#2e7d32; }
-  .word-card.wrong { border-color:#c62828; background:#ffcdd2; animation:shake 0.4s; }
+  .word-card.wrong { border-color:#c62828; background:#ffcdd2; }
   .word-card.wrong .w-py { color:#c62828; }
-  @keyframes shake { 0%,100%{transform:translateX(0);} 25%{transform:translateX(-5px);} 75%{transform:translateX(5px);} }
   .word-card.practicing { border-color:#e65100; background:#ffe0b2; box-shadow:0 0 16px rgba(230,81,0,0.6); transform:scale(1.1); }
   .speed-row { display:flex; align-items:center; gap:10px; margin:12px 0; }
   .speed-row label { font-size:20px; white-space:nowrap; }
@@ -72,8 +70,6 @@
   .stars { font-size:36px; letter-spacing:6px; }
   .score-text { font-size:20px; margin-top:6px; }
   .score-detail { font-size:16px; color:#666; margin-top:4px; }
-  .practice-tip { background:#fff3e0; border-left:5px solid #e65100; padding:12px; border-radius:8px; margin:10px 0; font-size:18px; }
-  .practice-tip strong { color:#e65100; }
   .tab-bar { display:flex; gap:0; margin:10px 0; border-radius:12px; overflow:hidden; border:2px solid #1565c0; }
   .tab-bar button { flex:1; padding:14px; font-size:22px; font-weight:bold; border:none; cursor:pointer; background:#fff; color:#1565c0; }
   .tab-bar button.active { background:#1565c0; color:#fff; }
@@ -99,10 +95,6 @@
   .modal .modal-btn { width:100%; padding:16px; font-size:22px; font-weight:bold; border:none; border-radius:12px; cursor:pointer; margin:6px 0; }
   .modal .modal-btn.primary { background:#1565c0; color:#fff; }
   .modal .modal-btn.secondary { background:#f0f0f0; color:#666; }
-  .perm-bar { padding:14px; border-radius:12px; margin-bottom:12px; font-size:20px; display:flex; align-items:center; gap:10px; }
-  .perm-ok { background:#e8f5e9; color:#2e7d32; }
-  .perm-warn { background:#fff3e0; color:#e65100; }
-  .perm-denied { background:#ffebee; color:#c62828; }
   .env-warn { background:#fff3e0; border:2px solid #e65100; border-radius:12px; padding:14px; margin-bottom:12px; font-size:18px; color:#e65100; }
   .env-info { font-size:14px; color:#999; text-align:center; margin-top:8px; }
   .unit-progress { margin:10px 0; }
@@ -110,14 +102,12 @@
   .unit-progress .up-bar { height:10px; background:#e0e0e0; border-radius:5px; overflow:hidden; }
   .unit-progress .up-fill { height:100%; background:linear-gradient(90deg,#2563eb,#66bb6a); border-radius:5px; transition:width 0.3s; }
 
-  /* 底部导航 */
   .bottom-nav { position:fixed; bottom:0; left:0; right:0; display:flex; background:#fff; border-top:2px solid #e0e0e0; z-index:100; max-width:850px; margin:0 auto; }
   .bottom-nav button { flex:1; padding:12px 0; border:none; background:#fff; font-size:18px; cursor:pointer; color:#999; display:flex; flex-direction:column; align-items:center; gap:2px; }
   .bottom-nav button.active { color:#1565c0; font-weight:bold; }
   .bottom-nav button .nav-icon { font-size:24px; }
   .bottom-nav button .nav-label { font-size:14px; }
 
-  /* 我的页面 */
   .mine-card { background:#fff; border-radius:16px; padding:20px; margin-bottom:14px; box-shadow:0 2px 12px rgba(0,0,0,0.06); }
   .mine-card h3 { font-size:22px; color:#1565c0; margin-bottom:14px; }
   .mine-stat { display:flex; justify-content:space-around; text-align:center; margin:10px 0; flex-wrap:wrap; gap:10px; }
@@ -138,54 +128,45 @@
 </head>
 <body>
 
-<!-- 顶部栏 -->
 <div class="top-bar">
   <button class="back-btn" id="backBtn" onclick="goBack()" style="visibility:hidden;">← 返回</button>
   <div class="points">💰 <span id="topPoints">0</span> 积分</div>
 </div>
 
-<!-- 环境警告 -->
 <div class="env-warn hidden" id="envWarn">
   ⚠️ 当前协议是 <span id="envProtocol">file:</span>，非HTTPS环境，浏览器会禁止麦克风录音。<br>
-  请部署到 HTTPS 网站后使用（如 Netlify、GitHub Pages）。
+  请部署到 HTTPS 网站后使用。
 </div>
 
-<!-- 学期列表页 -->
 <div id="page-courses">
   <h1>📚 普通话学习</h1>
   <div id="courseList"></div>
 </div>
 
-<!-- 单元列表页 -->
 <div id="page-units" class="hidden">
   <h1 id="unitsTitle">选择单元</h1>
   <div id="unitList"></div>
 </div>
 
-<!-- 小节列表页 -->
 <div id="page-sections" class="hidden">
   <h1 id="sectionsTitle">选择小节</h1>
   <div id="sectionList"></div>
 </div>
 
-<!-- 学习页 -->
 <div id="page-learn" class="hidden">
   <h1 id="learnTitle">句子学习</h1>
   <div class="section-info" id="sectionInfo"></div>
 
-  <!-- 听读/跟写 Tab -->
   <div class="tab-bar">
     <button id="tabRead" class="active" onclick="switchTab('read')">🎤 跟读</button>
     <button id="tabWrite" onclick="switchTab('write')">✍️ 跟写</button>
   </div>
 
-  <!-- 单元进度 -->
   <div class="unit-progress">
     <div class="up-label" id="upLabel">听读进度：0/0 句</div>
     <div class="up-bar"><div class="up-fill" id="upFill" style="width:0%"></div></div>
   </div>
 
-  <!-- 跟读面板 -->
   <div id="panelRead">
     <div class="card">
       <div class="sentence-nav">
@@ -223,31 +204,11 @@
           <div class="score-text" id="scoreText"></div>
           <div class="score-detail" id="scoreDetail"></div>
         </div>
-        <div class="practice-tip hidden" id="practiceTip">
-          <strong>💡 练习建议：</strong>点击红色词语，听慢速拼音示范，再跟读一遍。
-        </div>
-        <div class="btn-row">
-          <button class="btn btn-orange" onclick="practiceWrongWords()">🔁 练习错词</button>
-          <button class="btn btn-primary" onclick="retryRecord()">🎤 再读一遍</button>
-        </div>
+        <button class="btn btn-primary" onclick="retryRecord()">🎤 重新录音</button>
       </div>
-      <div id="progressArea" class="hidden">
-        <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
-        <div style="font-size:16px;color:#666;text-align:center;" id="progressText">已读对 0/0 个词</div>
-      </div>
-    </div>
-    <div class="perm-bar perm-warn" id="permBar"><span>🎤</span><span>环境检测中…</span></div>
-    <div class="card hidden" id="permGuide">
-      <h3 style="font-size:20px;color:#c62828;margin-bottom:10px;">🔧 麦克风权限被拒绝，重置方法：</h3>
-      <p style="font-size:17px;line-height:1.8;">
-        1. 点击地址栏左边的 🔒 锁图标<br>
-        2. 找到「麦克风」，改为「允许」<br>
-        3. 刷新页面即可
-      </p>
     </div>
   </div>
 
-  <!-- 跟写面板 -->
   <div id="panelWrite" class="hidden">
     <div class="card">
       <div class="sentence-nav">
@@ -271,7 +232,6 @@
   </div>
 </div>
 
-<!-- 我的页面 -->
 <div id="page-mine" class="hidden">
   <h1>👤 我的学习</h1>
   <div class="mine-card">
@@ -304,7 +264,6 @@
 
 <div class="env-info" id="envInfo"></div>
 
-<!-- 完成弹窗 -->
 <div class="modal-overlay hidden" id="completionModal">
   <div class="modal">
     <div class="modal-stars" id="modalStars">🎉</div>
@@ -317,7 +276,6 @@
   </div>
 </div>
 
-<!-- 底部导航 -->
 <div class="bottom-nav">
   <button id="navStudy" class="active" onclick="switchBottomTab('study')">
     <span class="nav-icon">📚</span><span class="nav-label">学习</span>
@@ -329,7 +287,7 @@
 
 <script>
 // ================================================================
-// 数据：学期 → 单元 → 小节 → 句子（口语化短句，每句≤20字）
+// 数据：学期 → 单元 → 小节 → 句子
 // ================================================================
 const courses = [
   { id:1, name:'第一学期：种牙日常沟通', units:[
@@ -427,7 +385,6 @@ function checkAchievements(){
 // 全局状态
 // ================================================================
 let currentCourseId=1, currentUnitId=1, currentSectionId=1, currentIdx=0, currentSpeed=1.0;
-let recognition=null, recordState='idle', finalTranscript='', litCount=0, forceStopTimer=null, isPlaying=false;
 let sessionProgress = { readDone: new Set(), writeDone: new Set(), readPointsAwarded: false, writePointsAwarded: false };
 let modalCallback=null, modalSecondaryCallback=null;
 
@@ -436,18 +393,15 @@ function currentSection(){ const u=currentUnit(); return u&&u.sections?u.section
 function currentSentences(){ const s=currentSection(); return s?s.sentences:[]; }
 
 // ================================================================
-// LCS容错语音比对（替代原来严格逐字比对，70分达标）
+// LCS容错语音比对（70分达标）
 // ================================================================
 function evaluateText(standard, userRaw) {
-  if(!userRaw) return {score:0, html:''};
-  // 过滤语气词
+  if(!userRaw) return 0;
   const stopWords = ["嗯","啊","呃","那个","噢","哦","呀","吧","呢","啦","哎"];
   const puncReg = /[，。！？；：""''、,.!?;:\s]/g;
   let sText = standard.replace(puncReg, "");
   let uText = userRaw.replace(puncReg, "");
   stopWords.forEach(w => { uText = uText.split(w).join(""); });
-
-  // LCS最长公共子序列
   function lcsLen(a, b) {
     const m = a.length, n = b.length;
     const dp = Array.from({length: m+1}, () => Array(n+1).fill(0));
@@ -459,33 +413,13 @@ function evaluateText(standard, userRaw) {
     }
     return dp[m][n];
   }
-
   const matchLen = lcsLen(sText, uText);
   const score = sText.length > 0 ? Math.round((matchLen / sText.length) * 100) : 0;
-  const finalScore = Math.max(0, Math.min(100, score));
-
-  // 简易渲染：匹配的字黑色，不匹配的红色
-  let html = "";
-  let uRemain = uText;
-  for(let i = 0; i < standard.length; i++) {
-    const ch = standard[i];
-    if(/[，。！？；：""''、,.!?;:\s]/.test(ch)) {
-      html += `<span>${ch}</span>`;
-    } else {
-      const pos = uRemain.indexOf(ch);
-      if(pos >= 0) {
-        html += `<span style="color:#222;">${ch}</span>`;
-        uRemain = uRemain.slice(0, pos) + uRemain.slice(pos+1);
-      } else {
-        html += `<span style="color:#f5222d;">${ch}</span>`;
-      }
-    }
-  }
-  return {score: finalScore, html: html};
+  return Math.max(0, Math.min(100, score));
 }
 
 // ================================================================
-// 页面导航（四级：学期→单元→小节→句子）
+// 页面导航（四级）
 // ================================================================
 function showPage(id){ ['page-courses','page-units','page-sections','page-learn'].forEach(p=>document.getElementById(p).classList.add('hidden')); document.getElementById(id).classList.remove('hidden'); document.getElementById('backBtn').style.visibility=(id==='page-courses')?'hidden':'visible'; }
 function goBack(){
@@ -498,36 +432,45 @@ function selectUnit(id){
   const c=courses.find(c=>c.id===currentCourseId); const u=c.units.find(u=>u.id===id);
   if(u.locked){alert('该单元即将上线，敬请期待！');return;}
   currentUnitId=id;
-  // 如果单元有多个小节，显示小节选择页；只有1个小节直接进入
-  if(u.sections && u.sections.length > 1) {
-    showPage('page-sections'); renderSections();
-  } else if(u.sections && u.sections.length === 1) {
-    currentSectionId = u.sections[0].id;
-    enterLearn();
-  } else {
-    alert('该单元暂无内容');
-  }
+  if(u.sections && u.sections.length > 1) { showPage('page-sections'); renderSections(); }
+  else if(u.sections && u.sections.length === 1) { currentSectionId = u.sections[0].id; enterLearn(); }
+  else { alert('该单元暂无内容'); }
 }
-function selectSection(id){ currentSectionId=id; enterLearn(); }
+function selectSection(id){
+  const u = currentUnit();
+  const sec = u.sections.find(s => s.id === id);
+  if (!sec) { console.warn("找不到小节 id=", id); return; }
+  currentSectionId = sec.id;
+  sessionProgress.readDone = new Set();
+  sessionProgress.writeDone = new Set();
+  sessionProgress.readPointsAwarded = false;
+  sessionProgress.writePointsAwarded = false;
+  currentIdx = 0;
+  enterLearn();
+}
 function enterLearn(){
   currentIdx=0;
   sessionProgress = { readDone: new Set(), writeDone: new Set(), readPointsAwarded: false, writePointsAwarded: false };
   const u=currentUnit(); const s=currentSection();
   document.getElementById('learnTitle').textContent=u.name;
   document.getElementById('sectionInfo').textContent=s.name + '（共' + s.sentences.length + '句）';
+  switchTab('read');
   showPage('page-learn');
   loadSentence(); updateUnitProgress(); checkEnvironment();
 }
 function calcSectionProgress(sec){
-  const store=getStore(); let total=0,done=0;
-  sec.sentences.forEach(s=>{total++; if(store.achievements['readdone_'+currentCourseId+'_'+currentUnitId+'_'+currentSectionId+'_'+s.cn])done++;});
-  return total>0?Math.round(done/total*100):0;
+  const store=getStore();
+  const readKey='readsection_'+currentCourseId+'_'+currentUnitId+'_'+sec.id;
+  const writeKey='writesection_'+currentCourseId+'_'+currentUnitId+'_'+sec.id;
+  const readDone=!!store.achievements[readKey];
+  const writeDone=!!store.achievements[writeKey];
+  if(readDone&&writeDone)return 100;
+  if(readDone||writeDone)return 50;
+  return 0;
 }
 function renderCourses(){
   const list=document.getElementById('courseList'); let html='';
-  courses.forEach(c=>{
-    html+=`<div class="nav-card" onclick="selectCourse(${c.id})"><div class="nav-title">${c.name}</div><div class="nav-desc">共 ${c.units.length} 个单元</div></div>`;
-  });
+  courses.forEach(c=>{ html+=`<div class="nav-card" onclick="selectCourse(${c.id})"><div class="nav-title">${c.name}</div><div class="nav-desc">共 ${c.units.length} 个单元</div></div>`; });
   list.innerHTML=html;
 }
 function renderUnits(){
@@ -554,9 +497,6 @@ function renderSections(){
   list.innerHTML=html;
 }
 
-// ================================================================
-// 小节进度显示
-// ================================================================
 function updateUnitProgress(){
   const total = currentSentences().length;
   const readDone = sessionProgress.readDone.size;
@@ -572,7 +512,7 @@ function updateUnitProgress(){
 }
 
 // ================================================================
-// 下一句箭头高亮闪烁
+// 下一句箭头高亮
 // ================================================================
 function highlightNextButton(duration) {
   duration = duration || 8000;
@@ -626,14 +566,34 @@ function loadSentence(){
   document.getElementById('writeResult').innerHTML = '';
   clearNextButtonHighlight();
 }
-function prevSentence(){ if(currentIdx>0){currentIdx--;loadSentence();} }
-function nextSentence(){ const s=currentSentences(); if(currentIdx<s.length-1){currentIdx++;loadSentence();} }
+function prevSentence(){
+  if(recordState==='recording'){ alert('请先结束录音，再切换句子'); return; }
+  if(currentIdx>0){currentIdx--;loadSentence();}
+}
+function nextSentence(){
+  if(recordState==='recording'){ alert('请先结束录音，再切换句子'); return; }
+  const s=currentSentences(); if(currentIdx<s.length-1){currentIdx++;loadSentence();}
+}
 
 // ================================================================
-// TTS
+// TTS（方案A：isTTSPlaying互斥锁）
 // ================================================================
+let isTTSPlaying = false;
+let isPlaying = false;
 function getVoice(){ const voices=speechSynthesis.getVoices(); return voices.find(v=>/zh-CN|cmn|mandarin|普通话|中文/i.test(v.lang+v.name))||voices.find(v=>/zh|chinese/i.test(v.lang+v.name)); }
-function speak(text,rate){ return new Promise(resolve=>{ if(!('speechSynthesis' in window)){resolve();return;} speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(text); const v=getVoice(); if(v)u.voice=v; u.lang='zh-CN'; u.rate=rate||currentSpeed; u.pitch=1.0; u.onend=resolve; u.onerror=resolve; speechSynthesis.speak(u); }); }
+function speak(text,rate){
+  return new Promise(resolve=>{
+    if(!('speechSynthesis' in window)){resolve();return;}
+    isTTSPlaying = true;
+    speechSynthesis.cancel();
+    const u=new SpeechSynthesisUtterance(text);
+    const v=getVoice(); if(v)u.voice=v;
+    u.lang='zh-CN'; u.rate=rate||currentSpeed; u.pitch=1.0;
+    u.onend=()=>{ isTTSPlaying=false; resolve(); };
+    u.onerror=()=>{ isTTSPlaying=false; resolve(); };
+    speechSynthesis.speak(u);
+  });
+}
 async function togglePlay(){
   if(isPlaying){stopSpeak();return;}
   isPlaying=true; const btn=document.getElementById('playBtn');
@@ -641,67 +601,107 @@ async function togglePlay(){
   await speak(currentSentences()[currentIdx].cn,currentSpeed);
   isPlaying=false; btn.textContent='🔊 播放整句'; btn.className='btn btn-green';
 }
-function stopSpeak(){ if('speechSynthesis' in window)speechSynthesis.cancel(); isPlaying=false; const b=document.getElementById('playBtn'); if(b){b.textContent='🔊 播放整句';b.className='btn btn-green';} }
+function stopSpeak(){ if('speechSynthesis' in window)speechSynthesis.cancel(); isTTSPlaying=false; isPlaying=false; const b=document.getElementById('playBtn'); if(b){b.textContent='🔊 播放整句';b.className='btn btn-green';} }
 async function playWord(idx){
   const w=currentSentences()[currentIdx].words[idx];
   const card=document.querySelector(`#wordsContainer .word-card[data-idx="${idx}"]`);
   if(card){card.style.background='#bbdefb';setTimeout(()=>{if(card)card.style.background='';},600);}
   await speak(w.cn,currentSpeed);
 }
-function onWordClick(idx){ const card=document.querySelector(`#wordsContainer .word-card[data-idx="${idx}"]`); if(card&&card.classList.contains('wrong'))practiceSingleWord(idx); else playWord(idx); }
+function onWordClick(idx){ playWord(idx); }
 function updateSpeed(){ currentSpeed=parseFloat(document.getElementById('speedRange').value); document.getElementById('speedVal').textContent=currentSpeed.toFixed(1)+'x'; document.querySelectorAll('#speedPresets button').forEach(b=>b.classList.remove('active')); }
 function setSpeed(v,el){ currentSpeed=v; document.getElementById('speedRange').value=v; document.getElementById('speedVal').textContent=v.toFixed(1)+'x'; document.querySelectorAll('#speedPresets button').forEach(b=>b.classList.remove('active')); if(el)el.classList.add('active'); }
 
 // ================================================================
-// 跟读录音
+// 方案A：语音识别全局单例（页面初始化一次，全程复用）
+// ================================================================
+let recognition = null;
+let recordState = 'idle';
+let finalTranscript = '';
+let litCount = 0;
+let forceStopTimer = null;
+let voiceApiLocked = false;
+
+function initVoiceRecognition(){
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if(!SR){ voiceApiLocked = true; console.warn('当前浏览器不支持语音识别'); return; }
+  recognition = new SR();
+  recognition.lang = 'zh-CN';
+  recognition.continuous = true;
+  recognition.interimResults = true;
+  recognition.maxAlternatives = 1;
+
+  recognition.onresult = (e) => {
+    let interim='', final='';
+    for(let i=0;i<e.results.length;i++){ if(e.results[i].isFinal) final+=e.results[i][0].transcript; else interim+=e.results[i][0].transcript; }
+    finalTranscript = final;
+    const all = final + interim;
+    document.getElementById('liveText').textContent = '听到：' + (all || '…');
+    lightUpWords(all);
+  };
+
+  recognition.onerror = (e) => {
+    let msg = '';
+    if(e.error==='not-allowed'||e.error==='service-not-allowed'){ msg='❌ 麦克风被拒绝，请在浏览器设置中允许麦克风'; }
+    else if(e.error==='no-speech'){ msg='没有听到声音，请大声一点'; }
+    else if(e.error==='audio-capture'){ msg='找不到麦克风'; }
+    else if(e.error==='network'){ msg='网络错误，请检查网络'; }
+    else if(e.error==='aborted'){ msg='识别中断，请重试'; }
+    else { msg='识别出错：'+e.error; }
+    const status = document.getElementById('recordStatus');
+    status.className = 'record-status record-recording';
+    status.textContent = msg;
+    recordState = 'idle';
+    resetRecordBtn();
+    clearTimeout(forceStopTimer);
+  };
+
+  recognition.onend = () => {
+    clearTimeout(forceStopTimer);
+    if(recordState==='recording'||recordState==='stopping'){
+      recordState='idle';
+      resetRecordBtn();
+      finishRecording();
+    }
+  };
+}
+
+// ================================================================
+// 跟读录音（方案A：TTS互斥锁检查，复用全局单例）
 // ================================================================
 function toggleRecord(){ if(recordState==='recording')stopRecord(); else if(recordState==='idle')startRecord(); }
 function startRecord(){
-  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-  if(!SR){alert('当前浏览器不支持语音识别，请用 Chrome/Edge');return;}
+  if(voiceApiLocked || !recognition){ alert('当前浏览器不支持语音识别'); return; }
+  if(isTTSPlaying){ alert('请等待句子朗读完毕，再点击录音'); return; }
+  if(recordState==='recording') return;
+
   document.querySelectorAll('#wordsContainer .word-card').forEach(c=>c.classList.remove('lit','wrong','practicing'));
   litCount=0; finalTranscript='';
-  recognition=new SR(); recognition.lang='zh-CN'; recognition.continuous=true; recognition.interimResults=true; recognition.maxAlternatives=1;
+
   const btn=document.getElementById('recordBtn'); const status=document.getElementById('recordStatus');
-  recognition.onstart=()=>{
-    recordState='recording'; btn.textContent='⏹ 结束录音'; btn.className='btn btn-gray'; btn.disabled=false;
+  try{
+    recognition.start();
+    recordState='recording';
+    btn.textContent='⏹ 结束录音'; btn.className='btn btn-gray'; btn.disabled=false;
     status.className='record-status record-recording'; status.textContent='🔴 正在录音，大声读句子（读对的词会变绿）';
     document.getElementById('resultArea').classList.add('hidden');
     document.getElementById('liveTextArea').classList.remove('hidden');
     document.getElementById('liveText').textContent='听到：…';
-    document.getElementById('progressArea').classList.remove('hidden'); updateProgress();
     clearTimeout(forceStopTimer);
-    forceStopTimer=setTimeout(()=>{if(recordState==='recording'){status.textContent='⏰ 时间到，自动结束…';stopRecord();}},20000);
-  };
-  recognition.onresult=(e)=>{
-    let interim='',final='';
-    for(let i=0;i<e.results.length;i++){if(e.results[i].isFinal)final+=e.results[i][0].transcript;else interim+=e.results[i][0].transcript;}
-    finalTranscript=final; const all=final+interim;
-    document.getElementById('liveText').textContent='听到：'+(all||'…');
-    lightUpWords(all);
-  };
-  recognition.onerror=(e)=>{
-    let msg='';
-    if(e.error==='not-allowed'||e.error==='service-not-allowed'){msg='❌ 麦克风被拒绝，请按页面指引重置';updatePermUI('denied');}
-    else if(e.error==='no-speech')msg='没有听到声音，请大声一点';
-    else if(e.error==='audio-capture')msg='找不到麦克风';
-    else if(e.error==='network')msg='网络错误，请检查网络';
-    else msg='识别出错：'+e.error;
-    status.className='record-status record-recording'; status.textContent=msg;
-    recordState='idle'; resetRecordBtn(); clearTimeout(forceStopTimer);
-  };
-  recognition.onend=()=>{
-    clearTimeout(forceStopTimer);
-    if(recordState==='recording'||recordState==='stopping'){recordState='idle';resetRecordBtn();finishRecording();}
-  };
-  try{recognition.start();}catch(e){status.textContent='启动失败：'+e.message;recordState='idle';}
+    forceStopTimer=setTimeout(()=>{ if(recordState==='recording'){ status.textContent='⏰ 时间到，自动结束…'; stopRecord(); } },20000);
+  }catch(e){
+    status.textContent='启动失败：'+e.message;
+    recordState='idle';
+  }
 }
 function stopRecord(){
-  if(recordState!=='recording')return;
-  recordState='stopping'; const btn=document.getElementById('recordBtn'); btn.textContent='⏳ 处理中…'; btn.disabled=true;
+  if(recordState!=='recording') return;
+  recordState='stopping';
+  const btn=document.getElementById('recordBtn');
+  btn.textContent='⏳ 处理中…'; btn.disabled=true;
   clearTimeout(forceStopTimer);
-  forceStopTimer=setTimeout(()=>{if(recordState==='stopping'){recordState='idle';resetRecordBtn();finishRecording();}},2500);
-  try{if(recognition)recognition.stop();}catch(e){}
+  forceStopTimer=setTimeout(()=>{ if(recordState==='stopping'){ recordState='idle'; resetRecordBtn(); finishRecording(); } },2500);
+  try{ if(recognition) recognition.stop(); }catch(e){}
 }
 function resetRecordBtn(){ const b=document.getElementById('recordBtn'); b.textContent='🎤 开始录音'; b.className='btn btn-red'; b.disabled=false; }
 function resetRecordUI(){
@@ -709,7 +709,6 @@ function resetRecordUI(){
   const s=document.getElementById('recordStatus'); s.className='record-status record-idle'; s.textContent='等待开始录音…';
   document.getElementById('resultArea').classList.add('hidden');
   document.getElementById('liveTextArea').classList.add('hidden');
-  document.getElementById('progressArea').classList.add('hidden');
   resetRecordBtn();
 }
 function normalize(t){ return t.replace(/[，。、；：？！,.?;:\s"'""''（）()【】\[\]…—0-9]/g,''); }
@@ -719,19 +718,13 @@ function lightUpWords(text){
     const card=document.querySelector(`#wordsContainer .word-card[data-idx="${i}"]`); if(!card)return;
     let found=norm.includes(normalize(w.cn));
     if(w.cn==='55岁'&&!found)found=norm.includes('五十五岁')||norm.includes('五五岁');
-    if(found){if(!card.classList.contains('lit')){card.classList.add('lit');card.classList.remove('wrong');}count++;}
+    if(found){ if(!card.classList.contains('lit')){ card.classList.add('lit'); card.classList.remove('wrong'); } count++; }
   });
-  litCount=count; updateProgress();
-}
-function updateProgress(){
-  const total=currentSentences()[currentIdx].words.length;
-  const pct=total>0?Math.round(litCount/total*100):0;
-  document.getElementById('progressFill').style.width=pct+'%';
-  document.getElementById('progressText').textContent=`已读对 ${litCount}/${total} 个词`;
+  litCount=count;
 }
 
 // ================================================================
-// 小节听读完成 —— 积分+弹窗（按小节计算，相当于旧版一个单元的积分）
+// 小节听读完成 —— 积分+弹窗
 // ================================================================
 function grantReadCompletionReward(){
   if (sessionProgress.readPointsAwarded) return;
@@ -762,7 +755,11 @@ function grantReadCompletionReward(){
       isFirst: isFirst,
       hint: '💡 接下来去跟写练习，巩固一下汉字写法吧！',
       primaryText: '✍️ 去跟写练习',
-      primaryAction: () => { switchTab('write'); },
+      primaryAction: () => {
+        currentIdx = 0;
+        loadSentence();
+        switchTab('write');
+      },
       secondaryText: '🔄 再复习一遍',
       secondaryAction: () => { sessionProgress.readPointsAwarded=false; currentIdx=0; loadSentence(); }
     });
@@ -770,7 +767,7 @@ function grantReadCompletionReward(){
 }
 
 // ================================================================
-// 小节跟写完成 —— 积分+弹窗（按小节计算）
+// 小节跟写完成 —— 积分+弹窗
 // ================================================================
 function grantWriteCompletionReward(){
   if (sessionProgress.writePointsAwarded) return;
@@ -797,7 +794,6 @@ function grantWriteCompletionReward(){
   const totalSecPoints = readFirst + writePoints;
   console.log('💰 跟写小节完成奖励 +'+writePoints+'分，本小节合计 +'+totalSecPoints+'分，总积分：'+getStore().totalPoints);
 
-  // 检查是否还有下一小节
   const u = currentUnit();
   const nextSec = u.sections ? u.sections.find(s => s.id === currentSectionId + 1) : null;
 
@@ -820,17 +816,15 @@ function grantWriteCompletionReward(){
 }
 
 // ================================================================
-// 录音结束 —— LCS容错比对，70分达标，不弹窗只显示纠错
+// 录音结束 —— LCS容错比对，70分达标
 // ================================================================
 function finishRecording(){
   const s=currentSentences()[currentIdx];
   const status=document.getElementById('recordStatus');
   s.words.forEach((w,i)=>{const card=document.querySelector(`#wordsContainer .word-card[data-idx="${i}"]`);if(card&&!card.classList.contains('lit'))card.classList.add('wrong');});
 
-  // LCS容错比对得分（替代原来的词语权重严格比对）
-  const lcsResult = evaluateText(s.cn, finalTranscript);
-  const score = lcsResult.score;
-  const ts = score / 100; // 0-1
+  const score = evaluateText(s.cn, finalTranscript);
+  const ts = score / 100;
 
   const total=s.words.length,correct=litCount,wrongCount=total-correct;
   let stars='',st='';
@@ -846,10 +840,8 @@ function finishRecording(){
   document.getElementById('scoreText').textContent=st;
   document.getElementById('scoreDetail').textContent=`词语点亮 ${correct}/${total} | 文本匹配度 ${score}% | 听到：${finalTranscript||'（无）'}`;
   document.getElementById('resultArea').classList.remove('hidden');
-  document.getElementById('practiceTip').classList.toggle('hidden',wrongCount===0);
   document.getElementById('liveTextArea').classList.add('hidden');
 
-  // 70分达标（原来80分，降低门槛适配LCS容错）
   if (ts >= 0.7) {
     sessionProgress.readDone.add(currentIdx);
     const store = getStore();
@@ -865,30 +857,6 @@ function finishRecording(){
 }
 
 function retryRecord(){ document.querySelectorAll('#wordsContainer .word-card').forEach(c=>c.classList.remove('lit','wrong','practicing')); litCount=0; startRecord(); }
-
-async function practiceSingleWord(idx){
-  const w=currentSentences()[currentIdx].words[idx];
-  const card=document.querySelector(`#wordsContainer .word-card[data-idx="${idx}"]`); if(!card)return;
-  card.classList.add('practicing'); card.classList.remove('wrong');
-  await speak(w.cn,0.5); await new Promise(r=>setTimeout(r,300)); await speak(w.cn,0.8);
-  const status=document.getElementById('recordStatus'); status.className='record-status record-live';
-  status.innerHTML=`📖 跟我读：<strong>${w.cn}</strong>（${w.py}）— 慢速读两遍后，点"开始录音"跟读`;
-  setTimeout(()=>{card.classList.remove('practicing');card.classList.add('wrong');},2000);
-}
-async function practiceWrongWords(){
-  const wrongs=document.querySelectorAll('#wordsContainer .word-card.wrong');
-  if(wrongs.length===0){alert('没有读错的词，太棒了！');return;}
-  const status=document.getElementById('recordStatus'); status.className='record-status record-live';
-  status.textContent='📖 开始逐个练习错词，每个词慢速读两遍…';
-  for(const card of wrongs){
-    const idx=parseInt(card.dataset.idx); const w=currentSentences()[currentIdx].words[idx];
-    card.classList.add('practicing'); card.classList.remove('wrong');
-    status.innerHTML=`📖 跟我读：<strong>${w.cn}</strong>（${w.py}）`;
-    await speak(w.cn,0.5); await new Promise(r=>setTimeout(r,400)); await speak(w.cn,0.7); await new Promise(r=>setTimeout(r,600));
-    card.classList.remove('practicing'); card.classList.add('wrong');
-  }
-  status.className='record-status record-done'; status.textContent='✅ 错词练习完成！点"开始录音"再跟读一遍';
-}
 
 // ================================================================
 // 弹窗
@@ -914,11 +882,12 @@ function modalSecondaryAction(){closeModal();if(modalSecondaryCallback)modalSeco
 // Tab
 // ================================================================
 function switchTab(tab){
+  if(recordState==='recording'){ alert('请先结束录音，再切换页面'); return; }
   document.getElementById('tabRead').classList.toggle('active',tab==='read');
   document.getElementById('tabWrite').classList.toggle('active',tab==='write');
   document.getElementById('panelRead').classList.toggle('hidden',tab!=='read');
   document.getElementById('panelWrite').classList.toggle('hidden',tab!=='write');
-  stopSpeak(); if(recordState==='recording')stopRecord();
+  stopSpeak();
   updateUnitProgress();
 }
 
@@ -948,6 +917,9 @@ function submitWrite(){
     store.achievements['writedone_'+currentCourseId+'_'+currentUnitId+'_'+currentSectionId+'_'+standard] = true;
     saveStore(store);
     updateUnitProgress();
+    if (currentIdx < currentSentences().length - 1) {
+      setTimeout(() => { highlightNextButton(8000); }, 300);
+    }
     grantWriteCompletionReward();
   }else{
     rb.className='write-result write-wrong';
@@ -960,29 +932,18 @@ function submitWrite(){
 // 环境与权限
 // ================================================================
 function checkEnvironment(){
-  const warn=document.getElementById('envWarn'); const bar=document.getElementById('permBar');
-  const recordBtn=document.getElementById('recordBtn'); const info=document.getElementById('envInfo');
+  const warn=document.getElementById('envWarn');
+  const recordBtn=document.getElementById('recordBtn');
+  const info=document.getElementById('envInfo');
   const isSecure=window.isSecureContext;
   info.textContent=`协议：${location.protocol} | 安全上下文：${isSecure?'是 ✅':'否 ❌'}`;
   if(!isSecure){
     document.getElementById('envProtocol').textContent=location.protocol;
     warn.classList.remove('hidden');
-    bar.className='perm-bar perm-denied'; bar.innerHTML='<span>🚫</span><span>非HTTPS，录音不可用（请看上方部署方法）</span>';
     recordBtn.disabled=true; recordBtn.textContent='🎤 开始录音（需HTTPS）';
     return;
   }
-  bar.className='perm-bar perm-warn'; bar.innerHTML='<span>🎤</span><span>环境正常，点"开始录音"会弹授权框</span>';
   recordBtn.disabled=false; recordBtn.textContent='🎤 开始录音';
-  if(navigator.permissions&&navigator.permissions.query){
-    navigator.permissions.query({name:'microphone'}).then(r=>{updatePermUI(r.state);r.onchange=()=>updatePermUI(r.state);}).catch(()=>{});
-  }
-}
-function updatePermUI(state){
-  const bar=document.getElementById('permBar'); const guide=document.getElementById('permGuide'); const recordBtn=document.getElementById('recordBtn');
-  if(!window.isSecureContext)return;
-  if(state==='granted'){bar.className='perm-bar perm-ok';bar.innerHTML='<span>✅</span><span>麦克风权限正常，可以录音！</span>';guide.classList.add('hidden');recordBtn.disabled=false;recordBtn.textContent='🎤 开始录音';}
-  else if(state==='denied'){bar.className='perm-bar perm-denied';bar.innerHTML='<span>🚫</span><span>麦克风被拒绝，请看下方重置方法</span>';guide.classList.remove('hidden');recordBtn.disabled=true;recordBtn.textContent='🎤 开始录音（权限被拒绝）';}
-  else{bar.className='perm-bar perm-warn';bar.innerHTML='<span>🎤</span><span>点"开始录音"会弹授权框，请点"允许"</span>';guide.classList.add('hidden');recordBtn.disabled=false;recordBtn.textContent='🎤 开始录音';}
 }
 
 // ================================================================
@@ -999,9 +960,8 @@ function renderMine(){
   document.getElementById('mineWithdraw').textContent = withdraw;
   const achList = document.getElementById('mineAchieveList');
   const achKeys = Object.keys(store.achievements||{}).filter(k=>k.startsWith('achv_'));
-  if(achKeys.length===0){
-    achList.innerHTML = '<div class="empty-tip">暂无成就，继续学习解锁奖励！</div>';
-  }else{
+  if(achKeys.length===0){ achList.innerHTML = '<div class="empty-tip">暂无成就，继续学习解锁奖励！</div>'; }
+  else{
     let html = '';
     achKeys.forEach(k=>{
       const d = store.achieveDetails?.[k];
@@ -1016,9 +976,8 @@ function renderMine(){
   }
   const logEl = document.getElementById('minePointLog');
   const logs = (store.pointLogs||[]).slice(-10).reverse();
-  if(logs.length===0){
-    logEl.innerHTML = '<div class="empty-tip">暂无积分记录</div>';
-  }else{
+  if(logs.length===0){ logEl.innerHTML = '<div class="empty-tip">暂无积分记录</div>'; }
+  else{
     let html = '';
     logs.forEach(l=>{
       const time = l.time ? l.time.slice(5,16).replace('T',' ') : '';
@@ -1050,9 +1009,7 @@ function importData(event){
       localStorage.setItem('pt_learn_data', JSON.stringify(data));
       alert('✅ 数据恢复成功！页面即将刷新。');
       location.reload();
-    } catch (err) {
-      alert('❌ 数据格式错误，请检查备份文件。');
-    }
+    } catch (err) { alert('❌ 数据格式错误，请检查备份文件。'); }
   };
   reader.readAsText(file);
   event.target.value = '';
@@ -1074,7 +1031,7 @@ function switchBottomTab(tab){
 }
 
 // ================================================================
-// 调试接口（F12控制台直接调用）
+// 调试接口
 // ================================================================
 window.__app = {
   get currentIdx(){ return currentIdx; },
@@ -1084,6 +1041,9 @@ window.__app = {
   get totalSentences(){ return currentSentences().length; },
   get readDoneCount(){ return sessionProgress.readDone.size; },
   get writeDoneCount(){ return sessionProgress.writeDone.size; },
+  get recordState(){ return recordState; },
+  get isTTSPlaying(){ return isTTSPlaying; },
+  get voiceApiLocked(){ return voiceApiLocked; },
   evaluateText: function(std, user){ return evaluateText(std, user); },
   markReadDone: function(idx){
     const i = (idx===undefined)? currentIdx : idx;
@@ -1092,9 +1052,7 @@ window.__app = {
     if(s){ const store=getStore(); store.achievements['readdone_'+currentCourseId+'_'+currentUnitId+'_'+currentSectionId+'_'+s.cn]=true; saveStore(store); }
     updateUnitProgress();
     console.log('✅ 已标记第'+(i+1)+'句听读通过，当前通过'+sessionProgress.readDone.size+'/'+currentSentences().length);
-    if (i < currentSentences().length - 1) {
-      setTimeout(() => { highlightNextButton(8000); }, 300);
-    }
+    if (i < currentSentences().length - 1) { setTimeout(() => { highlightNextButton(8000); }, 300); }
     grantReadCompletionReward();
   },
   markWriteDone: function(idx){
@@ -1104,21 +1062,16 @@ window.__app = {
     if(s){ const store=getStore(); store.achievements['writedone_'+currentCourseId+'_'+currentUnitId+'_'+currentSectionId+'_'+s.cn]=true; saveStore(store); }
     updateUnitProgress();
     console.log('✅ 已标记第'+(i+1)+'句跟写通过，当前通过'+sessionProgress.writeDone.size+'/'+currentSentences().length);
+    if (i < currentSentences().length - 1) { setTimeout(() => { highlightNextButton(8000); }, 300); }
     grantWriteCompletionReward();
   },
-  markAllReadDone: function(){
-    for(let i=0;i<currentSentences().length;i++){ this.markReadDone(i); }
-    console.log('🎉 全部'+currentSentences().length+'句听读已标记通过！');
-  },
-  markAllWriteDone: function(){
-    for(let i=0;i<currentSentences().length;i++){ this.markWriteDone(i); }
-    console.log('🎉 全部'+currentSentences().length+'句跟写已标记通过！');
-  },
+  markAllReadDone: function(){ for(let i=0;i<currentSentences().length;i++){ this.markReadDone(i); } console.log('🎉 全部'+currentSentences().length+'句听读已标记通过！'); },
+  markAllWriteDone: function(){ for(let i=0;i<currentSentences().length;i++){ this.markWriteDone(i); } console.log('🎉 全部'+currentSentences().length+'句跟写已标记通过！'); },
   next: function(){ nextSentence(); },
   prev: function(){ prevSentence(); },
   load: function(){ loadSentence(); },
   switchTab: function(t){ switchTab(t); },
-  gotoSection: function(id){ currentSectionId=id; enterLearn(); },
+  gotoSection: function(id){ selectSection(id); },
   resetSession: function(){
     sessionProgress = { readDone: new Set(), writeDone: new Set(), readPointsAwarded: false, writePointsAwarded: false };
     currentIdx = 0;
@@ -1131,14 +1084,20 @@ window.__app = {
     console.log('当前句:', (currentIdx+1)+'/'+currentSentences().length);
     console.log('听读通过:', sessionProgress.readDone.size+'/'+currentSentences().length);
     console.log('跟写通过:', sessionProgress.writeDone.size+'/'+currentSentences().length);
+    console.log('录音状态:', recordState, '| TTS播放中:', isTTSPlaying, '| 语音API锁死:', voiceApiLocked);
     console.log('当前句子:', currentSentences()[currentIdx].cn);
   }
 };
 
 // ================================================================
-// 初始化
+// 初始化（方案A：页面加载时初始化语音识别全局单例）
 // ================================================================
-window.addEventListener('load',()=>{ updateTopPoints(); renderCourses(); showPage('page-courses'); });
+window.addEventListener('load',()=>{
+  updateTopPoints();
+  renderCourses();
+  showPage('page-courses');
+  initVoiceRecognition();
+});
 </script>
 </body>
 </html>

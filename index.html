@@ -6,7 +6,7 @@
 <title>普通话学习</title>
 <style>
   * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
-  body { font-family:"PingFang SC","Microsoft YaHei","Heiti SC",sans-serif; background:#f5f7fa; color:#1a1a1a; font-size:22px; line-height:1.6; padding:16px; max-width:850px; margin:0 auto; }
+  body { font-family:"PingFang SC","Microsoft YaHei","Heiti SC",sans-serif; background:#f5f7fa; color:#1a1a1a; font-size:22px; line-height:1.6; padding:16px; max-width:850px; margin:0 auto; padding-bottom:80px; }
   h1 { font-size:28px; text-align:center; margin:8px 0 14px; color:#1565c0; }
   .card { background:#fff; border-radius:16px; padding:18px; margin-bottom:14px; box-shadow:0 2px 12px rgba(0,0,0,0.06); }
   .hidden { display:none !important; }
@@ -22,10 +22,12 @@
   .nav-card .nav-progress-fill { height:100%; background:linear-gradient(90deg,#2563eb,#9333ea); border-radius:8px; transition:width 0.3s; }
   .nav-card .nav-progress-text { font-size:16px; color:#888; margin-top:6px; text-align:right; }
   .nav-card.locked { opacity:0.5; cursor:not-allowed; }
+  .section-tag { display:inline-block; background:#e3f2fd; color:#1565c0; font-size:14px; padding:2px 8px; border-radius:6px; margin-left:8px; }
   .sentence-nav { display:flex; align-items:center; gap:10px; margin-bottom:10px; }
-  .sentence-nav button { background:#1565c0; color:#fff; border:none; font-size:28px; width:56px; height:56px; border-radius:12px; cursor:pointer; flex-shrink:0; }
+  .sentence-nav button { background:#1565c0; color:#fff; border:none; font-size:28px; width:56px; height:56px; border-radius:12px; cursor:pointer; flex-shrink:0; transition:transform 0.3s, box-shadow 0.3s, background 0.3s; }
   .sentence-nav button:disabled { opacity:0.3; }
   .sentence-nav .sentence-counter { flex:1; text-align:center; font-size:20px; color:#1565c0; font-weight:bold; }
+  .section-info { font-size:16px; color:#888; text-align:center; margin-bottom:6px; }
   .sentence-box { background:#e3f2fd; border-radius:14px; padding:20px; margin:10px 0; min-height:80px; display:flex; flex-direction:column; align-items:center; justify-content:center; }
   .sentence-cn { font-size:30px; font-weight:bold; line-height:1.5; text-align:center; }
   .words-container { display:flex; flex-wrap:wrap; gap:10px; margin:12px 0; }
@@ -101,49 +103,25 @@
   .perm-ok { background:#e8f5e9; color:#2e7d32; }
   .perm-warn { background:#fff3e0; color:#e65100; }
   .perm-denied { background:#ffebee; color:#c62828; }
-  .env-warn { background:#fff3e0; border:3px solid #e65100; border-radius:14px; padding:18px; margin-bottom:14px; }
-  .env-warn h3 { color:#e65100; font-size:22px; margin-bottom:8px; }
-  .env-warn p { font-size:18px; margin-bottom:6px; }
-  .env-warn ol { padding-left:22px; font-size:18px; line-height:1.8; }
-  .env-warn code { background:#ffe0b2; padding:2px 6px; border-radius:4px; font-size:16px; }
-  .guide-box { background:#fff8e1; border:2px solid #f9a825; border-radius:12px; padding:16px; margin:10px 0; }
-  .guide-box h3 { color:#e65100; font-size:20px; margin-bottom:8px; }
-  .guide-box ol { padding-left:22px; font-size:18px; line-height:1.8; }
-  .guide-box .hl { background:#ffe0b2; padding:2px 6px; border-radius:4px; font-weight:bold; }
-  .env-info { font-size:14px; color:#999; text-align:center; margin-top:6px; }
-  .unit-progress { background:#e3f2fd; border-radius:10px; padding:10px 14px; margin:10px 0; font-size:18px; color:#1565c0; }
-  .unit-progress .up-label { font-weight:bold; margin-bottom:4px; }
-  .unit-progress .up-bar { height:10px; background:#fff; border-radius:5px; overflow:hidden; }
+  .env-warn { background:#fff3e0; border:2px solid #e65100; border-radius:12px; padding:14px; margin-bottom:12px; font-size:18px; color:#e65100; }
+  .env-info { font-size:14px; color:#999; text-align:center; margin-top:8px; }
+  .unit-progress { margin:10px 0; }
+  .unit-progress .up-label { font-size:16px; color:#666; margin-bottom:4px; }
+  .unit-progress .up-bar { height:10px; background:#e0e0e0; border-radius:5px; overflow:hidden; }
   .unit-progress .up-fill { height:100%; background:linear-gradient(90deg,#2563eb,#66bb6a); border-radius:5px; transition:width 0.3s; }
 
-  /* ===== 箭头闪烁提醒（句子完成≥80%） ===== */
-  @keyframes arrowBlink {
-    0%,100% { background:#1565c0; box-shadow:0 0 0 rgba(21,101,192,0); }
-    50% { background:#2e7d32; box-shadow:0 0 20px rgba(46,125,50,0.7); transform:scale(1.1); }
-  }
-  .arrow-blink { animation:arrowBlink 0.8s infinite; }
-
-  /* ===== 底部导航 ===== */
-  .bottom-nav {
-    position:fixed; bottom:0; left:0; right:0;
-    display:flex; background:#fff; border-top:2px solid #e0e0e0;
-    z-index:100; max-width:850px; margin:0 auto;
-  }
-  .bottom-nav button {
-    flex:1; padding:12px 0; border:none; background:#fff;
-    font-size:18px; cursor:pointer; color:#999;
-    display:flex; flex-direction:column; align-items:center; gap:2px;
-  }
+  /* 底部导航 */
+  .bottom-nav { position:fixed; bottom:0; left:0; right:0; display:flex; background:#fff; border-top:2px solid #e0e0e0; z-index:100; max-width:850px; margin:0 auto; }
+  .bottom-nav button { flex:1; padding:12px 0; border:none; background:#fff; font-size:18px; cursor:pointer; color:#999; display:flex; flex-direction:column; align-items:center; gap:2px; }
   .bottom-nav button.active { color:#1565c0; font-weight:bold; }
   .bottom-nav button .nav-icon { font-size:24px; }
   .bottom-nav button .nav-label { font-size:14px; }
-  body { padding-bottom:80px; }
 
-  /* ===== 我的页面 ===== */
+  /* 我的页面 */
   .mine-card { background:#fff; border-radius:16px; padding:20px; margin-bottom:14px; box-shadow:0 2px 12px rgba(0,0,0,0.06); }
   .mine-card h3 { font-size:22px; color:#1565c0; margin-bottom:14px; }
-  .mine-stat { display:flex; justify-content:space-around; text-align:center; margin:10px 0; }
-  .mine-stat .stat-item .num { font-size:32px; font-weight:700; color:#1565c0; }
+  .mine-stat { display:flex; justify-content:space-around; text-align:center; margin:10px 0; flex-wrap:wrap; gap:10px; }
+  .mine-stat .stat-item .num { font-size:28px; font-weight:700; color:#1565c0; }
   .mine-stat .stat-item .label { font-size:14px; color:#888; margin-top:4px; }
   .achieve-list { display:flex; flex-wrap:wrap; gap:8px; }
   .achieve-item { background:#f0f4ff; padding:8px 14px; border-radius:12px; display:flex; align-items:center; gap:6px; font-size:16px; }
@@ -160,81 +138,75 @@
 </head>
 <body>
 
-<div class="top-bar" id="topBar">
+<!-- 顶部栏 -->
+<div class="top-bar">
   <button class="back-btn" id="backBtn" onclick="goBack()" style="visibility:hidden;">← 返回</button>
-  <div class="points">🏆 积分：<span id="topPoints">0</span></div>
+  <div class="points">💰 <span id="topPoints">0</span> 积分</div>
 </div>
 
-<div id="envWarn" class="env-warn hidden">
-  <h3>⚠️ 当前环境无法使用录音</h3>
-  <p>检测到通过 <code id="envProtocol">file://</code> 打开，不是安全上下文。</p>
-  <p><strong>解决：部署到 HTTPS</strong></p>
-  <ol>
-    <li>文件改名为 <code>index.html</code></li>
-    <li>打开 <code>https://app.netlify.com/drop</code> 拖入文件</li>
-    <li>用平板打开得到的 <code>https://</code> 地址</li>
-  </ol>
-  <p style="margin-top:8px;font-size:16px;color:#666;">发音、跟写本地能用，只有录音跟读需HTTPS。</p>
+<!-- 环境警告 -->
+<div class="env-warn hidden" id="envWarn">
+  ⚠️ 当前协议是 <span id="envProtocol">file:</span>，非HTTPS环境，浏览器会禁止麦克风录音。<br>
+  请部署到 HTTPS 网站后使用（如 Netlify、GitHub Pages）。
 </div>
 
+<!-- 学期列表页 -->
 <div id="page-courses">
-  <h1>📚 选择学期</h1>
+  <h1>📚 普通话学习</h1>
   <div id="courseList"></div>
 </div>
 
+<!-- 单元列表页 -->
 <div id="page-units" class="hidden">
-  <h1 id="unitsTitle">📖 选择单元</h1>
+  <h1 id="unitsTitle">选择单元</h1>
   <div id="unitList"></div>
 </div>
 
-<div id="page-learn" class="hidden">
-  <h1 id="learnTitle"></h1>
+<!-- 小节列表页 -->
+<div id="page-sections" class="hidden">
+  <h1 id="sectionsTitle">选择小节</h1>
+  <div id="sectionList"></div>
+</div>
 
-  <div class="unit-progress" id="unitProgressBox">
-    <div class="up-label" id="upLabel">听读进度：0/7 句（每句需达到80%）</div>
+<!-- 学习页 -->
+<div id="page-learn" class="hidden">
+  <h1 id="learnTitle">句子学习</h1>
+  <div class="section-info" id="sectionInfo"></div>
+
+  <!-- 听读/跟写 Tab -->
+  <div class="tab-bar">
+    <button id="tabRead" class="active" onclick="switchTab('read')">🎤 跟读</button>
+    <button id="tabWrite" onclick="switchTab('write')">✍️ 跟写</button>
+  </div>
+
+  <!-- 单元进度 -->
+  <div class="unit-progress">
+    <div class="up-label" id="upLabel">听读进度：0/0 句</div>
     <div class="up-bar"><div class="up-fill" id="upFill" style="width:0%"></div></div>
   </div>
 
-  <div id="permBar" class="perm-bar perm-warn"><span>⏳</span><span>检测环境中…</span></div>
-
-  <div id="permGuide" class="guide-box hidden">
-    <h3>⚠️ 麦克风权限被拒绝</h3>
-    <ol>
-      <li>浏览器菜单 → <span class="hl">设置</span> → <span class="hl">站点设置</span> → <span class="hl">麦克风</span></li>
-      <li>找到本网站 → <span class="hl">清除并重置</span></li>
-      <li>下拉刷新页面，重新点录音</li>
-    </ol>
-    <button class="btn btn-yellow" onclick="location.reload()" style="margin-top:10px;">🔄 已重置，刷新</button>
-  </div>
-
-  <div class="tab-bar">
-    <button id="tabRead" class="active" onclick="switchTab('read')">👂 听读学习</button>
-    <button id="tabWrite" onclick="switchTab('write')">✍️ 跟写练习</button>
-  </div>
-
+  <!-- 跟读面板 -->
   <div id="panelRead">
     <div class="card">
       <div class="sentence-nav">
-        <button onclick="prevSentence()" id="prevBtn">‹</button>
+        <button id="prevBtn" onclick="prevSentence()">‹</button>
         <div class="sentence-counter" id="sentenceCounter">第 1 / 7 句</div>
-        <button onclick="nextSentence()" id="nextBtn">›</button>
+        <button id="nextBtn" onclick="nextSentence()">›</button>
       </div>
-      <div class="sentence-box"><div class="sentence-cn" id="sentenceCn"></div></div>
+      <div class="sentence-box">
+        <div class="sentence-cn" id="sentenceCn"></div>
+      </div>
       <div class="words-container" id="wordsContainer"></div>
-      <div id="progressArea" class="hidden">
-        <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
-        <div style="text-align:center;font-size:16px;color:#666;" id="progressText">已读对 0/0 个词</div>
-      </div>
       <div class="speed-row">
         <label>速度：</label>
         <input type="range" id="speedRange" min="0.1" max="1.5" step="0.1" value="1.0" oninput="updateSpeed()">
-        <span class="speed-val" id="speedVal">1.0x</span>
+        <div class="speed-val" id="speedVal">1.0x</div>
       </div>
       <div class="speed-presets" id="speedPresets">
         <button onclick="setSpeed(0.1,this)">0.1x</button>
         <button onclick="setSpeed(0.3,this)">0.3x</button>
         <button onclick="setSpeed(0.5,this)">0.5x</button>
-        <button onclick="setSpeed(0.8,this)">0.8x</button>
+        <button onclick="setSpeed(0.7,this)">0.7x</button>
         <button onclick="setSpeed(1.0,this)" class="active">1.0x</button>
       </div>
       <div class="btn-row">
@@ -251,53 +223,55 @@
           <div class="score-text" id="scoreText"></div>
           <div class="score-detail" id="scoreDetail"></div>
         </div>
-        <div id="practiceTip" class="practice-tip hidden">
-          <strong>💡 红色词语没读对：</strong>点红色词语，慢速播放读音和拼音，跟着多读几遍。
+        <div class="practice-tip hidden" id="practiceTip">
+          <strong>💡 练习建议：</strong>点击红色词语，听慢速拼音示范，再跟读一遍。
         </div>
         <div class="btn-row">
-          <button class="btn btn-orange" onclick="practiceWrongWords()">🔁 逐个练错词</button>
-          <button class="btn btn-primary" onclick="retryRecord()">🔄 重新跟读</button>
+          <button class="btn btn-orange" onclick="practiceWrongWords()">🔁 练习错词</button>
+          <button class="btn btn-primary" onclick="retryRecord()">🎤 再读一遍</button>
         </div>
       </div>
+      <div id="progressArea" class="hidden">
+        <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+        <div style="font-size:16px;color:#666;text-align:center;" id="progressText">已读对 0/0 个词</div>
+      </div>
+    </div>
+    <div class="perm-bar perm-warn" id="permBar"><span>🎤</span><span>环境检测中…</span></div>
+    <div class="card hidden" id="permGuide">
+      <h3 style="font-size:20px;color:#c62828;margin-bottom:10px;">🔧 麦克风权限被拒绝，重置方法：</h3>
+      <p style="font-size:17px;line-height:1.8;">
+        1. 点击地址栏左边的 🔒 锁图标<br>
+        2. 找到「麦克风」，改为「允许」<br>
+        3. 刷新页面即可
+      </p>
     </div>
   </div>
 
+  <!-- 跟写面板 -->
   <div id="panelWrite" class="hidden">
     <div class="card">
       <div class="sentence-nav">
-        <button onclick="prevSentence()" id="prevBtn2">‹</button>
+        <button id="prevBtn2" onclick="prevSentence()">‹</button>
         <div class="sentence-counter" id="sentenceCounter2">第 1 / 7 句</div>
-        <button onclick="nextSentence()" id="nextBtn2">›</button>
+        <button id="nextBtn2" onclick="nextSentence()">›</button>
       </div>
       <div class="sentence-box">
-        <div class="sentence-cn" id="writeCn" style="font-size:28px;font-weight:bold;line-height:1.5;text-align:center;"></div>
-        <div class="sentence-pinyin" id="writePy" style="font-size:16px;color:#1565c0;margin-top:8px;text-align:center;"></div>
+        <div class="sentence-cn" id="writeCn"></div>
+        <div style="font-size:16px;color:#666;margin-top:8px;" id="writePy"></div>
       </div>
       <div class="btn-row">
-        <button class="btn btn-green" onclick="playWriteSentence()">🔊 再听一遍</button>
-        <button class="btn btn-orange" onclick="playWriteSlow()">🐢 慢速听</button>
+        <button class="btn btn-green" onclick="playWriteSentence()">🔊 播放</button>
+        <button class="btn btn-orange" onclick="playWriteSlow()">🐢 慢速</button>
+        <button class="btn btn-gray" onclick="clearWrite()">🗑 清空</button>
       </div>
-      <textarea id="writeInput" class="write-input" placeholder="在这里写出你听到的句子…"></textarea>
-      <button class="btn btn-primary" onclick="submitWrite()">✅ 提交判断</button>
-      <button class="btn btn-gray" onclick="clearWrite()">🗑 清空重写</button>
-      <div id="writeResult" class="hidden"></div>
+      <textarea class="write-input" id="writeInput" placeholder="请照着上面的句子写下来…" rows="3"></textarea>
+      <button class="btn btn-primary" onclick="submitWrite()">✅ 提交检查</button>
+      <div id="writeResult" class="write-result hidden"></div>
     </div>
   </div>
 </div>
 
-<div id="completionModal" class="modal-overlay hidden">
-  <div class="modal">
-    <div class="modal-stars" id="modalStars">⭐✨⭐✨⭐</div>
-    <div class="modal-title" id="modalTitle"></div>
-    <div class="modal-points" id="modalPoints"></div>
-    <div class="modal-total" id="modalTotal"></div>
-    <div class="modal-hint" id="modalHint"></div>
-    <button class="modal-btn primary" id="modalPrimaryBtn" onclick="modalPrimaryAction()">继续</button>
-    <button class="modal-btn secondary" id="modalSecondaryBtn" onclick="modalSecondaryAction()">返回</button>
-  </div>
-</div>
-
-<!-- ===== 我的页面 ===== -->
+<!-- 我的页面 -->
 <div id="page-mine" class="hidden">
   <h1>👤 我的学习</h1>
   <div class="mine-card">
@@ -330,7 +304,20 @@
 
 <div class="env-info" id="envInfo"></div>
 
-<!-- ===== 底部导航 ===== -->
+<!-- 完成弹窗 -->
+<div class="modal-overlay hidden" id="completionModal">
+  <div class="modal">
+    <div class="modal-stars" id="modalStars">🎉</div>
+    <div class="modal-title" id="modalTitle"></div>
+    <div class="modal-points" id="modalPoints"></div>
+    <div class="modal-total" id="modalTotal"></div>
+    <div class="modal-hint" id="modalHint"></div>
+    <button class="modal-btn primary" id="modalPrimaryBtn" onclick="modalPrimaryAction()">继续</button>
+    <button class="modal-btn secondary" id="modalSecondaryBtn" onclick="modalSecondaryAction()">再练一遍</button>
+  </div>
+</div>
+
+<!-- 底部导航 -->
 <div class="bottom-nav">
   <button id="navStudy" class="active" onclick="switchBottomTab('study')">
     <span class="nav-icon">📚</span><span class="nav-label">学习</span>
@@ -342,45 +329,56 @@
 
 <script>
 // ================================================================
-// 数据：学期 → 单元 → 句子（来自新课件文档）
+// 数据：学期 → 单元 → 小节 → 句子（口语化短句，每句≤20字）
 // ================================================================
 const courses = [
   { id:1, name:'第一学期：种牙日常沟通', units:[
-    { id:1, name:'单元1：常规篇', sentences:[
-      {cn:"刘秀文，55岁，今天来准备种牙。",py:"liú xiù wén, wǔ shí wǔ suì, jīn tiān lái zhǔn bèi zhǒng yá.",words:[{cn:"刘秀文",py:"liú xiù wén"},{cn:"55岁",py:"wǔ shí wǔ suì"},{cn:"今天",py:"jīn tiān"},{cn:"来",py:"lái"},{cn:"准备",py:"zhǔn bèi",keyword:true},{cn:"种牙",py:"zhǒng yá",keyword:true,note:"种读zhǒng"}]},
-      {cn:"无糖尿病、无麻药过敏、近期没吃药；低血压今早正常。",py:"wú táng niào bìng, wú má yào guò mǐn, jìn qī méi chī yào; dī xuè yā jīn zǎo zhèng cháng.",words:[{cn:"无",py:"wú"},{cn:"糖尿病",py:"táng niào bìng",keyword:true},{cn:"无",py:"wú"},{cn:"麻药过敏",py:"má yào guò mǐn",keyword:true},{cn:"近期",py:"jìn qī"},{cn:"没吃药",py:"méi chī yào",keyword:true},{cn:"低血压",py:"dī xuè yā",keyword:true},{cn:"今早",py:"jīn zǎo"},{cn:"正常",py:"zhèng cháng",keyword:true}]},
-      {cn:"今天无感冒发烧等不适，早上已吃饭。",py:"jīn tiān wú gǎn mào fā shāo děng bù shì, zǎo shang yǐ chī fàn.",words:[{cn:"今天",py:"jīn tiān"},{cn:"无",py:"wú"},{cn:"感冒",py:"gǎn mào",keyword:true},{cn:"发烧",py:"fā shāo",keyword:true},{cn:"等不适",py:"děng bù shì"},{cn:"早上",py:"zǎo shang"},{cn:"已吃饭",py:"yǐ chī fàn",keyword:true}]},
-      {cn:"口腔无溃疡牙疼，牙龈红肿无出血，旁边牙微疼。",py:"kǒu qiāng wú kuì yáng yá téng, yá yín hóng zhǒng wú chū xuè, páng biān yá wēi téng.",words:[{cn:"口腔",py:"kǒu qiāng"},{cn:"无",py:"wú"},{cn:"溃疡",py:"kuì yáng",keyword:true},{cn:"牙疼",py:"yá téng",keyword:true},{cn:"牙龈",py:"yá yín",keyword:true},{cn:"红肿",py:"hóng zhǒng",keyword:true},{cn:"无",py:"wú"},{cn:"出血",py:"chū xuè",keyword:true,note:"血读xuè"},{cn:"旁边",py:"páng biān"},{cn:"牙",py:"yá"},{cn:"微疼",py:"wēi téng"}]},
-      {cn:"紧张怕疼，请医生动作轻点慢点；没听清麻烦再说一遍。",py:"jǐn zhāng pà téng, qǐng yī shēng dòng zuò qīng diǎn màn diǎn; méi tīng qīng má fan zài shuō yī biàn.",words:[{cn:"紧张",py:"jǐn zhāng",keyword:true},{cn:"怕疼",py:"pà téng",keyword:true},{cn:"请",py:"qǐng"},{cn:"医生",py:"yī shēng"},{cn:"动作",py:"dòng zuò"},{cn:"轻点",py:"qīng diǎn"},{cn:"慢点",py:"màn diǎn"},{cn:"没听清",py:"méi tīng qīng",keyword:true},{cn:"麻烦",py:"má fan"},{cn:"再说一遍",py:"zài shuō yī biàn"}]},
-      {cn:"是莫志伟医生本人做吗？大概多久？",py:"shì mò zhì wěi yī shēng běn rén zuò ma? dà gài duō jiǔ?",words:[{cn:"是",py:"shì"},{cn:"莫志伟",py:"mò zhì wěi"},{cn:"医生",py:"yī shēng"},{cn:"本人",py:"běn rén"},{cn:"做",py:"zuò"},{cn:"吗",py:"ma"},{cn:"大概",py:"dà gài"},{cn:"多久",py:"duō jiǔ",keyword:true}]},
-      {cn:"术后多久能回家？今天一个人来，能自己回吗？注意什么？",py:"shù hòu duō jiǔ néng huí jiā? jīn tiān yī gè rén lái, néng zì jǐ huí ma? zhù yì shén me?",words:[{cn:"术后",py:"shù hòu",keyword:true},{cn:"多久",py:"duō jiǔ",keyword:true},{cn:"能",py:"néng"},{cn:"回家",py:"huí jiā",keyword:true},{cn:"今天",py:"jīn tiān"},{cn:"一个人",py:"yī gè rén"},{cn:"来",py:"lái"},{cn:"能",py:"néng"},{cn:"自己",py:"zì jǐ"},{cn:"回",py:"huí"},{cn:"吗",py:"ma"},{cn:"注意",py:"zhù yì"},{cn:"什么",py:"shén me"}]}
+    { id:1, name:'单元1：常规篇', sections:[
+      { id:1, name:'小节1：个人情况介绍', sentences:[
+        {cn:"我叫刘秀文，今年55岁。",py:"wǒ jiào liú xiù wén, jīn nián wǔ shí wǔ suì.",words:[{cn:"我叫",py:"wǒ jiào"},{cn:"刘秀文",py:"liú xiù wén"},{cn:"今年",py:"jīn nián"},{cn:"55岁",py:"wǔ shí wǔ suì",keyword:true}]},
+        {cn:"我今天过来，准备做种牙。",py:"wǒ jīn tiān guò lái, zhǔn bèi zuò zhǒng yá.",words:[{cn:"我",py:"wǒ"},{cn:"今天",py:"jīn tiān"},{cn:"过来",py:"guò lái"},{cn:"准备",py:"zhǔn bèi",keyword:true},{cn:"做",py:"zuò"},{cn:"种牙",py:"zhǒng yá",keyword:true,note:"种读zhǒng"}]},
+        {cn:"我没有糖尿病，麻药也不过敏。",py:"wǒ méi yǒu táng niào bìng, má yào yě bù guò mǐn.",words:[{cn:"我",py:"wǒ"},{cn:"没有",py:"méi yǒu"},{cn:"糖尿病",py:"táng niào bìng",keyword:true},{cn:"麻药",py:"má yào",keyword:true},{cn:"也",py:"yě"},{cn:"不",py:"bù"},{cn:"过敏",py:"guò mǐn",keyword:true}]},
+        {cn:"我最近一段时间，没有吃什么药物。",py:"wǒ zuì jìn yī duàn shí jiān, méi yǒu chī shén me yào wù.",words:[{cn:"我",py:"wǒ"},{cn:"最近",py:"zuì jìn"},{cn:"一段时间",py:"yī duàn shí jiān"},{cn:"没有",py:"méi yǒu"},{cn:"吃",py:"chī"},{cn:"什么",py:"shén me"},{cn:"药物",py:"yào wù",keyword:true}]},
+        {cn:"我血压有一点偏低。",py:"wǒ xuè yā yǒu yī diǎn piān dī.",words:[{cn:"我",py:"wǒ"},{cn:"血压",py:"xuè yā",keyword:true,note:"血读xuè"},{cn:"有一点",py:"yǒu yī diǎn"},{cn:"偏低",py:"piān dī",keyword:true}]},
+        {cn:"今天早上测量，血压是正常的。",py:"jīn tiān zǎo shang cè liáng, xuè yā shì zhèng cháng de.",words:[{cn:"今天",py:"jīn tiān"},{cn:"早上",py:"zǎo shang"},{cn:"测量",py:"cè liáng"},{cn:"血压",py:"xuè yā",keyword:true},{cn:"是",py:"shì"},{cn:"正常",py:"zhèng cháng",keyword:true},{cn:"的",py:"de"}]},
+        {cn:"我今天没有感冒，身体没有不舒服。",py:"wǒ jīn tiān méi yǒu gǎn mào, shēn tǐ méi yǒu bù shū fu.",words:[{cn:"我",py:"wǒ"},{cn:"今天",py:"jīn tiān"},{cn:"没有",py:"méi yǒu"},{cn:"感冒",py:"gǎn mào",keyword:true},{cn:"身体",py:"shēn tǐ"},{cn:"没有",py:"méi yǒu"},{cn:"不舒服",py:"bù shū fu",keyword:true}]}
+      ]},
+      { id:2, name:'小节2：身体与口腔情况', sentences:[
+        {cn:"早饭我今天已经吃过了。",py:"zǎo fàn wǒ jīn tiān yǐ jīng chī guò le.",words:[{cn:"早饭",py:"zǎo fàn",keyword:true},{cn:"我",py:"wǒ"},{cn:"今天",py:"jīn tiān"},{cn:"已经",py:"yǐ jīng"},{cn:"吃过",py:"chī guò"},{cn:"了",py:"le"}]},
+        {cn:"我的口腔里面，没有长溃疡。",py:"wǒ de kǒu qiāng lǐ miàn, méi yǒu zhǎng kuì yáng.",words:[{cn:"我的",py:"wǒ de"},{cn:"口腔",py:"kǒu qiāng",keyword:true},{cn:"里面",py:"lǐ miàn"},{cn:"没有",py:"méi yǒu"},{cn:"长",py:"zhǎng"},{cn:"溃疡",py:"kuì yáng",keyword:true}]},
+        {cn:"我现在，也没有牙疼的情况。",py:"wǒ xiàn zài, yě méi yǒu yá téng de qíng kuàng.",words:[{cn:"我",py:"wǒ"},{cn:"现在",py:"xiàn zài"},{cn:"也",py:"yě"},{cn:"没有",py:"méi yǒu"},{cn:"牙疼",py:"yá téng",keyword:true},{cn:"的",py:"de"},{cn:"情况",py:"qíng kuàng"}]},
+        {cn:"牙龈有一点红肿，但没有出血。",py:"yá yín yǒu yī diǎn hóng zhǒng, dàn méi yǒu chū xuè.",words:[{cn:"牙龈",py:"yá yín",keyword:true},{cn:"有一点",py:"yǒu yī diǎn"},{cn:"红肿",py:"hóng zhǒng",keyword:true},{cn:"但",py:"dàn"},{cn:"没有",py:"méi yǒu"},{cn:"出血",py:"chū xuè",keyword:true,note:"血读xuè"}]},
+        {cn:"旁边的那颗牙，会稍微有一点疼。",py:"páng biān de nà kē yá, huì shāo wēi yǒu yī diǎn téng.",words:[{cn:"旁边",py:"páng biān"},{cn:"的",py:"de"},{cn:"那颗",py:"nà kē"},{cn:"牙",py:"yá"},{cn:"会",py:"huì"},{cn:"稍微",py:"shāo wēi"},{cn:"有一点",py:"yǒu yī diǎn"},{cn:"疼",py:"téng"}]},
+        {cn:"我心里有点紧张，我会怕疼。",py:"wǒ xīn lǐ yǒu diǎn jǐn zhāng, wǒ huì pà téng.",words:[{cn:"我",py:"wǒ"},{cn:"心里",py:"xīn lǐ"},{cn:"有点",py:"yǒu diǎn"},{cn:"紧张",py:"jǐn zhāng",keyword:true},{cn:"我",py:"wǒ"},{cn:"会",py:"huì"},{cn:"怕疼",py:"pà téng",keyword:true}]},
+        {cn:"麻烦医生，动作轻一点慢一点。",py:"má fan yī shēng, dòng zuò qīng yī diǎn màn yī diǎn.",words:[{cn:"麻烦",py:"má fan"},{cn:"医生",py:"yī shēng"},{cn:"动作",py:"dòng zuò"},{cn:"轻一点",py:"qīng yī diǎn"},{cn:"慢一点",py:"màn yī diǎn"}]}
+      ]}
     ]},
-    { id:2, name:'单元2：术前核对+就诊留痕', locked:true, sentences:[] },
-    { id:3, name:'单元3：正常', locked:true, sentences:[] },
-    { id:4, name:'单元4：异常红牌（马上打120/去急诊）', locked:true, sentences:[] },
-    { id:5, name:'单元5：异常黄牌（尽快联系种植医生）', locked:true, sentences:[] },
-    { id:6, name:'单元6：拆线', locked:true, sentences:[] }
+    { id:2, name:'单元2：术前核对+就诊留痕', locked:true, sections:[] },
+    { id:3, name:'单元3：正常现象', locked:true, sections:[] },
+    { id:4, name:'单元4：异常红牌', locked:true, sections:[] },
+    { id:5, name:'单元5：异常黄牌', locked:true, sections:[] },
+    { id:6, name:'单元6：拆线', locked:true, sections:[] }
   ]},
   { id:2, name:'第二学期：种牙维护常识', units:[
-    { id:1, name:'单元1：长期维护', locked:true, sentences:[] },
-    { id:2, name:'单元2：复查', locked:true, sentences:[] },
-    { id:3, name:'单元3：术前准备', locked:true, sentences:[] },
-    { id:4, name:'单元4：术后初期', locked:true, sentences:[] },
-    { id:5, name:'单元5：长期维护', locked:true, sentences:[] }
+    { id:1, name:'单元1：长期维护', locked:true, sections:[] },
+    { id:2, name:'单元2：复查', locked:true, sections:[] },
+    { id:3, name:'单元3：术前准备', locked:true, sections:[] },
+    { id:4, name:'单元4：术后初期', locked:true, sections:[] },
+    { id:5, name:'单元5：长期维护', locked:true, sections:[] }
   ]},
   { id:3, name:'第三学期：懂得去问AI', units:[
-    { id:1, name:'单元1：基础提问', locked:true, sentences:[] },
-    { id:2, name:'单元2：种牙养护', locked:true, sentences:[] },
-    { id:3, name:'单元3：肠胃养生', locked:true, sentences:[] },
-    { id:4, name:'单元4：全身保养', locked:true, sentences:[] },
-    { id:5, name:'单元5：学会追问', locked:true, sentences:[] }
+    { id:1, name:'单元1：基础提问', locked:true, sections:[] },
+    { id:2, name:'单元2：种牙养护', locked:true, sections:[] },
+    { id:3, name:'单元3：肠胃养生', locked:true, sections:[] },
+    { id:4, name:'单元4：全身保养', locked:true, sections:[] },
+    { id:5, name:'单元5：学会追问', locked:true, sections:[] }
   ]}
 ];
 
 // ================================================================
 // 数据存储
 // ================================================================
-function getStore(){ const raw=localStorage.getItem('pt_learn_data'); if(raw) try{return JSON.parse(raw);}catch(e){} return {totalPoints:0,dailyRewardPoints:{},achievements:{},achieveDetails:{},dailyRecords:{},reviewCounts:{}}; }
+function getStore(){ const raw=localStorage.getItem('pt_learn_data'); if(raw) try{return JSON.parse(raw);}catch(e){} return {totalPoints:0,dailyRewardPoints:{},achievements:{},achieveDetails:{},dailyRecords:{},reviewCounts:{},pointLogs:[]}; }
 function saveStore(d){ localStorage.setItem('pt_learn_data',JSON.stringify(d)); }
 function today(){ return new Date().toISOString().slice(0,10); }
 function addPoints(points, reason){
@@ -392,7 +390,6 @@ function addPoints(points, reason){
   if(!store.dailyRecords)store.dailyRecords={};
   if(!store.dailyRecords[t])store.dailyRecords[t]={count:0,tasks:[]};
   store.dailyRecords[t].count++;
-  // 参考经验包2：记录积分流水，便于排查虚高问题
   if(!store.pointLogs)store.pointLogs=[];
   store.pointLogs.push({amount:points, reason:reason||'未说明', time:new Date().toISOString(), total:store.totalPoints});
   if(store.pointLogs.length>100)store.pointLogs=store.pointLogs.slice(-100);
@@ -429,31 +426,101 @@ function checkAchievements(){
 // ================================================================
 // 全局状态
 // ================================================================
-let currentCourseId=1, currentUnitId=1, currentIdx=0, currentSpeed=1.0;
+let currentCourseId=1, currentUnitId=1, currentSectionId=1, currentIdx=0, currentSpeed=1.0;
 let recognition=null, recordState='idle', finalTranscript='', litCount=0, forceStopTimer=null, isPlaying=false;
 let sessionProgress = { readDone: new Set(), writeDone: new Set(), readPointsAwarded: false, writePointsAwarded: false };
 let modalCallback=null, modalSecondaryCallback=null;
 
 function currentUnit(){ const c=courses.find(c=>c.id===currentCourseId); return c?c.units.find(u=>u.id===currentUnitId):null; }
-function currentSentences(){ const u=currentUnit(); return u?u.sentences:[]; }
+function currentSection(){ const u=currentUnit(); return u&&u.sections?u.sections.find(s=>s.id===currentSectionId):null; }
+function currentSentences(){ const s=currentSection(); return s?s.sentences:[]; }
 
 // ================================================================
-// 页面导航
+// LCS容错语音比对（替代原来严格逐字比对，70分达标）
 // ================================================================
-function showPage(id){ ['page-courses','page-units','page-learn'].forEach(p=>document.getElementById(p).classList.add('hidden')); document.getElementById(id).classList.remove('hidden'); document.getElementById('backBtn').style.visibility=(id==='page-courses')?'hidden':'visible'; }
-function goBack(){ if(!document.getElementById('page-learn').classList.contains('hidden')){showPage('page-units');renderUnits();} else if(!document.getElementById('page-units').classList.contains('hidden')){showPage('page-courses');renderCourses();} }
+function evaluateText(standard, userRaw) {
+  if(!userRaw) return {score:0, html:''};
+  // 过滤语气词
+  const stopWords = ["嗯","啊","呃","那个","噢","哦","呀","吧","呢","啦","哎"];
+  const puncReg = /[，。！？；：""''、,.!?;:\s]/g;
+  let sText = standard.replace(puncReg, "");
+  let uText = userRaw.replace(puncReg, "");
+  stopWords.forEach(w => { uText = uText.split(w).join(""); });
+
+  // LCS最长公共子序列
+  function lcsLen(a, b) {
+    const m = a.length, n = b.length;
+    const dp = Array.from({length: m+1}, () => Array(n+1).fill(0));
+    for(let i = 1; i <= m; i++) {
+      for(let j = 1; j <= n; j++) {
+        if(a[i-1] === b[j-1]) dp[i][j] = dp[i-1][j-1] + 1;
+        else dp[i][j] = Math.max(dp[i-1][j], dp[i][j-1]);
+      }
+    }
+    return dp[m][n];
+  }
+
+  const matchLen = lcsLen(sText, uText);
+  const score = sText.length > 0 ? Math.round((matchLen / sText.length) * 100) : 0;
+  const finalScore = Math.max(0, Math.min(100, score));
+
+  // 简易渲染：匹配的字黑色，不匹配的红色
+  let html = "";
+  let uRemain = uText;
+  for(let i = 0; i < standard.length; i++) {
+    const ch = standard[i];
+    if(/[，。！？；：""''、,.!?;:\s]/.test(ch)) {
+      html += `<span>${ch}</span>`;
+    } else {
+      const pos = uRemain.indexOf(ch);
+      if(pos >= 0) {
+        html += `<span style="color:#222;">${ch}</span>`;
+        uRemain = uRemain.slice(0, pos) + uRemain.slice(pos+1);
+      } else {
+        html += `<span style="color:#f5222d;">${ch}</span>`;
+      }
+    }
+  }
+  return {score: finalScore, html: html};
+}
+
+// ================================================================
+// 页面导航（四级：学期→单元→小节→句子）
+// ================================================================
+function showPage(id){ ['page-courses','page-units','page-sections','page-learn'].forEach(p=>document.getElementById(p).classList.add('hidden')); document.getElementById(id).classList.remove('hidden'); document.getElementById('backBtn').style.visibility=(id==='page-courses')?'hidden':'visible'; }
+function goBack(){
+  if(!document.getElementById('page-learn').classList.contains('hidden')){showPage('page-sections');renderSections();}
+  else if(!document.getElementById('page-sections').classList.contains('hidden')){showPage('page-units');renderUnits();}
+  else if(!document.getElementById('page-units').classList.contains('hidden')){showPage('page-courses');renderCourses();}
+}
 function selectCourse(id){ currentCourseId=id; showPage('page-units'); renderUnits(); }
 function selectUnit(id){
   const c=courses.find(c=>c.id===currentCourseId); const u=c.units.find(u=>u.id===id);
   if(u.locked){alert('该单元即将上线，敬请期待！');return;}
-  currentUnitId=id; currentIdx=0;
+  currentUnitId=id;
+  // 如果单元有多个小节，显示小节选择页；只有1个小节直接进入
+  if(u.sections && u.sections.length > 1) {
+    showPage('page-sections'); renderSections();
+  } else if(u.sections && u.sections.length === 1) {
+    currentSectionId = u.sections[0].id;
+    enterLearn();
+  } else {
+    alert('该单元暂无内容');
+  }
+}
+function selectSection(id){ currentSectionId=id; enterLearn(); }
+function enterLearn(){
+  currentIdx=0;
   sessionProgress = { readDone: new Set(), writeDone: new Set(), readPointsAwarded: false, writePointsAwarded: false };
-  showPage('page-learn'); document.getElementById('learnTitle').textContent=u.name;
+  const u=currentUnit(); const s=currentSection();
+  document.getElementById('learnTitle').textContent=u.name;
+  document.getElementById('sectionInfo').textContent=s.name + '（共' + s.sentences.length + '句）';
+  showPage('page-learn');
   loadSentence(); updateUnitProgress(); checkEnvironment();
 }
-function calcProgress(items){
+function calcSectionProgress(sec){
   const store=getStore(); let total=0,done=0;
-  items.forEach(s=>{total++; if(store.achievements['readdone_'+currentCourseId+'_'+currentUnitId+'_'+s.cn])done++;});
+  sec.sentences.forEach(s=>{total++; if(store.achievements['readdone_'+currentCourseId+'_'+currentUnitId+'_'+currentSectionId+'_'+s.cn])done++;});
   return total>0?Math.round(done/total*100):0;
 }
 function renderCourses(){
@@ -468,14 +535,27 @@ function renderUnits(){
   document.getElementById('unitsTitle').textContent=c.name;
   const list=document.getElementById('unitList'); let html='';
   c.units.forEach(u=>{
-    const pct=u.locked?0:calcProgress(u.sentences);
-    html+=`<div class="nav-card ${u.locked?'locked':''}" onclick="${u.locked?'':`selectUnit(${u.id})`}"><div class="nav-title">${u.name}${u.locked?' 🔒':''}</div><div class="nav-desc">${u.locked?'即将上线':(u.sentences.length+' 个句子')}</div>${u.locked?'':`<div class="nav-progress"><div class="nav-progress-fill" style="width:${pct}%"></div></div><div class="nav-progress-text">学习进度 ${pct}%</div>`}</div>`;
+    const secCount = u.sections ? u.sections.length : 0;
+    const totalSents = u.sections ? u.sections.reduce((sum,s)=>sum+s.sentences.length,0) : 0;
+    html+=`<div class="nav-card ${u.locked?'locked':''}" onclick="${u.locked?'':`selectUnit(${u.id})`}"><div class="nav-title">${u.name}${u.locked?' 🔒':''}</div><div class="nav-desc">${u.locked?'即将上线':(secCount+' 个小节，'+totalSents+' 个句子')}</div></div>`;
   });
+  list.innerHTML=html;
+}
+function renderSections(){
+  const u=currentUnit();
+  document.getElementById('sectionsTitle').textContent=u.name + ' - 选择小节';
+  const list=document.getElementById('sectionList'); let html='';
+  if(u.sections){
+    u.sections.forEach(s=>{
+      const pct = calcSectionProgress(s);
+      html+=`<div class="nav-card" onclick="selectSection(${s.id})"><div class="nav-title">${s.name}</div><div class="nav-desc">${s.sentences.length} 个句子</div><div class="nav-progress"><div class="nav-progress-fill" style="width:${pct}%"></div></div><div class="nav-progress-text">学习进度 ${pct}%</div></div>`;
+    });
+  }
   list.innerHTML=html;
 }
 
 // ================================================================
-// 单元进度显示
+// 小节进度显示
 // ================================================================
 function updateUnitProgress(){
   const total = currentSentences().length;
@@ -483,7 +563,7 @@ function updateUnitProgress(){
   const writeDone = sessionProgress.writeDone.size;
   const activeTab = document.getElementById('tabRead').classList.contains('active') ? 'read' : 'write';
   const label = activeTab==='read'
-    ? `听读进度：${readDone}/${total} 句（每句需达到80%才算完成）`
+    ? `听读进度：${readDone}/${total} 句（每句需达到70%才算完成）`
     : `跟写进度：${writeDone}/${total} 句（全部写对才算完成）`;
   const done = activeTab==='read' ? readDone : writeDone;
   const pct = total>0 ? Math.round(done/total*100) : 0;
@@ -492,22 +572,18 @@ function updateUnitProgress(){
 }
 
 // ================================================================
-// 下一句箭头高亮闪烁（参考经验包4：独立函数+定时器管理+ID精确选择）
+// 下一句箭头高亮闪烁
 // ================================================================
 function highlightNextButton(duration) {
   duration = duration || 8000;
-  // 听读页(nextBtn)和跟写页(nextBtn2)都有下一句按钮，同时高亮
   const btns = [document.getElementById('nextBtn'), document.getElementById('nextBtn2')];
   btns.forEach(nextBtn => {
-    if (!nextBtn || nextBtn.disabled) return;  // 最后一句禁用，不高亮
-    // 清除旧定时器，避免多次触发叠加（经验包4卡点2）
+    if (!nextBtn || nextBtn.disabled) return;
     if (nextBtn._highlightTimer) clearTimeout(nextBtn._highlightTimer);
-    // 应用高亮样式：放大1.2倍 + 绿色光晕
     nextBtn.style.transition = 'transform 0.3s, box-shadow 0.3s, background 0.3s';
     nextBtn.style.transform = 'scale(1.2)';
     nextBtn.style.boxShadow = '0 0 20px rgba(46,125,50,0.7)';
     nextBtn.style.background = '#2e7d32';
-    // 定时恢复，避免永久高亮（经验包4卡点5）
     nextBtn._highlightTimer = setTimeout(() => {
       nextBtn.style.transform = 'scale(1)';
       nextBtn.style.boxShadow = 'none';
@@ -515,8 +591,6 @@ function highlightNextButton(duration) {
     }, duration);
   });
 }
-
-// 清除高亮（切换句子/进入页面时调用，经验包4卡点3/6）
 function clearNextButtonHighlight() {
   const btns = [document.getElementById('nextBtn'), document.getElementById('nextBtn2')];
   btns.forEach(nextBtn => {
@@ -524,10 +598,7 @@ function clearNextButtonHighlight() {
       nextBtn.style.transform = '';
       nextBtn.style.boxShadow = '';
       nextBtn.style.background = '';
-      if (nextBtn._highlightTimer) {
-        clearTimeout(nextBtn._highlightTimer);
-        nextBtn._highlightTimer = null;
-      }
+      if (nextBtn._highlightTimer) { clearTimeout(nextBtn._highlightTimer); nextBtn._highlightTimer = null; }
     }
   });
 }
@@ -550,11 +621,9 @@ function loadSentence(){
   const container=document.getElementById('wordsContainer');
   container.innerHTML=s.words.map((w,i)=>`<div class="word-card ${w.keyword?'keyword':''}" onclick="onWordClick(${i})" data-idx="${i}"><span class="w-cn">${w.cn}</span><span class="w-py">${w.py}</span>${w.note?`<span class="w-note">${w.note}</span>`:''}</div>`).join('');
   resetRecordUI();
-  // 修改2：切换句子时清空跟写输入框和结果区域，避免上一句残留
   document.getElementById('writeInput').value = '';
   document.getElementById('writeResult').classList.add('hidden');
   document.getElementById('writeResult').innerHTML = '';
-  // 修改3：切换句子时清除下一句箭头高亮（经验包4卡点3）
   clearNextButtonHighlight();
 }
 function prevSentence(){ if(currentIdx>0){currentIdx--;loadSentence();} }
@@ -662,7 +731,7 @@ function updateProgress(){
 }
 
 // ================================================================
-// 听读全部完成 —— 积分+弹窗（独立函数，finishRecording和F12都调用）
+// 小节听读完成 —— 积分+弹窗（按小节计算，相当于旧版一个单元的积分）
 // ================================================================
 function grantReadCompletionReward(){
   if (sessionProgress.readPointsAwarded) return;
@@ -670,8 +739,9 @@ function grantReadCompletionReward(){
   if (!allReadDone) return;
   sessionProgress.readPointsAwarded = true;
   const store = getStore();
-  const readKey = 'readunit_'+currentCourseId+'_'+currentUnitId;
-  const reviewKey = 'readunit_review_'+currentCourseId+'_'+currentUnitId;
+  const sec = currentSection();
+  const readKey = 'readsection_'+currentCourseId+'_'+currentUnitId+'_'+currentSectionId;
+  const reviewKey = 'readsection_review_'+currentCourseId+'_'+currentUnitId+'_'+currentSectionId;
   let points = 0, isFirst = false;
   if (!store.achievements[readKey]) {
     isFirst = true; points = 30;
@@ -682,12 +752,12 @@ function grantReadCompletionReward(){
     const rc = store.reviewCounts[reviewKey] || 0;
     if (rc < 20) { points = 10; store.reviewCounts[reviewKey] = rc+1; saveStore(store); }
   }
-  if (points > 0) addPoints(points, isFirst?'听读单元首次完成':'听读单元复习第'+((store.reviewCounts||{})[reviewKey]||0)+'次');
-  console.log('💰 听读单元完成奖励 +'+points+'分，总积分：'+getStore().totalPoints);
+  if (points > 0) addPoints(points, isFirst?'听读小节首次完成('+sec.name+')':'听读小节复习第'+((store.reviewCounts||{})[reviewKey]||0)+'次('+sec.name+')');
+  console.log('💰 听读小节完成奖励 +'+points+'分，总积分：'+getStore().totalPoints);
   setTimeout(() => {
     showModal({
       stars: '🎉',
-      title: '听读学习全部完成！<br>每句都达到80%以上',
+      title: sec.name+'<br>听读学习全部完成！',
       points: points,
       isFirst: isFirst,
       hint: '💡 接下来去跟写练习，巩固一下汉字写法吧！',
@@ -700,7 +770,7 @@ function grantReadCompletionReward(){
 }
 
 // ================================================================
-// 跟写全部完成 —— 积分+弹窗（独立函数，submitWrite和F12都调用）
+// 小节跟写完成 —— 积分+弹窗（按小节计算）
 // ================================================================
 function grantWriteCompletionReward(){
   if (sessionProgress.writePointsAwarded) return;
@@ -708,8 +778,9 @@ function grantWriteCompletionReward(){
   if (!allWriteDone) return;
   sessionProgress.writePointsAwarded = true;
   const store = getStore();
-  const writeKey = 'writeunit_'+currentCourseId+'_'+currentUnitId;
-  const reviewKey = 'writeunit_review_'+currentCourseId+'_'+currentUnitId;
+  const sec = currentSection();
+  const writeKey = 'writesection_'+currentCourseId+'_'+currentUnitId+'_'+currentSectionId;
+  const reviewKey = 'writesection_review_'+currentCourseId+'_'+currentUnitId+'_'+currentSectionId;
   let writePoints = 0, isFirstWrite = false;
   if (!store.achievements[writeKey]) {
     isFirstWrite = true; writePoints = 20;
@@ -720,65 +791,76 @@ function grantWriteCompletionReward(){
     const rc = store.reviewCounts[reviewKey] || 0;
     if (rc < 20) { writePoints = 5; store.reviewCounts[reviewKey] = rc+1; saveStore(store); }
   }
-  if (writePoints > 0) addPoints(writePoints, isFirstWrite?'跟写单元首次完成':'跟写单元复习第'+((store.reviewCounts||{})[reviewKey]||0)+'次');
-  const readKey = 'readunit_'+currentCourseId+'_'+currentUnitId;
+  if (writePoints > 0) addPoints(writePoints, isFirstWrite?'跟写小节首次完成('+sec.name+')':'跟写小节复习第'+((store.reviewCounts||{})[reviewKey]||0)+'次('+sec.name+')');
+  const readKey = 'readsection_'+currentCourseId+'_'+currentUnitId+'_'+currentSectionId;
   const readFirst = store.achievements[readKey] ? 30 : 0;
-  const totalUnitPoints = readFirst + writePoints;
-  console.log('💰 跟写单元完成奖励 +'+writePoints+'分，本单元合计 +'+totalUnitPoints+'分，总积分：'+getStore().totalPoints);
+  const totalSecPoints = readFirst + writePoints;
+  console.log('💰 跟写小节完成奖励 +'+writePoints+'分，本小节合计 +'+totalSecPoints+'分，总积分：'+getStore().totalPoints);
+
+  // 检查是否还有下一小节
+  const u = currentUnit();
+  const nextSec = u.sections ? u.sections.find(s => s.id === currentSectionId + 1) : null;
+
   setTimeout(() => {
     showModal({
       stars: '🏆',
-      title: `整个单元完成！<br>听读+跟写全部通过`,
+      title: sec.name+'<br>听读+跟写全部通过！',
       points: writePoints,
       isFirst: isFirstWrite,
-      hint: `听读奖励 +${readFirst} 分，跟写奖励 +${writePoints} 分，本单元共获得 +${totalUnitPoints} 积分！`,
-      primaryText: '返回单元列表',
-      primaryAction: () => { showPage('page-units'); renderUnits(); },
-      secondaryText: '再练一遍',
+      hint: `听读奖励 +${readFirst} 分，跟写奖励 +${writePoints} 分，本小节共获得 +${totalSecPoints} 积分！`,
+      primaryText: nextSec ? '➡️ 下一小节' : '📋 返回小节列表',
+      primaryAction: () => {
+        if(nextSec) { currentSectionId = nextSec.id; enterLearn(); }
+        else { showPage('page-sections'); renderSections(); }
+      },
+      secondaryText: '🔄 再练一遍',
       secondaryAction: () => { sessionProgress.writePointsAwarded=false; currentIdx=0; loadSentence(); switchTab('read'); }
     });
   }, 600);
 }
 
 // ================================================================
-// 录音结束 —— 不弹窗，只显示纠错；≥80%标记完成；全部完成才弹窗
+// 录音结束 —— LCS容错比对，70分达标，不弹窗只显示纠错
 // ================================================================
 function finishRecording(){
   const s=currentSentences()[currentIdx];
   const status=document.getElementById('recordStatus');
   s.words.forEach((w,i)=>{const card=document.querySelector(`#wordsContainer .word-card[data-idx="${i}"]`);if(card&&!card.classList.contains('lit'))card.classList.add('wrong');});
+
+  // LCS容错比对得分（替代原来的词语权重严格比对）
+  const lcsResult = evaluateText(s.cn, finalTranscript);
+  const score = lcsResult.score;
+  const ts = score / 100; // 0-1
+
   const total=s.words.length,correct=litCount,wrongCount=total-correct;
-  let kwT=0,kwC=0;
-  s.words.forEach((w,i)=>{if(w.keyword){kwT++;const c=document.querySelector(`#wordsContainer .word-card[data-idx="${i}"]`);if(c&&c.classList.contains('lit'))kwC++;}});
-  const ws=correct/total,ks=kwT>0?kwC/kwT:1,ts=ws*0.4+ks*0.6;
   let stars='',st='';
-  if(ts>=0.9){stars='⭐⭐⭐⭐⭐';st='非常棒！读得很标准';}
-  else if(ts>=0.75){stars='⭐⭐⭐⭐';st='不错，有几个词再练练';}
-  else if(ts>=0.5){stars='⭐⭐⭐';st='继续加油，红色词语重点练';}
-  else if(ts>=0.3){stars='⭐⭐';st='再听一遍示范，慢慢读';}
+  if(score>=90){stars='⭐⭐⭐⭐⭐';st='非常棒！读得很标准';}
+  else if(score>=75){stars='⭐⭐⭐⭐';st='不错，有几个字再练练';}
+  else if(score>=60){stars='⭐⭐⭐';st='继续加油，红色字重点练';}
+  else if(score>=40){stars='⭐⭐';st='再听一遍示范，慢慢读';}
   else{stars='⭐';st='没关系，先听慢速，再跟读';}
+
   status.className='record-status record-done';
-  status.textContent=wrongCount>0?`✅ 识别完成！读对 ${correct}/${total} 个词，${wrongCount} 个词需再练（本句完成度${Math.round(ts*100)}%，需80%才算通过）`:'✅ 太棒了！全部读对！';
+  status.textContent=wrongCount>0?`✅ 识别完成！读对 ${correct}/${total} 个词，匹配度 ${score}%（需70%才算通过）`:'✅ 太棒了！全部读对！';
   document.getElementById('scoreStars').textContent=stars;
   document.getElementById('scoreText').textContent=st;
-  document.getElementById('scoreDetail').textContent=`读对 ${correct}/${total} 个词`+(kwT>0?` | 重点词 ${kwC}/${kwT}`:'')+` | 完成度 ${Math.round(ts*100)}%`;
+  document.getElementById('scoreDetail').textContent=`词语点亮 ${correct}/${total} | 文本匹配度 ${score}% | 听到：${finalTranscript||'（无）'}`;
   document.getElementById('resultArea').classList.remove('hidden');
   document.getElementById('practiceTip').classList.toggle('hidden',wrongCount===0);
   document.getElementById('liveTextArea').classList.add('hidden');
 
-  if (ts >= 0.8) {
+  // 70分达标（原来80分，降低门槛适配LCS容错）
+  if (ts >= 0.7) {
     sessionProgress.readDone.add(currentIdx);
     const store = getStore();
-    store.achievements['readdone_'+currentCourseId+'_'+currentUnitId+'_'+s.cn] = true;
+    store.achievements['readdone_'+currentCourseId+'_'+currentUnitId+'_'+currentSectionId+'_'+s.cn] = true;
     saveStore(store);
     updateUnitProgress();
-    // 修改3：本句完成度≥80%，下一句箭头高亮闪烁（经验包4：延迟500ms确保DOM渲染完成）
     if (currentIdx < currentSentences().length - 1) {
       setTimeout(() => { highlightNextButton(8000); }, 500);
     }
   }
 
-  // 检查是否全部完成，触发积分+弹窗（独立函数，F12标记也走这里）
   grantReadCompletionReward();
 }
 
@@ -826,7 +908,7 @@ function showModal(opts){
 }
 function closeModal(){document.getElementById('completionModal').classList.add('hidden');}
 function modalPrimaryAction(){closeModal();if(modalCallback)modalCallback();}
-function modalSecondaryAction(){closeModal();if(modalSecondaryCallback)modalSecondaryCallback();}
+function modalSecondaryAction(){closeModal();if(modalSecondaryCallback)modalSecondaryAction();}
 
 // ================================================================
 // Tab
@@ -863,11 +945,9 @@ function submitWrite(){
     rb.innerHTML=`✅ 完全正确！写得很棒！<br><span style="font-size:18px;">${standard}</span>`;
     sessionProgress.writeDone.add(currentIdx);
     const store = getStore();
-    store.achievements['writedone_'+currentCourseId+'_'+currentUnitId+'_'+standard] = true;
+    store.achievements['writedone_'+currentCourseId+'_'+currentUnitId+'_'+currentSectionId+'_'+standard] = true;
     saveStore(store);
     updateUnitProgress();
-
-    // 检查是否全部完成，触发积分+弹窗（独立函数，F12标记也走这里）
     grantWriteCompletionReward();
   }else{
     rb.className='write-result write-wrong';
@@ -906,21 +986,17 @@ function updatePermUI(state){
 }
 
 // ================================================================
-// 我的页面（积分/成就/数据备份）
+// 我的页面
 // ================================================================
 function renderMine(){
   const store = getStore();
   const t = today();
-  // 总积分、今日积分
   document.getElementById('mineTotalPoints').textContent = store.totalPoints || 0;
   document.getElementById('mineTodayPoints').textContent = store.dailyRewardPoints?.[t] || 0;
-  // 学习天数
   const days = Object.keys(store.dailyRecords||{}).filter(d=>(store.dailyRecords[d].count||0)>0).length;
   document.getElementById('mineDays').textContent = days;
-  // 可提现金额（参考经验包1/2：100积分=0.01元，即总积分×0.0001，保留2位小数）
   const withdraw = ((store.totalPoints || 0) * 0.0001).toFixed(2);
   document.getElementById('mineWithdraw').textContent = withdraw;
-  // 成就列表
   const achList = document.getElementById('mineAchieveList');
   const achKeys = Object.keys(store.achievements||{}).filter(k=>k.startsWith('achv_'));
   if(achKeys.length===0){
@@ -929,19 +1005,15 @@ function renderMine(){
     let html = '';
     achKeys.forEach(k=>{
       const d = store.achieveDetails?.[k];
-      if(d){
-        html += `<div class="achieve-item"><span>🏅</span><span class="ach-name">${d.name}</span><span class="ach-pts">+${d.points}</span></div>`;
-      }
+      if(d){ html += `<div class="achieve-item"><span>🏅</span><span class="ach-name">${d.name}</span><span class="ach-pts">+${d.points}</span></div>`; }
     });
-    // 单元完成也算成就
-    const unitKeys = Object.keys(store.achievements||{}).filter(k=>k.startsWith('readunit_')||k.startsWith('writeunit_'));
-    unitKeys.forEach(k=>{
-      const label = k.startsWith('readunit_')?'📖 听读完成':'✍️ 跟写完成';
+    const secKeys = Object.keys(store.achievements||{}).filter(k=>k.startsWith('readsection_')||k.startsWith('writesection_'));
+    secKeys.forEach(k=>{
+      const label = k.startsWith('readsection_')?'📖 听读完成':'✍️ 跟写完成';
       html += `<div class="achieve-item"><span>✅</span><span class="ach-name">${label}</span></div>`;
     });
     achList.innerHTML = html;
   }
-  // 积分流水（最近10条）
   const logEl = document.getElementById('minePointLog');
   const logs = (store.pointLogs||[]).slice(-10).reverse();
   if(logs.length===0){
@@ -955,8 +1027,6 @@ function renderMine(){
     logEl.innerHTML = html;
   }
 }
-
-// 导出数据（备份为JSON文件）
 function exportData(){
   const data = localStorage.getItem('pt_learn_data');
   if(!data){ alert('没有数据可备份。'); return; }
@@ -970,8 +1040,6 @@ function exportData(){
   document.body.removeChild(a);
   URL.revokeObjectURL(url);
 }
-
-// 导入数据（从JSON文件恢复）
 function importData(event){
   const file = event.target.files[0];
   if(!file) return;
@@ -989,61 +1057,53 @@ function importData(event){
   reader.readAsText(file);
   event.target.value = '';
 }
-
-// 底部导航切换
 function switchBottomTab(tab){
   document.getElementById('navStudy').classList.toggle('active', tab==='study');
   document.getElementById('navMine').classList.toggle('active', tab==='mine');
   if(tab==='study'){
     document.getElementById('page-mine').classList.add('hidden');
-    // 回到学习页（根据当前状态显示课程/单元/学习页）
-    if(!document.getElementById('page-learn').classList.contains('hidden')){
-      document.getElementById('page-learn').classList.remove('hidden');
-    }else if(!document.getElementById('page-units').classList.contains('hidden')){
-      document.getElementById('page-units').classList.remove('hidden');
-    }else{
-      document.getElementById('page-courses').classList.remove('hidden');
-    }
+    if(!document.getElementById('page-learn').classList.contains('hidden')){document.getElementById('page-learn').classList.remove('hidden');}
+    else if(!document.getElementById('page-sections').classList.contains('hidden')){document.getElementById('page-sections').classList.remove('hidden');}
+    else if(!document.getElementById('page-units').classList.contains('hidden')){document.getElementById('page-units').classList.remove('hidden');}
+    else{document.getElementById('page-courses').classList.remove('hidden');}
   }else{
-    // 隐藏所有学习页，显示我的页
-    ['page-courses','page-units','page-learn'].forEach(p=>document.getElementById(p).classList.add('hidden'));
+    ['page-courses','page-units','page-sections','page-learn'].forEach(p=>document.getElementById(p).classList.add('hidden'));
     document.getElementById('page-mine').classList.remove('hidden');
     renderMine();
   }
 }
 
 // ================================================================
-// 调试接口（F12控制台直接调用，解决之前找不到变量的问题）
+// 调试接口（F12控制台直接调用）
 // ================================================================
 window.__app = {
   get currentIdx(){ return currentIdx; },
   get currentCourseId(){ return currentCourseId; },
   get currentUnitId(){ return currentUnitId; },
+  get currentSectionId(){ return currentSectionId; },
   get totalSentences(){ return currentSentences().length; },
   get readDoneCount(){ return sessionProgress.readDone.size; },
   get writeDoneCount(){ return sessionProgress.writeDone.size; },
+  evaluateText: function(std, user){ return evaluateText(std, user); },
   markReadDone: function(idx){
     const i = (idx===undefined)? currentIdx : idx;
     sessionProgress.readDone.add(i);
     const s = currentSentences()[i];
-    if(s){ const store=getStore(); store.achievements['readdone_'+currentCourseId+'_'+currentUnitId+'_'+s.cn]=true; saveStore(store); }
+    if(s){ const store=getStore(); store.achievements['readdone_'+currentCourseId+'_'+currentUnitId+'_'+currentSectionId+'_'+s.cn]=true; saveStore(store); }
     updateUnitProgress();
     console.log('✅ 已标记第'+(i+1)+'句听读通过，当前通过'+sessionProgress.readDone.size+'/'+currentSentences().length);
-    // 修改3：F12标记通过也触发下一句箭头高亮（之前只在录音结束时触发，这是闪烁不显示的根因）
     if (i < currentSentences().length - 1) {
       setTimeout(() => { highlightNextButton(8000); }, 300);
     }
-    // 标记后检查是否全部完成，触发积分+弹窗
     grantReadCompletionReward();
   },
   markWriteDone: function(idx){
     const i = (idx===undefined)? currentIdx : idx;
     sessionProgress.writeDone.add(i);
     const s = currentSentences()[i];
-    if(s){ const store=getStore(); store.achievements['writedone_'+currentCourseId+'_'+currentUnitId+'_'+s.cn]=true; saveStore(store); }
+    if(s){ const store=getStore(); store.achievements['writedone_'+currentCourseId+'_'+currentUnitId+'_'+currentSectionId+'_'+s.cn]=true; saveStore(store); }
     updateUnitProgress();
     console.log('✅ 已标记第'+(i+1)+'句跟写通过，当前通过'+sessionProgress.writeDone.size+'/'+currentSentences().length);
-    // 标记后检查是否全部完成，触发积分+弹窗
     grantWriteCompletionReward();
   },
   markAllReadDone: function(){
@@ -1058,6 +1118,7 @@ window.__app = {
   prev: function(){ prevSentence(); },
   load: function(){ loadSentence(); },
   switchTab: function(t){ switchTab(t); },
+  gotoSection: function(id){ currentSectionId=id; enterLearn(); },
   resetSession: function(){
     sessionProgress = { readDone: new Set(), writeDone: new Set(), readPointsAwarded: false, writePointsAwarded: false };
     currentIdx = 0;
@@ -1066,7 +1127,7 @@ window.__app = {
   },
   status: function(){
     console.log('=== 当前学习状态 ===');
-    console.log('学期:', currentCourseId, '单元:', currentUnitId);
+    console.log('学期:', currentCourseId, '单元:', currentUnitId, '小节:', currentSectionId);
     console.log('当前句:', (currentIdx+1)+'/'+currentSentences().length);
     console.log('听读通过:', sessionProgress.readDone.size+'/'+currentSentences().length);
     console.log('跟写通过:', sessionProgress.writeDone.size+'/'+currentSentences().length);

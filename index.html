@@ -199,7 +199,6 @@
       </div>
       <div class="btn-row">
         <button class="btn btn-green" id="playBtn" onclick="togglePlay()">🔊 播放普通话</button>
-        <button class="btn btn-blue" id="playYueBtn" onclick="playYueSentence()" disabled style="opacity:0.4;cursor:not-allowed;">🔊 播放粤语</button>
       </div>
       <div class="btn-row">
         <button class="btn btn-red" id="recordBtn" onclick="toggleRecord()" disabled>🎤 用普通话录音</button>
@@ -293,11 +292,6 @@
 </div>
 
 <script>
-// ================================================================
-// 百度CFC语音识别接口地址（已配置好，无需修改）
-// ================================================================
-const CFC_ASR_URL = "https://cew03t9wr2fvm.cfc-execute.bj.baidubce.com/asr";
-
 // ================================================================
 // 数据：学期 → 单元 → 小节 → 句子
 // ================================================================
@@ -400,12 +394,176 @@ let currentCourseId=1, currentUnitId=1, currentSectionId=1, currentIdx=0, curren
 let sessionProgress = { readDone: new Set(), writeDone: new Set(), readPointsAwarded: false, writePointsAwarded: false };
 let modalCallback=null, modalSecondaryCallback=null;
 let isTTSPlaying=false, isPlaying=false;
-let recordState='idle', finalTranscript='', litCount=0, forceStopTimer=null;
-let mediaRecorder=null, audioStream=null, audioContext=null, scriptProcessor=null, inputNode=null, pcmData=null;
 
-function currentUnit(){ const c=courses.find(c=>c.id===currentCourseId); return c?c.units.find(u=>u.id===currentUnitId):null; }
-function currentSection(){ const u=currentUnit(); return u&&u.sections?u.sections.find(s=>s.id===currentSectionId):null; }
-function currentSentences(){ const s=currentSection(); return s?s.sentences:[]; }
+// ================================================================
+// Web Speech 语音识别（专门优化华为平板Edge）
+// ================================================================
+let recordState='idle';
+let recognition=null;
+let finalTranscript='';
+let litCount=0;
+let autoStopTimer=null;
+let retryCount=0;
+const MAX_RETRY=2;
+
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+const speechSupported = !!SpeechRecognition;
+
+function toggleRecord(){
+  if(recordState==='recording') stopRecord();
+  else if(recordState==='idle') startRecord();
+}
+
+function startRecord(){
+  if(isTTSPlaying){ alert('请等待句子朗读完毕，再点击录音'); return; }
+  if(!speechSupported){ alert('当前浏览器不支持语音识别，请使用Edge或Chrome浏览器'); return; }
+  if(recordState==='recording') return;
+
+  debugLog('【录音】开始录音，创建新的识别实例');
+  document.querySelectorAll('#wordsContainer .word-card').forEach(c=>c.classList.remove('lit','wrong'));
+  litCount=0; finalTranscript=''; retryCount=0;
+
+  const btn=document.getElementById('recordBtn');
+  const status=document.getElementById('recordStatus');
+
+  // 关键优化1：每次都新建实例，不使用全局单例
+  recognition = new SpeechRecognition();
+  recognition.lang = 'zh-CN';
+  recognition.continuous = true;       // 关键优化2：连续识别，避免短句被截断
+  recognition.interimResults = true;    // 关键优化3：实时返回中间结果，实时点亮词语
+  recognition.maxAlternatives = 1;
+
+  recognition.onstart = function(){
+    debugLog('【录音】识别引擎已启动');
+    recordState='recording';
+    btn.textContent='⏹ 结束录音'; btn.className='btn btn-gray'; btn.disabled=false;
+    status.className='record-status record-recording';
+    status.textContent='🔴 正在录音，大声读句子（读对的词会变绿）';
+    document.getElementById('resultArea').classList.add('hidden');
+    document.getElementById('liveTextArea').classList.remove('hidden');
+    document.getElementById('liveText').textContent='听到：…';
+
+    // 关键优化4：12秒自动停止（长辈读短句足够，避免一直挂着）
+    clearTimeout(autoStopTimer);
+    autoStopTimer=setTimeout(()=>{
+      if(recordState==='recording'){
+        debugLog('【录音】12秒到，自动停止');
+        status.textContent='⏰ 时间到，自动结束…';
+        stopRecord();
+      }
+    },12000);
+  };
+
+  recognition.onresult = function(event){
+    let interim='';
+    for(let i=event.resultIndex; i<event.results.length; i++){
+      const transcript = event.results[i][0].transcript;
+      if(event.results[i].isFinal){
+        finalTranscript += transcript;
+      }else{
+        interim += transcript;
+      }
+    }
+    const fullText = finalTranscript + interim;
+    document.getElementById('liveText').textContent = '听到：' + fullText;
+    // 关键优化5：实时点亮词语
+    lightUpWords(fullText);
+  };
+
+  recognition.onerror = function(event){
+    debugLog('【录音】识别错误: ' + event.error);
+    if(event.error === 'not-allowed' || event.error === 'service-not-allowed'){
+      status.textContent='❌ 麦克风权限被拒绝，请在浏览器设置里允许麦克风';
+      recordState='idle'; resetRecordBtn();
+    }else if(event.error === 'no-speech'){
+      status.textContent='❌ 没有听到声音，请大声读句子';
+      // 关键优化6：no-speech不直接结束，等自动停止或用户手动停止
+    }else if(event.error === 'audio-capture'){
+      status.textContent='❌ 没有找到麦克风设备';
+      recordState='idle'; resetRecordBtn();
+    }else if(event.error === 'network'){
+      status.textContent='❌ 网络错误，请检查网络连接';
+      recordState='idle'; resetRecordBtn();
+    }
+    // 其他错误（aborted等）不处理，等onend
+  };
+
+  recognition.onend = function(){
+    debugLog('【录音】识别结束，finalTranscript=' + finalTranscript);
+    clearTimeout(autoStopTimer);
+    if(recordState !== 'recording') return; // 已经手动停止过了
+
+    // 关键优化7：如果没有任何识别结果，自动重试一次（华为平板常见第一次启动没结果）
+    if(!finalTranscript && retryCount < MAX_RETRY){
+      retryCount++;
+      debugLog('【录音】没有识别结果，自动重试第' + retryCount + '次');
+      status.textContent='🔄 重新启动识别…';
+      try{ recognition.start(); }catch(e){ debugLog('【录音】重试启动失败: '+e.message); finishRecording(); }
+      return;
+    }
+
+    recordState='idle';
+    resetRecordBtn();
+    finishRecording();
+  };
+
+  // 关键优化8：延迟500ms启动，等TTS完全停止、麦克风释放
+  setTimeout(()=>{
+    try{
+      recognition.start();
+    }catch(e){
+      debugLog('【录音】启动失败: '+e.message);
+      status.textContent='启动失败：'+e.message;
+      recordState='idle';
+    }
+  }, 500);
+}
+
+function stopRecord(){
+  if(recordState!=='recording') return;
+  debugLog('【录音】用户手动停止');
+  recordState='stopping';
+  clearTimeout(autoStopTimer);
+  const btn=document.getElementById('recordBtn');
+  btn.textContent='⏳ 识别中…'; btn.disabled=true;
+  try{
+    // 关键优化9：不调用abort()！安卓Edge调用abort会导致后续识别异常
+    // 用stop()温和停止
+    recognition.stop();
+  }catch(e){
+    debugLog('【录音】stop异常: '+e.message);
+    recordState='idle'; resetRecordBtn(); finishRecording();
+  }
+  // 兜底：如果2秒后还没触发onend，直接结束
+  setTimeout(()=>{
+    if(recordState==='stopping'){
+      debugLog('【录音】兜底结束');
+      recordState='idle'; resetRecordBtn(); finishRecording();
+    }
+  }, 2000);
+}
+
+function resetRecordBtn(){ const b=document.getElementById('recordBtn'); b.textContent='🎤 用普通话录音'; b.className='btn btn-red'; b.disabled=false; }
+function resetRecordUI(){
+  recordState='idle'; clearTimeout(autoStopTimer);
+  if(recognition){ try{ recognition.stop(); }catch(e){} }
+  recognition=null;
+  const s=document.getElementById('recordStatus'); s.className='record-status record-idle'; s.textContent='等待开始录音…';
+  document.getElementById('resultArea').classList.add('hidden');
+  document.getElementById('liveTextArea').classList.add('hidden');
+  resetRecordBtn();
+}
+function normalize(t){ return t.replace(/[，。、；：？！,.?;:\s"'""''（）()【】\[\]…—0-9]/g,''); }
+function lightUpWords(text){
+  const norm=normalize(text); const s=currentSentences()[currentIdx]; let count=0;
+  s.words.forEach((w,i)=>{
+    const card=document.querySelector(`#wordsContainer .word-card[data-idx="${i}"]`); if(!card)return;
+    let found=norm.includes(normalize(w.cn));
+    if(w.cn==='55岁'&&!found)found=norm.includes('五十五岁')||norm.includes('五五岁');
+    if(found){ if(!card.classList.contains('lit')){ card.classList.add('lit'); card.classList.remove('wrong'); } count++; }
+  });
+  litCount=count;
+}
 
 // ================================================================
 // LCS容错语音比对（70分达标）
@@ -524,6 +682,10 @@ function renderSections(){
 // ================================================================
 // 句子加载与切换
 // ================================================================
+function currentUnit(){ const c=courses.find(c=>c.id===currentCourseId); return c?c.units.find(u=>u.id===currentUnitId):null; }
+function currentSection(){ const u=currentUnit(); return u&&u.sections?u.sections.find(s=>s.id===currentSectionId):null; }
+function currentSentences(){ const s=currentSection(); return s?s.sentences:[]; }
+
 function loadSentence(){
   const sents=currentSentences();
   const s=sents[currentIdx];
@@ -617,152 +779,8 @@ async function playWord(idx){
   await speak(w.cn,currentSpeed);
 }
 function onWordClick(idx){ playWord(idx); }
-function playYueSentence(){ alert('粤语播放功能即将上线，敬请期待！'); }
 function updateSpeed(){ currentSpeed=parseFloat(document.getElementById('speedRange').value); document.getElementById('speedVal').textContent=currentSpeed.toFixed(1)+'x'; document.querySelectorAll('#speedPresets button').forEach(b=>b.classList.remove('active')); }
 function setSpeed(v,el){ currentSpeed=v; document.getElementById('speedRange').value=v; document.getElementById('speedVal').textContent=v.toFixed(1)+'x'; document.querySelectorAll('#speedPresets button').forEach(b=>b.classList.remove('active')); if(el)el.classList.add('active'); }
-
-// ================================================================
-// MediaRecorder录音 + 百度CFC语音识别
-// ================================================================
-function toggleRecord(){ if(recordState==='recording')stopRecord(); else if(recordState==='idle')startRecord(); }
-
-async function startRecord(){
-  if(isTTSPlaying){ alert('请等待句子朗读完毕，再点击录音'); return; }
-  if(recordState==='recording') return;
-  debugLog('【录音】开始录音，请求麦克风权限');
-
-  document.querySelectorAll('#wordsContainer .word-card').forEach(c=>c.classList.remove('lit','wrong','practicing'));
-  litCount=0; finalTranscript='';
-
-  const btn=document.getElementById('recordBtn'); const status=document.getElementById('recordStatus');
-
-  try{
-    audioStream = await navigator.mediaDevices.getUserMedia({audio:true});
-    audioContext = new (window.AudioContext || window.webkitAudioContext)({sampleRate:16000});
-    inputNode = audioContext.createMediaStreamSource(audioStream);
-    scriptProcessor = audioContext.createScriptProcessor(4096, 1, 1);
-    inputNode.connect(scriptProcessor);
-    scriptProcessor.connect(audioContext.destination);
-
-    pcmData = new Int16Array(0);
-    scriptProcessor.onaudioprocess = function(e){
-      const channelData = e.inputBuffer.getChannelData(0);
-      const int16Buf = floatTo16BitPCM(channelData);
-      const combined = new Int16Array(pcmData.length + int16Buf.length);
-      combined.set(pcmData);
-      combined.set(int16Buf, pcmData.length);
-      pcmData = combined;
-    };
-
-    recordState='recording';
-    btn.textContent='⏹ 结束录音'; btn.className='btn btn-gray'; btn.disabled=false;
-    status.className='record-status record-recording'; status.textContent='🔴 正在录音，大声读句子（读对的词会变绿）';
-    document.getElementById('resultArea').classList.add('hidden');
-    document.getElementById('liveTextArea').classList.remove('hidden');
-    document.getElementById('liveText').textContent='听到：…';
-
-    clearTimeout(forceStopTimer);
-    forceStopTimer=setTimeout(()=>{ if(recordState==='recording'){ status.textContent='⏰ 时间到，自动结束…'; stopRecord(); } },15000);
-
-    debugLog('【录音】MediaRecorder启动成功，正在采集音频');
-  }catch(e){
-    debugLog('【录音】启动失败: '+e.message);
-    status.textContent='启动失败：'+e.message;
-    recordState='idle';
-  }
-}
-
-function floatTo16BitPCM(inputSamples){
-  const output = new Int16Array(inputSamples.length);
-  for(let i=0;i<inputSamples.length;i++){
-    let s = Math.max(-1, Math.min(1, inputSamples[i]));
-    output[i] = s < 0 ? s * 0x8000 : s * 0x7FFF;
-  }
-  return output;
-}
-
-async function stopRecord(){
-  if(recordState!=='recording') return;
-  debugLog('【录音】停止录音，开始处理音频');
-  recordState='processing';
-  const btn=document.getElementById('recordBtn');
-  btn.textContent='⏳ 识别中…'; btn.disabled=true;
-  clearTimeout(forceStopTimer);
-
-  try{
-    scriptProcessor.disconnect();
-    inputNode.disconnect();
-    if(audioStream) audioStream.getTracks().forEach(t=>t.stop());
-    await audioContext.close();
-
-    const pcmBlob = new Blob([pcmData.buffer], {type:'audio/pcm'});
-    debugLog(`【录音】音频转换完成，PCM大小: ${pcmBlob.size} 字节`);
-    await sendToCFC(pcmBlob);
-  }catch(e){
-    debugLog('【录音】停止录音异常: '+e.message);
-    recordState='idle';
-    resetRecordBtn();
-    finishRecording();
-  }
-}
-
-async function sendToCFC(pcmBlob){
-  const status=document.getElementById('recordStatus');
-  try{
-    debugLog('【百度ASR】开始上传音频到CFC接口');
-    const arrayBuffer = await pcmBlob.arrayBuffer();
-    const resp = await fetch(CFC_ASR_URL,{
-      method:"POST",
-      body:arrayBuffer,
-      headers:{"Content-Type":"audio/pcm;rate=16000"}
-    });
-    const result = await resp.json();
-    debugLog('【百度ASR】接口返回: '+JSON.stringify(result));
-
-    if(result.err_no === 0 && result.result && result.result.length > 0){
-      finalTranscript = result.result[0];
-      debugLog('【百度识别结果】: '+finalTranscript);
-      document.getElementById('liveText').textContent = '听到：' + finalTranscript;
-      lightUpWords(finalTranscript);
-    }else{
-      debugLog('【百度ASR】识别失败: err_no='+result.err_no+', err_msg='+result.err_msg);
-      finalTranscript = '';
-      status.textContent='❌ 识别失败: '+(result.err_msg || '未知错误');
-    }
-  }catch(e){
-    debugLog('【百度ASR】请求异常: '+e.message);
-    finalTranscript = '';
-    status.textContent='❌ 网络错误: '+e.message;
-  }
-  recordState='idle';
-  resetRecordBtn();
-  finishRecording();
-}
-
-function resetRecordBtn(){ const b=document.getElementById('recordBtn'); b.textContent='🎤 用普通话录音'; b.className='btn btn-red'; b.disabled=false; }
-function resetRecordUI(){
-  recordState='idle'; clearTimeout(forceStopTimer);
-  if(scriptProcessor){try{scriptProcessor.disconnect();}catch(e){}}
-  if(inputNode){try{inputNode.disconnect();}catch(e){}}
-  if(audioStream){try{audioStream.getTracks().forEach(t=>t.stop());}catch(e){}}
-  if(audioContext){try{audioContext.close();}catch(e){}}
-  scriptProcessor=null; inputNode=null; audioStream=null; audioContext=null; pcmData=null;
-  const s=document.getElementById('recordStatus'); s.className='record-status record-idle'; s.textContent='等待开始录音…';
-  document.getElementById('resultArea').classList.add('hidden');
-  document.getElementById('liveTextArea').classList.add('hidden');
-  resetRecordBtn();
-}
-function normalize(t){ return t.replace(/[，。、；：？！,.?;:\s"'""''（）()【】\[\]…—0-9]/g,''); }
-function lightUpWords(text){
-  const norm=normalize(text); const s=currentSentences()[currentIdx]; let count=0;
-  s.words.forEach((w,i)=>{
-    const card=document.querySelector(`#wordsContainer .word-card[data-idx="${i}"]`); if(!card)return;
-    let found=norm.includes(normalize(w.cn));
-    if(w.cn==='55岁'&&!found)found=norm.includes('五十五岁')||norm.includes('五五岁');
-    if(found){ if(!card.classList.contains('lit')){ card.classList.add('lit'); card.classList.remove('wrong'); } count++; }
-  });
-  litCount=count;
-}
 
 // ================================================================
 // 小节听读完成 —— 积分+弹窗
@@ -885,7 +903,7 @@ function finishRecording(){
   grantReadCompletionReward();
 }
 
-function retryRecord(){ document.querySelectorAll('#wordsContainer .word-card').forEach(c=>c.classList.remove('lit','wrong','practicing')); litCount=0; startRecord(); }
+function retryRecord(){ document.querySelectorAll('#wordsContainer .word-card').forEach(c=>c.classList.remove('lit','wrong')); litCount=0; startRecord(); }
 
 // ================================================================
 // 弹窗
@@ -965,11 +983,15 @@ function checkEnvironment(){
   const recordBtn=document.getElementById('recordBtn');
   const info=document.getElementById('envInfo');
   const isSecure=window.isSecureContext;
-  info.textContent=`协议：${location.protocol} | 安全上下文：${isSecure?'是 ✅':'否 ❌'}`;
+  info.textContent=`协议：${location.protocol} | 安全上下文：${isSecure?'是 ✅':'否 ❌'} | 语音识别支持：${speechSupported?'是 ✅':'否 ❌'}`;
   if(!isSecure){
     document.getElementById('envProtocol').textContent=location.protocol;
     warn.classList.remove('hidden');
     recordBtn.disabled=true; recordBtn.textContent='🎤 用普通话录音（需HTTPS）';
+    return;
+  }
+  if(!speechSupported){
+    recordBtn.disabled=true; recordBtn.textContent='🎤 浏览器不支持语音识别';
     return;
   }
   recordBtn.disabled=false; recordBtn.textContent='🎤 用普通话录音';
@@ -1072,7 +1094,7 @@ window.__app = {
   get writeDoneCount(){ return sessionProgress.writeDone.size; },
   get recordState(){ return recordState; },
   get isTTSPlaying(){ return isTTSPlaying; },
-  get cfcUrl(){ return CFC_ASR_URL; },
+  get speechSupported(){ return speechSupported; },
   evaluateText: function(std, user){ return evaluateText(std, user); },
   markReadDone: function(idx){
     const i = (idx===undefined)? currentIdx : idx;
@@ -1113,7 +1135,7 @@ window.__app = {
     console.log('当前句:', (currentIdx+1)+'/'+currentSentences().length);
     console.log('听读通过:', sessionProgress.readDone.size+'/'+currentSentences().length);
     console.log('跟写通过:', sessionProgress.writeDone.size+'/'+currentSentences().length);
-    console.log('录音状态:', recordState, '| TTS播放中:', isTTSPlaying, '| CFC接口:', CFC_ASR_URL);
+    console.log('录音状态:', recordState, '| TTS播放中:', isTTSPlaying, '| 语音识别支持:', speechSupported);
     console.log('当前句子:', currentSentences()[currentIdx].cn);
   }
 };
@@ -1145,8 +1167,8 @@ function updateDebugPanel(){
     <div class="debug-row"><span class="debug-label">学期/单元/小节:</span> ${currentCourseId}/${currentUnitId}/${currentSectionId} (${sec?sec.name:'无'})</div>
     <div class="debug-row"><span class="debug-label">当前句:</span> ${currentIdx+1}/${sents.length} - ${curSent}</div>
     <div class="debug-row"><span class="debug-label">录音状态:</span> ${recordState}</div>
-    <div class="debug-row"><span class="debug-label">MediaRecorder:</span> ${scriptProcessor ? '运行中' : '未启动'}</div>
-    <div class="debug-row"><span class="debug-label">CFC接口:</span> ${CFC_ASR_URL.substr(0,50)}…</div>
+    <div class="debug-row"><span class="debug-label">识别实例:</span> ${recognition ? '已创建' : '未创建'}</div>
+    <div class="debug-row"><span class="debug-label">语音识别支持:</span> ${speechSupported?'是':'否'}</div>
     <div class="debug-row"><span class="debug-label">TTS播放中:</span> ${isTTSPlaying}</div>
     <div class="debug-row"><span class="debug-label">听读通过:</span> ${sessionProgress.readDone.size}/${sents.length}</div>
     <div class="debug-row"><span class="debug-label">跟写通过:</span> ${sessionProgress.writeDone.size}/${sents.length}</div>
@@ -1185,7 +1207,8 @@ window.addEventListener('load',()=>{
   updateTopPoints();
   renderCourses();
   showPage('page-courses');
-  debugLog('页面加载完成，百度CFC ASR模式初始化');
+  debugLog('页面加载完成，Web Speech语音识别模式初始化');
+  if('speechSynthesis' in window){ speechSynthesis.getVoices(); }
 });
 </script>
 

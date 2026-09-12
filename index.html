@@ -402,7 +402,6 @@ body { background:#f5f7fa; color:#1a1a1a; font-size:22px; line-height:1.6; paddi
       <div class="sentence-text" id="sentenceText"></div>
       <div class="speaker-icon">📢</div>
     </div>
-    <div class="word-grid" id="wordGrid"></div>
 
     <!-- 可编辑语音输入框（保持外观，支持平板输入法语音输入+手打字） -->
     <div class="voice-input-wrap">
@@ -417,6 +416,9 @@ body { background:#f5f7fa; color:#1a1a1a; font-size:22px; line-height:1.6; paddi
 
     <button class="score-btn" onclick="submitScore()">开始评分</button>
     <div class="score-result" id="scoreResult"></div>
+
+    <!-- 词语卡片网格（移到最下面，键盘弹出时不遮挡输入框和评分按钮） -->
+    <div class="word-grid" id="wordGrid"></div>
   </div>
 
   <!-- 跟写面板 -->
@@ -494,7 +496,7 @@ body { background:#f5f7fa; color:#1a1a1a; font-size:22px; line-height:1.6; paddi
 </div>
 
 <!-- 调试面板 -->
-<button class="debug-toggle" id="debugToggle" onclick="toggleDebugPanel()">📊</button>
+<button class="debug-toggle" id="debugToggle" onclick="toggleDebugPanel()">🧪</button>
 <div class="debug-panel hidden" id="debugPanel">
   <div class="debug-title">
     <span>🧩 调试面板</span>

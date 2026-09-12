@@ -21,6 +21,13 @@ body { background:#f5f7fa; color:#1a1a1a; font-size:22px; line-height:1.6; paddi
   border-radius:0 0 22px 22px;
   box-shadow:0 8px 22px rgba(43,138,255,0.35);
 }
+.back-btn-top {
+  background:rgba(255,255,255,0.25); border:none; color:#fff;
+  width:44px; height:44px; border-radius:12px; font-size:24px;
+  cursor:pointer; display:flex; align-items:center; justify-content:center;
+  font-weight:bold; line-height:1; flex-shrink:0;
+}
+.back-btn-top:active { background:rgba(255,255,255,0.4); }
 .coin-area { display:flex; align-items:center; gap:6px; font-size:18px; color:#ffd447; }
 .coin-area span { font-size:22px; }
 
@@ -63,13 +70,14 @@ body { background:#f5f7fa; color:#1a1a1a; font-size:22px; line-height:1.6; paddi
 }
 .practice-tab.active { background:#2b8aff; color:#fff; }
 
-/* 句子大卡片 */
+/* 句子大卡片 - 悬浮固定在顶部 */
 .sentence-card {
   background:linear-gradient(135deg,#2b8aff 0%,#1a6fe0 100%);
   border-radius:26px; padding:28px 24px; color:#fff;
   display:flex; justify-content:center; align-items:center; gap:16px;
   margin-top:16px; box-shadow:0 18px 38px rgba(43,138,255,0.45);
   cursor:pointer; transition:transform 0.15s; position:relative;
+  position: sticky; top: 0; z-index: 30;
 }
 .sentence-card:active { transform:scale(0.985); }
 .sentence-text {
@@ -288,6 +296,38 @@ body { background:#f5f7fa; color:#1a1a1a; font-size:22px; line-height:1.6; paddi
 .nav-home { background:linear-gradient(135deg,#2b8aff,#1a6fe0); }
 .nav-mine { background:linear-gradient(135deg,#ffc120,#ffa000); }
 
+/* 练习页顶部栏：返回箭头+tab在左，下一句在右 */
+.practice-top-bar {
+  display:flex; justify-content:space-between; align-items:center;
+  padding:14px 4px 10px; gap:10px;
+}
+.practice-top-left { display:flex; align-items:center; gap:12px; }
+.back-arrow-large {
+  font-size:32px; color:#2b8aff; cursor:pointer; font-weight:bold;
+  background:#eaf4ff; width:52px; height:52px; border-radius:14px;
+  display:flex; align-items:center; justify-content:center;
+  box-shadow:0 4px 12px rgba(43,138,255,0.2); flex-shrink:0;
+  line-height:1;
+}
+.next-sentence-top {
+  font-size:18px; font-weight:bold; color:#2b8aff;
+  background:#eaf4ff; padding:12px 20px; border-radius:999px;
+  border:2px solid #2b8aff; cursor:pointer;
+  box-shadow:0 4px 12px rgba(43,138,255,0.2);
+  white-space:nowrap; flex-shrink:0;
+  transition:all 0.2s;
+}
+.next-sentence-top:active { transform:scale(0.95); }
+.next-sentence-top.blink {
+  animation:arrowBlink 0.8s infinite alternate;
+  background:#fff3e0; border-color:#ffb020; color:#e65100;
+  box-shadow:0 6px 20px rgba(255,176,32,0.5);
+}
+@keyframes arrowBlink {
+  from { opacity:0.6; transform:translateX(-3px); box-shadow:0 4px 10px rgba(255,176,32,0.3); }
+  to { opacity:1; transform:translateX(3px); box-shadow:0 8px 24px rgba(255,176,32,0.6); }
+}
+
 /* 调试面板 */
 .debug-toggle {
   position:fixed; right:8px; bottom:120px; width:36px; height:36px;
@@ -311,6 +351,7 @@ body { background:#f5f7fa; color:#1a1a1a; font-size:22px; line-height:1.6; paddi
 
 <!-- 顶部导航 -->
 <div class="top-header">
+  <button class="back-btn-top" id="backBtnTop" onclick="goSection()" style="visibility:hidden;">←</button>
   <span id="topTitle">普通话学习</span>
   <span class="coin-area">💰 <span id="topPoints">0</span></span>
 </div>
@@ -341,12 +382,12 @@ body { background:#f5f7fa; color:#1a1a1a; font-size:22px; line-height:1.6; paddi
 
 <!-- 页面4：练习页 -->
 <div id="page-practice" class="page">
-  <div class="back-row">
-    <span class="back-arrow" onclick="goSection()">←</span>
+  <div class="practice-top-bar">
     <div class="practice-tabs">
       <div id="tabRead" class="practice-tab active" onclick="switchTab('read')">✓ 跟读</div>
       <div id="tabWrite" class="practice-tab" onclick="switchTab('write')">✓ 跟写</div>
     </div>
+    <div class="next-sentence-top" id="nextArrowTop" onclick="nextSentence()">下一句 →</div>
   </div>
 
   <!-- 跟读面板 -->
@@ -370,11 +411,6 @@ body { background:#f5f7fa; color:#1a1a1a; font-size:22px; line-height:1.6; paddi
 
     <button class="score-btn" onclick="submitScore()">开始评分</button>
     <div class="score-result" id="scoreResult"></div>
-
-    <!-- 下一句箭头：常态显示，完成后闪烁 -->
-    <div class="next-arrow-wrap">
-      <div class="next-arrow" id="nextArrow" onclick="nextSentence()">→ 下一句</div>
-    </div>
   </div>
 
   <!-- 跟写面板 -->
@@ -396,11 +432,7 @@ body { background:#f5f7fa; color:#1a1a1a; font-size:22px; line-height:1.6; paddi
 
 <!-- 页面5：我的页面 -->
 <div id="page-mine" class="page">
-  <div class="back-row">
-    <span class="back-arrow" onclick="goHome()">←</span>
-    <span class="page-subtitle">我的学习</span>
-  </div>
-  <div class="mine-card">
+  <div class="mine-card" style="margin-top:20px;">
     <h3>📊 学习数据</h3>
     <div class="mine-stat">
       <div><div class="num" id="mineTotalPoints">0</div><div class="label">总积分</div></div>
@@ -456,7 +488,7 @@ body { background:#f5f7fa; color:#1a1a1a; font-size:22px; line-height:1.6; paddi
 </div>
 
 <!-- 调试面板 -->
-<button class="debug-toggle" id="debugToggle" onclick="toggleDebugPanel()">🧩</button>
+<button class="debug-toggle" id="debugToggle" onclick="toggleDebugPanel()">📊</button>
 <div class="debug-panel hidden" id="debugPanel">
   <div class="debug-title">
     <span>🧩 调试面板</span>
@@ -578,13 +610,31 @@ function switchPage(id){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   const bn=document.getElementById('bottomNav');
-  bn.classList.toggle('hidden', id!=='page-home');
+  // 首页和我的页面都显示底部导航，其他页面隐藏
+  bn.classList.toggle('hidden', id!=='page-home' && id!=='page-mine');
   document.getElementById('floatRecordBtn').style.display = (id==='page-practice')?'flex':'none';
+  // 非练习页：隐藏顶部返回按钮，恢复标题
+  if(id!=='page-practice'){
+    document.getElementById('backBtnTop').style.visibility='hidden';
+    document.getElementById('topTitle').textContent='普通话学习';
+  }
   if(id==='page-mine') renderMine();
 }
-function goHome(){ switchPage('page-home'); renderCourses(); }
-function goUnit(){ switchPage('page-unit'); renderUnits(); }
-function goSection(){ switchPage('page-section'); renderSections(); }
+function goHome(){ 
+  document.getElementById('backBtnTop').style.visibility='hidden';
+  document.getElementById('topTitle').textContent='普通话学习';
+  switchPage('page-home'); renderCourses(); 
+}
+function goUnit(){ 
+  document.getElementById('backBtnTop').style.visibility='hidden';
+  document.getElementById('topTitle').textContent='普通话学习';
+  switchPage('page-unit'); renderUnits(); 
+}
+function goSection(){ 
+  document.getElementById('backBtnTop').style.visibility='hidden';
+  document.getElementById('topTitle').textContent='普通话学习';
+  switchPage('page-section'); renderSections(); 
+}
 
 function selectCourse(id){ currentCourseId=id; goUnit(); }
 function selectUnit(id){
@@ -603,8 +653,9 @@ function selectSection(id){
 function enterLearn(){
   currentIdx=0;
   sessionProgress = { readDone: new Set(), writeDone: new Set(), readPointsAwarded: false, writePointsAwarded: false };
-  const u=currentUnit(); const s=currentSection();
-  document.getElementById('topTitle').textContent=s.name;
+  // 顶部导航栏：显示返回按钮，清空小节名称
+  document.getElementById('backBtnTop').style.visibility='visible';
+  document.getElementById('topTitle').textContent='';
   switchTab('read');
   switchPage('page-practice');
   loadSentence();
@@ -654,8 +705,8 @@ function loadSentence(){
   document.getElementById('scoreResult').style.display='none';
   // 清空输入框
   document.getElementById('voiceInputBox').value='';
-  // 下一句箭头常态显示，移除闪烁
-  document.getElementById('nextArrow').classList.remove('blink');
+  // 下一句按钮常态显示，移除闪烁
+  document.getElementById('nextArrowTop').classList.remove('blink');
   const grid=document.getElementById('wordGrid');
   grid.innerHTML=s.words.map((w,i)=>`
     <div class="word-card ${w.keyword?'keyword':''}" data-idx="${i}" onclick="playWord(${i})">
@@ -797,8 +848,8 @@ function submitScore(){
     resultEl.innerHTML=`${stars}<br>${st}<br>✅ 得分：${score}分，通过！词语正确 ${correct}/${s.words.length}`;
     sessionProgress.readDone.add(currentIdx);
     grantReadCompletionReward();
-    // 评分通过后，下一句箭头开始闪烁引导
-    document.getElementById('nextArrow').classList.add('blink');
+    // 评分通过后，顶部下一句按钮开始闪烁引导
+    document.getElementById('nextArrowTop').classList.add('blink');
   }else{
     resultEl.className='score-result fail';
     resultEl.innerHTML=`${stars}<br>${st}<br>❌ 得分：${score}分，未达到70分，请再试一次`;

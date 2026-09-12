@@ -323,6 +323,23 @@ body { background:#f5f7fa; color:#1a1a1a; font-size:22px; line-height:1.6; paddi
   white-space:nowrap; flex-shrink:0;
   transition:all 0.2s;
 }
+.prev-sentence-top {
+  font-size:18px; font-weight:bold; color:#666;
+  background:#f5f5f5; padding:12px 20px; border-radius:999px;
+  border:2px solid #ccc; cursor:pointer;
+  box-shadow:0 4px 12px rgba(0,0,0,0.08);
+  white-space:nowrap; flex-shrink:0;
+  transition:all 0.2s;
+}
+.prev-sentence-top:active { transform:scale(0.95); }
+.prev-sentence-top.disabled { opacity:0.4; cursor:not-allowed; }
+.sentence-counter {
+  font-size:20px; font-weight:bold; color:#333;
+  background:#fff; padding:12px 24px; border-radius:999px;
+  border:2px solid #e0e0e0;
+  box-shadow:0 2px 8px rgba(0,0,0,0.06);
+  white-space:nowrap; flex-shrink:0;
+}
 .next-sentence-top:active { transform:scale(0.95); }
 .next-sentence-top.blink {
   animation:arrowBlink 0.8s infinite alternate;
@@ -389,10 +406,8 @@ body { background:#f5f7fa; color:#1a1a1a; font-size:22px; line-height:1.6; paddi
 <!-- 页面4：练习页 -->
 <div id="page-practice" class="page">
   <div class="practice-top-bar">
-    <div class="practice-tabs">
-      <div id="tabRead" class="practice-tab active" onclick="switchTab('read')">✓ 跟读</div>
-      <div id="tabWrite" class="practice-tab" onclick="switchTab('write')">✓ 跟写</div>
-    </div>
+    <div class="prev-sentence-top" id="prevArrowTop" onclick="prevSentence()">← 上一句</div>
+    <div class="sentence-counter" id="sentenceCounter">1/7</div>
     <div class="next-sentence-top" id="nextArrowTop" onclick="nextSentence()">下一句 →</div>
   </div>
 
@@ -419,22 +434,6 @@ body { background:#f5f7fa; color:#1a1a1a; font-size:22px; line-height:1.6; paddi
 
     <!-- 词语卡片网格（移到最下面，键盘弹出时不遮挡输入框和评分按钮） -->
     <div class="word-grid" id="wordGrid"></div>
-  </div>
-
-  <!-- 跟写面板 -->
-  <div id="panelWrite" class="hidden">
-    <div class="write-sentence-box">
-      <div class="write-sentence-cn" id="writeCn"></div>
-      <div class="write-sentence-py" id="writePy"></div>
-    </div>
-    <div class="write-btns">
-      <button class="write-play" onclick="playWriteSentence()">🔊 播放</button>
-      <button class="write-slow" onclick="playWriteSlow()">🐢 慢速</button>
-      <button class="write-clear" onclick="clearWrite()">🗑 清空</button>
-    </div>
-    <textarea class="write-input" id="writeInput" placeholder="请照着上面的句子写下来…" rows="3"></textarea>
-    <button class="write-submit" onclick="submitWrite()">✅ 提交检查</button>
-    <div class="write-result" id="writeResult"></div>
   </div>
 </div>
 
@@ -580,7 +579,7 @@ function updateTopPoints(){ const store=getStore(); document.getElementById('top
 // 全局状态
 // ================================================================
 let currentCourseId=1, currentUnitId=1, currentSectionId=1, currentIdx=0, currentSpeed=1.0;
-let sessionProgress = { readDone: new Set(), writeDone: new Set(), readPointsAwarded: false, writePointsAwarded: false };
+let sessionProgress = { readDone: new Set(), readPointsAwarded: false };
 let modalCallback=null, modalSecondaryCallback=null;
 let recordState='idle', mediaRecorder=null, audioChunks=[], audioBlob=null, audioUrl=null;
 
@@ -654,17 +653,16 @@ function selectUnit(id){
 }
 function selectSection(id){
   currentSectionId=id;
-  sessionProgress = { readDone: new Set(), writeDone: new Set(), readPointsAwarded: false, writePointsAwarded: false };
+  sessionProgress = { readDone: new Set(), readPointsAwarded: false };
   currentIdx=0;
   enterLearn();
 }
 function enterLearn(){
   currentIdx=0;
-  sessionProgress = { readDone: new Set(), writeDone: new Set(), readPointsAwarded: false, writePointsAwarded: false };
+  sessionProgress = { readDone: new Set(), readPointsAwarded: false };
   // 顶部导航栏：显示返回按钮，清空小节名称
   document.getElementById('backBtnTop').style.visibility='visible';
   document.getElementById('topTitle').textContent='';
-  switchTab('read');
   switchPage('page-practice');
   loadSentence();
 }
@@ -706,15 +704,17 @@ function loadSentence(){
   const s=sents[currentIdx];
   if(!s)return;
   document.getElementById('sentenceText').innerHTML=s.cn.replace(/，/g,'，<br>');
-  document.getElementById('writeCn').textContent=s.cn;
-  document.getElementById('writePy').textContent=s.py;
-  document.getElementById('writeInput').value='';
-  document.getElementById('writeResult').classList.add('hidden');
   document.getElementById('scoreResult').style.display='none';
   // 清空输入框
   document.getElementById('voiceInputBox').value='';
   // 下一句按钮常态显示，移除闪烁
   document.getElementById('nextArrowTop').classList.remove('blink');
+  // 更新句子计数器
+  document.getElementById('sentenceCounter').textContent=(currentIdx+1)+'/'+sents.length;
+  // 上一句按钮状态：第一句时禁用
+  const prevBtn=document.getElementById('prevArrowTop');
+  if(currentIdx===0){ prevBtn.classList.add('disabled'); }
+  else { prevBtn.classList.remove('disabled'); }
   const grid=document.getElementById('wordGrid');
   grid.innerHTML=s.words.map((w,i)=>`
     <div class="word-card ${w.keyword?'keyword':''}" data-idx="${i}" onclick="playWord(${i})">
@@ -755,8 +755,6 @@ async function playWord(idx){
   await speak(w.cn,currentSpeed);
   debugLog('【TTS】播放词语：'+w.cn);
 }
-function playWriteSentence(){speak(currentSentences()[currentIdx].cn,1.0);}
-function playWriteSlow(){speak(currentSentences()[currentIdx].cn,0.6);}
 document.getElementById('speedSlider').addEventListener('input',function(){
   currentSpeed=parseFloat(this.value);
   document.getElementById('speedText').textContent=currentSpeed.toFixed(1);
@@ -865,34 +863,6 @@ function submitScore(){
 }
 
 // ================================================================
-// 跟写
-// ================================================================
-function clearWrite(){document.getElementById('writeInput').value='';document.getElementById('writeResult').classList.add('hidden');}
-function submitWrite(){
-  const standard=currentSentences()[currentIdx].cn;
-  const userInput=document.getElementById('writeInput').value.trim();
-  const rb=document.getElementById('writeResult');
-  if(!userInput){rb.className='write-result write-wrong';rb.innerHTML='请先写出句子再提交';rb.classList.remove('hidden');return;}
-  const sc=standard.replace(/[，。、；：？！,.?;:\s"'""''（）()【】\[\]]/g,'').split('');
-  const uc=userInput.replace(/[，。、；：？！,.?;:\s"'""''（）()【】\[\]]/g,'').split('');
-  let allOk=(sc.length===uc.length),comp='';
-  for(let i=0;i<Math.max(sc.length,uc.length);i++){
-    if(i<sc.length&&i<uc.length&&sc[i]===uc[i])comp+=`<span style="color:#52c41a;font-weight:bold;">${sc[i]}</span>`;
-    else{allOk=false;if(i<uc.length)comp+=`<span style="background:#ffcdd2;text-decoration:line-through;padding:2px 4px;border-radius:4px;">${uc[i]}</span>`;if(i<sc.length&&(i>=uc.length||sc[i]!==uc[i]))comp+=`<span style="color:#1565c0;font-weight:bold;">【${sc[i]}】</span>`;}
-  }
-  if(allOk){
-    rb.className='write-result write-correct';
-    rb.innerHTML=`✅ 完全正确！写得很棒！<br><span style="font-size:18px;">${standard}</span>`;
-    sessionProgress.writeDone.add(currentIdx);
-    grantWriteCompletionReward();
-  }else{
-    rb.className='write-result write-wrong';
-    rb.innerHTML=`❌ 有写错的地方（红色=你写错的，蓝色=正确的）：<br><div style="margin:8px 0;font-size:22px;">${comp}</div><div class="write-answer">正确写法：${standard}</div>`;
-  }
-  rb.classList.remove('hidden');
-}
-
-// ================================================================
 // 小节完成积分+弹窗
 // ================================================================
 function grantReadCompletionReward(){
@@ -915,44 +885,13 @@ function grantReadCompletionReward(){
   console.log('💰 听读小节完成奖励 +'+points+'分');
   setTimeout(()=>{
     showModal({
-      stars:'🎉',title:isFirst?'太棒了！听读全部完成！':'复习完成！继续加油！',
+      stars:'🎉',title:isFirst?'太棒了！全部完成！':'复习完成！继续加油！',
       points:points,isFirst:isFirst,
-      hint:'接下来进行跟写练习，巩固一下吧！',
-      primaryText:'✍️ 去跟写练习',
-      primaryAction:()=>{switchTab('write');currentIdx=0;loadSentence();},
-      secondaryText:'🔄 再听读一遍',
-      secondaryAction:()=>{sessionProgress.readPointsAwarded=false;currentIdx=0;loadSentence();}
-    });
-  },600);
-}
-function grantWriteCompletionReward(){
-  if(sessionProgress.writePointsAwarded)return;
-  const allDone=sessionProgress.writeDone.size>=currentSentences().length;
-  if(!allDone)return;
-  sessionProgress.writePointsAwarded=true;
-  const store=getStore();
-  const sec=currentSection();
-  const writeKey='writesection_'+currentCourseId+'_'+currentUnitId+'_'+currentSectionId;
-  let points=0,isFirst=false;
-  if(!store.achievements[writeKey]){
-    isFirst=true;points=20;store.achievements[writeKey]=true;saveStore(store);
-  }else{
-    if(!store.reviewCounts)store.reviewCounts={};
-    const rc=store.reviewCounts[writeKey+'_review']||0;
-    if(rc<20){points=5;store.reviewCounts[writeKey+'_review']=rc+1;saveStore(store);}
-  }
-  if(points>0)addPoints(points,isFirst?'跟写小节首次完成('+sec.name+')':'跟写小节复习('+sec.name+')');
-  console.log('💰 跟写小节完成奖励 +'+points+'分');
-  setTimeout(()=>{
-    const u=currentUnit();const hasNext=u.sections&&currentSectionId<u.sections.length;
-    showModal({
-      stars:'🏆',title:'太厉害了！跟写全部完成！',
-      points:points,isFirst:isFirst,
-      hint:hasNext?'本小节学习完成，继续下一小节吧！':'本单元所有小节已完成！',
-      primaryText:hasNext?'➡️ 进入下一小节':'📚 返回单元列表',
-      primaryAction:()=>{if(hasNext){selectSection(currentSectionId+1);}else{goUnit();}},
+      hint:'本小节句子已全部学习完成！',
+      primaryText:'✅ 返回小节列表',
+      primaryAction:()=>{goSection();},
       secondaryText:'🔄 再练一遍',
-      secondaryAction:()=>{sessionProgress.writePointsAwarded=false;currentIdx=0;loadSentence();switchTab('read');}
+      secondaryAction:()=>{sessionProgress.readPointsAwarded=false;currentIdx=0;loadSentence();}
     });
   },600);
 }
@@ -977,17 +916,6 @@ function modalPrimaryAction(){closeModal();if(modalCallback)modalCallback();}
 function modalSecondaryAction(){closeModal();if(modalSecondaryCallback)modalSecondaryAction();}
 
 // ================================================================
-// Tab
-// ================================================================
-function switchTab(tab){
-  document.getElementById('tabRead').classList.toggle('active',tab==='read');
-  document.getElementById('tabWrite').classList.toggle('active',tab==='write');
-  document.getElementById('panelRead').classList.toggle('hidden',tab!=='read');
-  document.getElementById('panelWrite').classList.toggle('hidden',tab!=='write');
-  if('speechSynthesis' in window)speechSynthesis.cancel();
-}
-
-// ================================================================
 // 我的页面
 // ================================================================
 function renderMine(){
@@ -999,12 +927,11 @@ function renderMine(){
   document.getElementById('mineDays').textContent=days;
   document.getElementById('mineWithdraw').textContent=((store.totalPoints||0)*0.0001).toFixed(2);
   const achList=document.getElementById('mineAchieveList');
-  const secKeys=Object.keys(store.achievements||{}).filter(k=>k.startsWith('readsection_')||k.startsWith('writesection_'));
+  const secKeys=Object.keys(store.achievements||{}).filter(k=>k.startsWith('readsection_'));
   if(secKeys.length===0){achList.innerHTML='<div class="empty-tip">暂无成就，继续学习解锁奖励！</div>';}
   else{
     achList.innerHTML=secKeys.map(k=>{
-      const label=k.startsWith('readsection_')?'📖 听读完成':'✍️ 跟写完成';
-      return `<div class="achieve-item"><span>✅</span><span class="ach-name">${label}</span></div>`;
+      return `<div class="achieve-item"><span>✅</span><span class="ach-name">📖 听读完成</span></div>`;
     }).join('');
   }
   const logEl=document.getElementById('minePointLog');
@@ -1052,7 +979,6 @@ window.__app={
   get currentSectionId(){return currentSectionId;},
   get totalSentences(){return currentSentences().length;},
   get readDoneCount(){return sessionProgress.readDone.size;},
-  get writeDoneCount(){return sessionProgress.writeDone.size;},
   evaluateText:function(std,user){return evaluateText(std,user);},
   markReadDone:function(idx){
     const i=(idx===undefined)?currentIdx:idx;
@@ -1060,21 +986,13 @@ window.__app={
     console.log('✅ 已标记第'+(i+1)+'句听读通过，当前通过'+sessionProgress.readDone.size+'/'+currentSentences().length);
     grantReadCompletionReward();
   },
-  markWriteDone:function(idx){
-    const i=(idx===undefined)?currentIdx:idx;
-    sessionProgress.writeDone.add(i);
-    console.log('✅ 已标记第'+(i+1)+'句跟写通过，当前通过'+sessionProgress.writeDone.size+'/'+currentSentences().length);
-    grantWriteCompletionReward();
-  },
   markAllReadDone:function(){for(let i=0;i<currentSentences().length;i++){this.markReadDone(i);}console.log('🎉 全部听读已标记通过！');},
-  markAllWriteDone:function(){for(let i=0;i<currentSentences().length;i++){this.markWriteDone(i);}console.log('🎉 全部跟写已标记通过！');},
   next:function(){nextSentence();},
   prev:function(){prevSentence();},
   load:function(){loadSentence();},
-  switchTab:function(t){switchTab(t);},
   gotoSection:function(id){selectSection(id);},
   resetSession:function(){
-    sessionProgress={readDone:new Set(),writeDone:new Set(),readPointsAwarded:false,writePointsAwarded:false};
+    sessionProgress={readDone:new Set(),readPointsAwarded:false};
     currentIdx=0;loadSentence();
     console.log('🔄 会话进度已重置');
   },
@@ -1083,7 +1001,6 @@ window.__app={
     console.log('学期:',currentCourseId,'单元:',currentUnitId,'小节:',currentSectionId);
     console.log('当前句:',(currentIdx+1)+'/'+currentSentences().length);
     console.log('听读通过:',sessionProgress.readDone.size+'/'+currentSentences().length);
-    console.log('跟写通过:',sessionProgress.writeDone.size+'/'+currentSentences().length);
     console.log('录音状态:',recordState);
     console.log('当前句子:',currentSentences()[currentIdx].cn);
   }
@@ -1115,7 +1032,6 @@ function updateDebugPanel(){
     <div class="debug-row"><span class="debug-label">当前句:</span> ${currentIdx+1}/${sents.length} - ${curSent}</div>
     <div class="debug-row"><span class="debug-label">录音状态:</span> ${recordState}</div>
     <div class="debug-row"><span class="debug-label">听读通过:</span> ${sessionProgress.readDone.size}/${sents.length}</div>
-    <div class="debug-row"><span class="debug-label">跟写通过:</span> ${sessionProgress.writeDone.size}/${sents.length}</div>
     <div class="debug-row"><span class="debug-label">总积分:</span> ${store.totalPoints||0}</div>
     <div class="debug-row"><span class="debug-label">协议:</span> ${location.protocol} | 安全上下文: ${window.isSecureContext?'是':'否'}</div>
     <div class="debug-row" style="margin-top:6px;"><span class="debug-label">操作日志:</span></div>

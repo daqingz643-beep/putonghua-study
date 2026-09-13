@@ -6,7 +6,7 @@
 <title>普通话学习</title>
 <style>
 * { margin:0; padding:0; box-sizing:border-box; font-family:"PingFang SC","Microsoft YaHei","Heiti SC",sans-serif; -webkit-tap-highlight-color:transparent; }
-body { background:#f5f7fa; color:#1a1a1a; font-size:22px; line-height:1.6; padding-bottom:20px; min-height:100vh; }
+body { background:#f5f7fa; color:#1a1a1a; font-size:22px; line-height:1.6; padding-bottom:180px; min-height:100vh; }
 .hidden { display:none !important; }
 
 /* 页面容器 */
@@ -495,7 +495,7 @@ body { background:#f5f7fa; color:#1a1a1a; font-size:22px; line-height:1.6; paddi
 </div>
 
 <!-- 调试面板 -->
-<button class="debug-toggle" id="debugToggle" onclick="toggleDebugPanel()">🔬</button>
+<button class="debug-toggle" id="debugToggle" onclick="toggleDebugPanel()">🔍</button>
 <div class="debug-panel hidden" id="debugPanel">
   <div class="debug-title">
     <span>🧩 调试面板</span>
@@ -24075,6 +24075,574 @@ const courses = [
         }
       ]
     }
+    ,
+    {
+      id: 9,
+      name: "种牙一期手术注意事项教程",
+      units: [
+        {
+          id: 1,
+          name: "术前核实与防坑",
+          sections: [
+            {
+              id: 1,
+              name: "种植体品牌型号核实",
+              sentences: [
+                { cn: "今天种的是什么牌子的种植体？", py: "", words: [] },
+                { cn: "种植体，就是种进骨头里的人工牙根。", py: "", words: [] },
+                { cn: "是韩国奥齿泰清水这个牌子吗？", py: "", words: [] },
+                { cn: "有几个型号可以选？分别是多大？", py: "", words: [] },
+                { cn: "医生根据什么来选型号？", py: "", words: [] },
+                { cn: "根据骨头条件选，骨头宽选粗一点的。", py: "", words: [] },
+                { cn: "手术前包装能不能打开给我看？", py: "", words: [] },
+                { cn: "包装术前不能打开，术后写名字再拍照。", py: "", words: [] },
+                { cn: "做完之后，盒子能给我拍照吗？", py: "", words: [] },
+              ]
+            },
+            {
+              id: 2,
+              name: "费用与额外项目确认",
+              sentences: [
+                { cn: "上面那颗牙有烂牙根，要清创。", py: "", words: [] },
+                { cn: "清创，就是把烂掉的牙根清理干净。", py: "", words: [] },
+                { cn: "清创要不要另外加钱？", py: "", words: [] },
+                { cn: "刚才说不另外收费，麻烦写在单上。", py: "", words: [] },
+                { cn: "今天的费用，包含在之前交的钱里吗？", py: "", words: [] },
+                { cn: "如果还要加钱，能不能先告诉我？", py: "", words: [] },
+                { cn: "我先不做额外项目，要和家人商量。", py: "", words: [] },
+                { cn: "能不能把全部费用，写在单子上？", py: "", words: [] },
+                { cn: "麻烦出示单据，我要看一下费用明细。", py: "", words: [] },
+              ]
+            }
+          ],
+          locked: false
+        },
+        {
+          id: 2,
+          name: "进手术室前的准备",
+          sections: [
+            {
+              id: 1,
+              name: "签字与病史告知",
+              sentences: [
+                { cn: "这是麻醉同意书，我签之前问几句。", py: "", words: [] },
+                { cn: "我对什么东西过敏吗？我没有药物过敏。", py: "", words: [] },
+                { cn: "以前做过什么手术吗？没有做过。", py: "", words: [] },
+                { cn: "最近有没有吃什么药？吃过小柴胡。", py: "", words: [] },
+                { cn: "小柴胡是感冒药，不影响麻醉。", py: "", words: [] },
+                { cn: "今天早上量血压了吗？血压正常。", py: "", words: [] },
+                { cn: "今天吃早餐了吗？吃过了。", py: "", words: [] },
+                { cn: "麻药是局部麻，还是全身麻？", py: "", words: [] },
+                { cn: "局部麻，就是只麻嘴巴附近，人是清醒的。", py: "", words: [] },
+              ]
+            },
+            {
+              id: 2,
+              name: "术前准备与止痛药",
+              sentences: [
+                { cn: "这是止痛药布洛芬，术前可以吃一颗。", py: "", words: [] },
+                { cn: "布洛芬，就是常用的止痛退烧药。", py: "", words: [] },
+                { cn: "现在一定要吃吗？还是回去痛了再吃？", py: "", words: [] },
+                { cn: "都可以，现在吃了麻药过了不会太痛。", py: "", words: [] },
+                { cn: "做手术前，建议先去个厕所。", py: "", words: [] },
+                { cn: "进手术室要穿鞋套，不用脱鞋。", py: "", words: [] },
+                { cn: "还要戴帽子，把头发包起来。", py: "", words: [] },
+                { cn: "手机可以带进去吗？放兜里就行。", py: "", words: [] },
+                { cn: "家属在外面等，有什么事会叫你们。", py: "", words: [] },
+              ]
+            }
+          ],
+          locked: false
+        },
+        {
+          id: 3,
+          name: "手术中怎么配合",
+          sections: [
+            {
+              id: 1,
+              name: "手术中的配合要点",
+              sentences: [
+                { cn: "手术中医生说白话，你听得懂的。", py: "", words: [] },
+                { cn: "现在给你消毒，消完毒手不要摸脸。", py: "", words: [] },
+                { cn: "脸上消过毒是干净的，摸了就污染了。", py: "", words: [] },
+                { cn: "手术中会有水，大部分帮你吸走。", py: "", words: [] },
+                { cn: "少部分水吞下去没事，是干净的盐水。", py: "", words: [] },
+                { cn: "盐水，就是打吊针用的那种水，很干净。", py: "", words: [] },
+                { cn: "尽量用鼻子呼吸，不要用嘴巴呼吸。", py: "", words: [] },
+                { cn: "用嘴巴呼吸，有水容易呛到自己。", py: "", words: [] },
+                { cn: "嘴巴张着，不要合上，也不要吐口水。", py: "", words: [] },
+              ]
+            },
+            {
+              id: 2,
+              name: "不舒服怎么示意",
+              sentences: [
+                { cn: "手术中觉得痛，就动动脚。", py: "", words: [] },
+                { cn: "你动脚，医生就会停下来问你。", py: "", words: [] },
+                { cn: "痛了一定要说，不说医生不知道。", py: "", words: [] },
+                { cn: "说了之后，医生会给你加麻药。", py: "", words: [] },
+                { cn: "加了麻药就不痛了，不用担心。", py: "", words: [] },
+                { cn: "觉得恶心、头晕，也动动脚示意。", py: "", words: [] },
+                { cn: "不要突然抬手或摇头，会影响医生。", py: "", words: [] },
+                { cn: "有什么不舒服，动脚就好，嘴巴不用动。", py: "", words: [] },
+                { cn: "手术时间不长，配合好很快就做完。", py: "", words: [] },
+              ]
+            }
+          ],
+          locked: false
+        },
+        {
+          id: 4,
+          name: "术后当天护理",
+          sections: [
+            {
+              id: 1,
+              name: "伤口观察与离院",
+              sentences: [
+                { cn: "做完手术，先在外面坐半个小时。", py: "", words: [] },
+                { cn: "半个小时后护士会来看伤口。", py: "", words: [] },
+                { cn: "伤口不出血，才可以回家。", py: "", words: [] },
+                { cn: "如果还出血，护士会再处理一下。", py: "", words: [] },
+                { cn: "家属去问护士：可以看伤口了吗？", py: "", words: [] },
+                { cn: "护士说不出血了，我们再走。", py: "", words: [] },
+                { cn: "今天做完手术可能会感觉疲惫。", py: "", words: [] },
+                { cn: "回去多休息，不要做劳累的事。", py: "", words: [] },
+                { cn: "路上慢一点，不要磕碰到嘴巴。", py: "", words: [] },
+              ]
+            },
+            {
+              id: 2,
+              name: "当天护理禁忌",
+              sentences: [
+                { cn: "回去两个小时之内，不要吃东西。", py: "", words: [] },
+                { cn: "两个小时之内，水也不要喝。", py: "", words: [] },
+                { cn: "麻药还没过，吃东西怕咬到舌头。", py: "", words: [] },
+                { cn: "也怕咬到面颊，自己不知道痛。", py: "", words: [] },
+                { cn: "有口水要吞下去，不要吐出来。", py: "", words: [] },
+                { cn: "吐口水会弄掉伤口上的血块。", py: "", words: [] },
+                { cn: "血块掉了，就会又出血。", py: "", words: [] },
+                { cn: "两天之内，都不要吐口水。", py: "", words: [] },
+                { cn: "不要用舌头去舔伤口。", py: "", words: [] },
+              ]
+            }
+          ],
+          locked: false
+        },
+        {
+          id: 5,
+          name: "用药指导",
+          sections: [
+            {
+              id: 1,
+              name: "止痛药与消炎药",
+              sentences: [
+                { cn: "止痛药术前吃了一粒，隔12小时再吃。", py: "", words: [] },
+                { cn: "比如早上九点吃的，晚上九点后再吃。", py: "", words: [] },
+                { cn: "不痛可以不吃止痛药，痛了才吃。", py: "", words: [] },
+                { cn: "这是消炎药，一定要饭后吃。", py: "", words: [] },
+                { cn: "空腹吃消炎药，胃会痛、会不舒服。", py: "", words: [] },
+                { cn: "就算只吃一点东西垫垫胃，也要先吃。", py: "", words: [] },
+                { cn: "消炎药一天吃两次，早上一次晚上一次。", py: "", words: [] },
+                { cn: "这个吃两片，那个吃一粒，别搞混了。", py: "", words: [] },
+                { cn: "维C和消炎药不要一起吃，隔开时间。", py: "", words: [] },
+              ]
+            },
+            {
+              id: 2,
+              name: "漱口水的用法",
+              sentences: [
+                { cn: "这是漱口水，24小时之后才可以用。", py: "", words: [] },
+                { cn: "比如今天上午做的，明天中午才开始用。", py: "", words: [] },
+                { cn: "太早用漱口水，会弄掉血块导致出血。", py: "", words: [] },
+                { cn: "一天用三次，三餐吃完饭之后用。", py: "", words: [] },
+                { cn: "倒一盖子，含在嘴里轻轻漱。", py: "", words: [] },
+                { cn: "含半分钟到一分钟，然后吐出来。", py: "", words: [] },
+                { cn: "吐完之后，不要再用清水漱口。", py: "", words: [] },
+                { cn: "漱口水能帮伤口清洁，恢复得更快。", py: "", words: [] },
+                { cn: "用的时候不要用力鼓漱，轻轻的就好。", py: "", words: [] },
+              ]
+            }
+          ],
+          locked: false
+        },
+        {
+          id: 6,
+          name: "饮食与忌口",
+          sections: [
+            {
+              id: 1,
+              name: "术后吃什么",
+              sentences: [
+                { cn: "两个小时后可以吃东西了。", py: "", words: [] },
+                { cn: "吃常温或者偏凉的，不要吃热的。", py: "", words: [] },
+                { cn: "热的会加速血液循环，可能又出血。", py: "", words: [] },
+                { cn: "喝水也喝常温的，不要喝热水。", py: "", words: [] },
+                { cn: "吃软的、烂的，比如粥、面条、鸡蛋羹。", py: "", words: [] },
+                { cn: "用另外一边嚼，不要碰到伤口那边。", py: "", words: [] },
+                { cn: "吃东西慢一点，不要急。", py: "", words: [] },
+                { cn: "太烫的东西放凉了再吃。", py: "", words: [] },
+                { cn: "吃完东西，24小时后可以用漱口水。", py: "", words: [] },
+              ]
+            },
+            {
+              id: 2,
+              name: "两周忌口清单",
+              sentences: [
+                { cn: "两个星期要忌口，这些东西先别吃。", py: "", words: [] },
+                { cn: "海鲜不能吃，比如虾、蟹、鱼。", py: "", words: [] },
+                { cn: "牛肉、羊肉不能吃，容易上火。", py: "", words: [] },
+                { cn: "辣的不能吃，会刺激伤口。", py: "", words: [] },
+                { cn: "太硬的东西不能吃，会碰到伤口。", py: "", words: [] },
+                { cn: "太烫的东西也不能吃。", py: "", words: [] },
+                { cn: "拆完线之后，再慢慢恢复正常饮食。", py: "", words: [] },
+                { cn: "忌口是为了伤口好得快，别嫌麻烦。", py: "", words: [] },
+                { cn: "实在想吃，等两个星期拆完线再吃。", py: "", words: [] },
+              ]
+            }
+          ],
+          locked: false
+        },
+        {
+          id: 7,
+          name: "口腔卫生与肿痛处理",
+          sections: [
+            {
+              id: 1,
+              name: "刷牙漱口时间",
+              sentences: [
+                { cn: "24小时之内，不要刷牙，也不要漱口。", py: "", words: [] },
+                { cn: "刷牙漱口会弄掉血块，导致又出血。", py: "", words: [] },
+                { cn: "明天晚上，24小时之后才可以刷牙。", py: "", words: [] },
+                { cn: "刷牙的时候，避开伤口那个位置。", py: "", words: [] },
+                { cn: "其他牙齿正常刷，动作轻一点。", py: "", words: [] },
+                { cn: "24小时后开始用漱口水，一天三次。", py: "", words: [] },
+                { cn: "不要因为有伤口就完全不清洁。", py: "", words: [] },
+                { cn: "清洁好了，伤口才不容易发炎。", py: "", words: [] },
+                { cn: "有食物残渣，用漱口水轻轻漱掉。", py: "", words: [] },
+              ]
+            },
+            {
+              id: 2,
+              name: "冰敷与热敷",
+              sentences: [
+                { cn: "冰袋带回去，放冰箱冻结实了循环用。", py: "", words: [] },
+                { cn: "48小时之内，都可以冰敷。", py: "", words: [] },
+                { cn: "冰敷，就是用冰袋隔着毛巾敷在脸上。", py: "", words: [] },
+                { cn: "第二、第三、第四天是肿痛高峰期。", py: "", words: [] },
+                { cn: "这几天冰敷，可以缓解肿痛。", py: "", words: [] },
+                { cn: "现在有麻药，可能感觉不到痛。", py: "", words: [] },
+                { cn: "麻药过了之后，可能会慢慢痛起来。", py: "", words: [] },
+                { cn: "48小时之后，如果还肿痛，可以热敷。", py: "", words: [] },
+                { cn: "不想敷也可以，敷了会舒服一点。", py: "", words: [] },
+              ]
+            }
+          ],
+          locked: false
+        },
+        {
+          id: 8,
+          name: "拆线复查与微信沟通",
+          sections: [
+            {
+              id: 1,
+              name: "拆线时间与注意",
+              sentences: [
+                { cn: "两个星期之后回来拆线。", py: "", words: [] },
+                { cn: "到时候医院会通知你。", py: "", words: [] },
+                { cn: "拆线可以迟，不能提前。", py: "", words: [] },
+                { cn: "迟几天、几个星期都没问题。", py: "", words: [] },
+                { cn: "甚至迟几个月拆线都可以。", py: "", words: [] },
+                { cn: "就是有线头在那里，不影响。", py: "", words: [] },
+                { cn: "但不能提前拆，伤口还没长好。", py: "", words: [] },
+                { cn: "拆线的时候痛不痛？一般不痛。", py: "", words: [] },
+                { cn: "拆完线，就可以慢慢恢复正常饮食。", py: "", words: [] },
+              ]
+            },
+            {
+              id: 2,
+              name: "微信联系与记录",
+              sentences: [
+                { cn: "我加了医院管家的微信，有问题随时问。", py: "", words: [] },
+                { cn: "管家，就是医院里负责跟进你的工作人员。", py: "", words: [] },
+                { cn: "护士说会把注意事项发到微信上。", py: "", words: [] },
+                { cn: "收到之后，仔细看一遍，照着做。", py: "", words: [] },
+                { cn: "有什么不清楚的，直接微信问。", py: "", words: [] },
+                { cn: "不要自己猜，也不要听别人说。", py: "", words: [] },
+                { cn: "把用药时间、拆线时间记在手机上。", py: "", words: [] },
+                { cn: "拍一下药盒，发给家人帮忙提醒。", py: "", words: [] },
+                { cn: "手术的单据、包装盒都收好。", py: "", words: [] },
+              ]
+            }
+          ],
+          locked: false
+        },
+        {
+          id: 9,
+          name: "异常判断与紧急应对",
+          sections: [
+            {
+              id: 1,
+              name: "哪些是正常现象",
+              sentences: [
+                { cn: "伤口有少量渗血，属于正常。", py: "", words: [] },
+                { cn: "脸部轻微肿胀，也是正常的。", py: "", words: [] },
+                { cn: "有点痛，但还可以忍受，正常。", py: "", words: [] },
+                { cn: "嘴巴有点张不开，过几天会好。", py: "", words: [] },
+                { cn: "伤口有点发痒，是在长新肉。", py: "", words: [] },
+                { cn: "脸上出现一点淤青，也算正常。", py: "", words: [] },
+                { cn: "这些情况，不用太担心。", py: "", words: [] },
+                { cn: "按照注意事项做，慢慢会好。", py: "", words: [] },
+                { cn: "如果不放心，微信问一下护士。", py: "", words: [] },
+              ]
+            },
+            {
+              id: 2,
+              name: "出血与异常怎么办",
+              sentences: [
+                { cn: "如果出血不止，先用纱布咬住。", py: "", words: [] },
+                { cn: "纱布，就是医院给的备用止血纱布。", py: "", words: [] },
+                { cn: "咬住30到40分钟，不要松口。", py: "", words: [] },
+                { cn: "咬完轻轻拿掉，看还出不出血。", py: "", words: [] },
+                { cn: "如果还止不住，马上联系医院。", py: "", words: [] },
+                { cn: "脸越肿越大，眼睛都睁不开，要去急诊。", py: "", words: [] },
+                { cn: "发烧超过38度，要尽快去医院。", py: "", words: [] },
+                { cn: "痛得特别厉害，吃止痛药也没用，要联系医生。", py: "", words: [] },
+                { cn: "伤口有臭味、流脓，要马上看医生。", py: "", words: [] },
+              ]
+            }
+          ],
+          locked: false
+        }
+      ]
+    },
+    {
+      id: 10,
+      name: "种牙二期到戴牙冠教程",
+      units: [
+        {
+          id: 1,
+          name: "二期手术前的准备与核实",
+          sections: [
+            {
+              id: 1,
+              name: "什么时候做二期手术",
+              sentences: [
+                { cn: "一期手术做完，多久做二期？", py: "", words: [] },
+                { cn: "一般等三到六个月，骨头长好。", py: "", words: [] },
+                { cn: "骨结合，就是种植体和骨头长在一起。", py: "", words: [] },
+                { cn: "骨头长好了，才能装基台。", py: "", words: [] },
+                { cn: "医生会拍片，看骨头长好了没有。", py: "", words: [] },
+                { cn: "拍片，就是照X光，看里面的情况。", py: "", words: [] },
+                { cn: "骨头长好了，就可以约二期手术。", py: "", words: [] },
+                { cn: "如果骨头长得慢，可能要多等一段时间。", py: "", words: [] },
+                { cn: "到时候医院会通知，或者自己打电话问。", py: "", words: [] },
+              ]
+            },
+            {
+              id: 2,
+              name: "术前复查与费用确认",
+              sentences: [
+                { cn: "做二期之前，要先复查拍片。", py: "", words: [] },
+                { cn: "今天拍片，看种植体长稳了没有。", py: "", words: [] },
+                { cn: "种植体，就是一期种进去的人工牙根。", py: "", words: [] },
+                { cn: "长稳了，就可以安排二期手术。", py: "", words: [] },
+                { cn: "二期手术的费用，包含在之前交的钱里吗？", py: "", words: [] },
+                { cn: "如果还要加钱，能不能先告诉我？", py: "", words: [] },
+                { cn: "今天的项目，都写在单子上了吗？", py: "", words: [] },
+                { cn: "麻烦出示单据，我看一下费用明细。", py: "", words: [] },
+                { cn: "主刀医生还是之前那位吗？", py: "", words: [] },
+              ]
+            }
+          ],
+          locked: false
+        },
+        {
+          id: 2,
+          name: "二期手术过程（装基台）",
+          sections: [
+            {
+              id: 1,
+              name: "什么是基台，手术怎么做",
+              sentences: [
+                { cn: "二期手术，就是装一个基台。", py: "", words: [] },
+                { cn: "基台，就是连接牙根和假牙的小零件。", py: "", words: [] },
+                { cn: "也叫愈合基台，或者牙龈成型器。", py: "", words: [] },
+                { cn: "它的作用，是把牙龈撑出一个形状。", py: "", words: [] },
+                { cn: "以后戴牙冠，就从这个位置戴进去。", py: "", words: [] },
+                { cn: "手术时，医生把牙龈切开一个小口。", py: "", words: [] },
+                { cn: "把基台拧在种植体上面。", py: "", words: [] },
+                { cn: "然后缝一两针，或者不用缝。", py: "", words: [] },
+                { cn: "手术比一期小，时间也短，不用太紧张。", py: "", words: [] },
+              ]
+            },
+            {
+              id: 2,
+              name: "手术中怎么配合",
+              sentences: [
+                { cn: "手术前，先量血压，确认身体没问题。", py: "", words: [] },
+                { cn: "要打麻药，局部麻，嘴巴附近麻。", py: "", words: [] },
+                { cn: "局部麻，就是只麻嘴巴，人是清醒的。", py: "", words: [] },
+                { cn: "手术中嘴巴张开，不要合上。", py: "", words: [] },
+                { cn: "手不要摸脸，脸上消过毒是干净的。", py: "", words: [] },
+                { cn: "手术中觉得痛，就动动脚。", py: "", words: [] },
+                { cn: "医生会停下来，给你加麻药。", py: "", words: [] },
+                { cn: "有什么不舒服，动脚就好，不要摇头。", py: "", words: [] },
+                { cn: "手术时间不长，配合好很快就做完。", py: "", words: [] },
+              ]
+            }
+          ],
+          locked: false
+        },
+        {
+          id: 3,
+          name: "二期术后护理",
+          sections: [
+            {
+              id: 1,
+              name: "伤口护理与饮食",
+              sentences: [
+                { cn: "二期伤口比一期小，出血也少。", py: "", words: [] },
+                { cn: "做完先坐一会儿，护士看了不出血再走。", py: "", words: [] },
+                { cn: "两个小时之内，不要吃东西，不要喝水。", py: "", words: [] },
+                { cn: "两个小时后，可以吃常温或偏凉的。", py: "", words: [] },
+                { cn: "吃软的，比如粥、面条、鸡蛋羹。", py: "", words: [] },
+                { cn: "用另外一边嚼，不要碰到伤口。", py: "", words: [] },
+                { cn: "24小时之内，不要刷牙，不要漱口。", py: "", words: [] },
+                { cn: "有口水吞下去，不要吐出来。", py: "", words: [] },
+                { cn: "不要用舌头去舔基台那个位置。", py: "", words: [] },
+              ]
+            },
+            {
+              id: 2,
+              name: "异常判断与注意事项",
+              sentences: [
+                { cn: "伤口轻微肿痛，属于正常。", py: "", words: [] },
+                { cn: "第二第三天是肿痛高峰期。", py: "", words: [] },
+                { cn: "48小时内可以冰敷，之后热敷。", py: "", words: [] },
+                { cn: "如果出血不止，用纱布咬住30分钟。", py: "", words: [] },
+                { cn: "还止不住，马上联系医院。", py: "", words: [] },
+                { cn: "基台松动了，或者掉下来了，要联系医生。", py: "", words: [] },
+                { cn: "基台，就是装在牙根上面的小帽子。", py: "", words: [] },
+                { cn: "发烧超过38度，要尽快去医院。", py: "", words: [] },
+                { cn: "痛得特别厉害，吃止痛药也没用，要联系医生。", py: "", words: [] },
+              ]
+            }
+          ],
+          locked: false
+        },
+        {
+          id: 4,
+          name: "取模流程",
+          sections: [
+            {
+              id: 1,
+              name: "什么是取模，什么时候取",
+              sentences: [
+                { cn: "基台装了一到两周，牙龈就成型了。", py: "", words: [] },
+                { cn: "牙龈成型了，就可以取模了。", py: "", words: [] },
+                { cn: "取模，就是取一个牙齿的模型。", py: "", words: [] },
+                { cn: "就像做鞋要先量脚的尺寸一样。", py: "", words: [] },
+                { cn: "医生用一种软的材料，放在牙齿上。", py: "", words: [] },
+                { cn: "等材料硬了，拿下来就是牙齿的模型。", py: "", words: [] },
+                { cn: "这个模型送到加工厂，做牙冠。", py: "", words: [] },
+                { cn: "牙冠，就是最后戴在嘴里的假牙。", py: "", words: [] },
+                { cn: "取模不痛，就是嘴巴里有点东西，有点恶心。", py: "", words: [] },
+              ]
+            },
+            {
+              id: 2,
+              name: "取模过程与注意事项",
+              sentences: [
+                { cn: "取模之前，医生会先检查牙龈情况。", py: "", words: [] },
+                { cn: "牙龈长好了，没有发炎，就可以取模。", py: "", words: [] },
+                { cn: "取模时，嘴巴张大，不要动。", py: "", words: [] },
+                { cn: "材料放进去的时候，会有点凉，有点恶心。", py: "", words: [] },
+                { cn: "恶心的话，用鼻子深呼吸，不要吞。", py: "", words: [] },
+                { cn: "等一两分钟，材料硬了就拿出来。", py: "", words: [] },
+                { cn: "取完模，医生会确认模型清不清楚。", py: "", words: [] },
+                { cn: "如果不清楚，可能要重新取一次。", py: "", words: [] },
+                { cn: "取完模，大概一两周牙冠就做好了。", py: "", words: [] },
+              ]
+            }
+          ],
+          locked: false
+        },
+        {
+          id: 5,
+          name: "戴牙冠流程",
+          sections: [
+            {
+              id: 1,
+              name: "试戴与调整咬合",
+              sentences: [
+                { cn: "牙冠做好了，今天来试戴。", py: "", words: [] },
+                { cn: "先看看颜色、形状，满不满意。", py: "", words: [] },
+                { cn: "牙冠的材料是什么？是全瓷的吗？", py: "", words: [] },
+                { cn: "全瓷，就是整个牙冠都是陶瓷做的。", py: "", words: [] },
+                { cn: "是什么牌子的？有没有合格证？", py: "", words: [] },
+                { cn: "然后戴到嘴里，试试咬合高不高。", py: "", words: [] },
+                { cn: "咬合，就是上下牙咬在一起的感觉。", py: "", words: [] },
+                { cn: "咬起来太高，或者太低，医生会调。", py: "", words: [] },
+                { cn: "调到咬着舒服，就可以粘牢了。", py: "", words: [] },
+              ]
+            },
+            {
+              id: 2,
+              name: "粘接固定与戴牙后注意",
+              sentences: [
+                { cn: "调好之后，医生用胶水把牙冠粘牢。", py: "", words: [] },
+                { cn: "粘的时候，嘴巴不要动，不要咽口水。", py: "", words: [] },
+                { cn: "粘完等胶水干了，就可以了。", py: "", words: [] },
+                { cn: "刚粘完，两个小时不要吃东西。", py: "", words: [] },
+                { cn: "24小时之内，不要用这边咬硬的。", py: "", words: [] },
+                { cn: "胶水还没完全干，咬硬的可能会掉。", py: "", words: [] },
+                { cn: "粘完之后，再拍个片，确认戴到位了。", py: "", words: [] },
+                { cn: "有哪里不舒服，马上告诉医生。", py: "", words: [] },
+                { cn: "当天不要用这边嚼东西，明天开始慢慢用。", py: "", words: [] },
+              ]
+            }
+          ],
+          locked: false
+        },
+        {
+          id: 6,
+          name: "长期维护与复查",
+          sections: [
+            {
+              id: 1,
+              name: "日常清洁与复查",
+              sentences: [
+                { cn: "牙冠戴好了，平时要好好清洁。", py: "", words: [] },
+                { cn: "每天刷牙，早晚各一次，用软毛牙刷。", py: "", words: [] },
+                { cn: "牙冠和真牙之间，要用牙线清理。", py: "", words: [] },
+                { cn: "牙线，就是一根细线，清理牙缝的。", py: "", words: [] },
+                { cn: "也可以用冲牙器，冲水清理牙缝。", py: "", words: [] },
+                { cn: "冲牙器，就是用水柱冲牙齿的小机器。", py: "", words: [] },
+                { cn: "每半年回医院复查一次，拍片看看。", py: "", words: [] },
+                { cn: "复查时，医生会检查种植体稳不稳。", py: "", words: [] },
+                { cn: "也要定期洗牙，保持口腔卫生。", py: "", words: [] },
+              ]
+            },
+            {
+              id: 2,
+              name: "使用寿命与异常判断",
+              sentences: [
+                { cn: "种植牙保养得好，可以用十几年甚至更久。", py: "", words: [] },
+                { cn: "不好好清洁，会发炎，种植体会松。", py: "", words: [] },
+                { cn: "种植牙没有神经，不会感觉疼。", py: "", words: [] },
+                { cn: "所以有问题，可能自己感觉不到。", py: "", words: [] },
+                { cn: "定期复查，才能早发现问题。", py: "", words: [] },
+                { cn: "牙冠松动了，或者掉了，要联系医生。", py: "", words: [] },
+                { cn: "牙龈红肿、出血、流脓，要马上看医生。", py: "", words: [] },
+                { cn: "咬东西疼，或者感觉牙冠高了，要调整。", py: "", words: [] },
+                { cn: "不要用种植牙咬硬骨头、坚果壳这些。", py: "", words: [] },
+              ]
+            }
+          ],
+          locked: false
+        }
+      ]
+    }
   ];
 
 // ================================================================
@@ -24717,6 +25285,277 @@ const manualSplitMap = {
   '你弯腰看一下就能看到。': [{cn:'你', py:'nǐ'}, {cn:'弯腰', py:'wān yāo'}, {cn:'看一下', py:'kàn yī xià'}, {cn:'就能', py:'jiù néng'}, {cn:'看到', py:'kàn dào'}],
   '那洗手间在哪里？怎么锁门？': [{cn:'那', py:'nà'}, {cn:'洗手间', py:'xǐ shǒu jiān'}, {cn:'在哪里', py:'zài nǎ lǐ'}, {cn:'怎么', py:'zěn me'}, {cn:'锁门', py:'suǒ mén'}],
   '每节车厢两端都有洗手间。': [{cn:'每节', py:'měi jié'}, {cn:'车厢', py:'chē xiāng'}, {cn:'两端', py:'liǎng duān'}, {cn:'都有', py:'dōu yǒu'}, {cn:'洗手间', py:'xǐ shǒu jiān'}]
+  ,
+  '今天种的是什么牌子的种植体？': [{cn:'今天', py:'jīn tiān'}, {cn:'种的', py:'zhòng de'}, {cn:'是什么', py:'shì shén me'}, {cn:'牌子的', py:'pái zi de'}, {cn:'种植体', py:'zhòng zhí tǐ'}],
+  '种植体，就是种进骨头里的人工牙根。': [{cn:'种植体', py:'zhòng zhí tǐ'}, {cn:'就是', py:'jiù shì'}, {cn:'种进', py:'zhòng jìn'}, {cn:'骨头里的', py:'gǔ tou lǐ de'}, {cn:'人工', py:'rén gōng'}, {cn:'牙根', py:'yá gēn'}],
+  '是韩国奥齿泰清水这个牌子吗？': [{cn:'是', py:'shì'}, {cn:'韩国', py:'hán guó'}, {cn:'奥齿泰', py:'ào chǐ tài'}, {cn:'清水', py:'qīng shuǐ'}, {cn:'这个', py:'zhè ge'}, {cn:'牌子吗', py:'pái zi ma'}],
+  '有几个型号可以选？分别是多大？': [{cn:'有几个', py:'yǒu jǐ gè'}, {cn:'型号', py:'xíng hào'}, {cn:'可以选', py:'kě yǐ xuǎn'}, {cn:'分别是', py:'fēn bié shì'}, {cn:'多大', py:'duō dà'}],
+  '医生根据什么来选型号？': [{cn:'医生', py:'yī shēng'}, {cn:'根据', py:'gēn jù'}, {cn:'什么', py:'shén me'}, {cn:'来选', py:'lái xuǎn'}, {cn:'型号', py:'xíng hào'}],
+  '根据骨头条件选，骨头宽选粗一点的。': [{cn:'根据', py:'gēn jù'}, {cn:'骨头', py:'gǔ tou'}, {cn:'条件', py:'tiáo jiàn'}, {cn:'选', py:'xuǎn'}, {cn:'骨头宽', py:'gǔ tou kuān'}, {cn:'选', py:'xuǎn'}, {cn:'粗一点的', py:'cū yì diǎn de'}],
+  '手术前包装能不能打开给我看？': [{cn:'手术前', py:'shǒu shù qián'}, {cn:'包装', py:'bāo zhuāng'}, {cn:'能不能', py:'néng bù néng'}, {cn:'打开', py:'dǎ kāi'}, {cn:'给我看', py:'gěi wǒ kàn'}],
+  '包装术前不能打开，术后写名字再拍照。': [{cn:'包装', py:'bāo zhuāng'}, {cn:'术前', py:'shù qián'}, {cn:'不能', py:'bù néng'}, {cn:'打开', py:'dǎ kāi'}, {cn:'术后', py:'shù hòu'}, {cn:'写名字', py:'xiě míng zì'}, {cn:'再拍照', py:'zài pāi zhào'}],
+  '做完之后，盒子能给我拍照吗？': [{cn:'做完', py:'zuò wán'}, {cn:'之后', py:'zhī hòu'}, {cn:'盒子', py:'hé zi'}, {cn:'能给我', py:'néng gěi wǒ'}, {cn:'拍照吗', py:'pāi zhào ma'}],
+  '上面那颗牙有烂牙根，要清创。': [{cn:'上面', py:'shàng miàn'}, {cn:'那颗牙', py:'nà kē yá'}, {cn:'有', py:'yǒu'}, {cn:'烂牙根', py:'làn yá gēn'}, {cn:'要', py:'yào'}, {cn:'清创', py:'qīng chuàng'}],
+  '清创，就是把烂掉的牙根清理干净。': [{cn:'清创', py:'qīng chuàng'}, {cn:'就是', py:'jiù shì'}, {cn:'把', py:'bǎ'}, {cn:'烂掉的', py:'làn diào de'}, {cn:'牙根', py:'yá gēn'}, {cn:'清理', py:'qīng lǐ'}, {cn:'干净', py:'gān jìng'}],
+  '清创要不要另外加钱？': [{cn:'清创', py:'qīng chuàng'}, {cn:'要不要', py:'yào bù yào'}, {cn:'另外', py:'lìng wài'}, {cn:'加钱', py:'jiā qián'}],
+  '刚才说不另外收费，麻烦写在单上。': [{cn:'刚才', py:'gāng cái'}, {cn:'说不', py:'shuō bù'}, {cn:'另外', py:'lìng wài'}, {cn:'收费', py:'shōu fèi'}, {cn:'麻烦', py:'má fán'}, {cn:'写在', py:'xiě zài'}, {cn:'单上', py:'dān shàng'}],
+  '今天的费用，包含在之前交的钱里吗？': [{cn:'今天的', py:'jīn tiān de'}, {cn:'费用', py:'fèi yòng'}, {cn:'包含在', py:'bāo hán zài'}, {cn:'之前交的', py:'zhī qián jiāo de'}, {cn:'钱里吗', py:'qián lǐ ma'}],
+  '如果还要加钱，能不能先告诉我？': [{cn:'如果', py:'rú guǒ'}, {cn:'还要', py:'hái yào'}, {cn:'加钱', py:'jiā qián'}, {cn:'能不能', py:'néng bù néng'}, {cn:'先', py:'xiān'}, {cn:'告诉我', py:'gào sù wǒ'}],
+  '我先不做额外项目，要和家人商量。': [{cn:'我先', py:'wǒ xiān'}, {cn:'不做', py:'bù zuò'}, {cn:'额外', py:'é wài'}, {cn:'项目', py:'xiàng mù'}, {cn:'要和', py:'yào hé'}, {cn:'家人', py:'jiā rén'}, {cn:'商量', py:'shāng liáng'}],
+  '能不能把全部费用，写在单子上？': [{cn:'能不能', py:'néng bù néng'}, {cn:'把全部', py:'bǎ quán bù'}, {cn:'费用', py:'fèi yòng'}, {cn:'写在', py:'xiě zài'}, {cn:'单子上', py:'dān zi shàng'}],
+  '麻烦出示单据，我要看一下费用明细。': [{cn:'麻烦', py:'má fán'}, {cn:'出示', py:'chū shì'}, {cn:'单据', py:'dān jù'}, {cn:'我要看', py:'wǒ yào kàn'}, {cn:'一下', py:'yī xià'}, {cn:'费用', py:'fèi yòng'}, {cn:'明细', py:'míng xì'}],
+  '这是麻醉同意书，我签之前问几句。': [{cn:'这是', py:'zhè shì'}, {cn:'麻醉', py:'má zuì'}, {cn:'同意书', py:'tóng yì shū'}, {cn:'我签', py:'wǒ qiān'}, {cn:'之前', py:'zhī qián'}, {cn:'问几句', py:'wèn jǐ jù'}],
+  '我对什么东西过敏吗？我没有药物过敏。': [{cn:'我对', py:'wǒ duì'}, {cn:'什么', py:'shén me'}, {cn:'东西', py:'dōng xī'}, {cn:'过敏吗', py:'guò mǐn ma'}, {cn:'我没有', py:'wǒ méi yǒu'}, {cn:'药物', py:'yào wù'}, {cn:'过敏', py:'guò mǐn'}],
+  '以前做过什么手术吗？没有做过。': [{cn:'以前', py:'yǐ qián'}, {cn:'做过', py:'zuò guò'}, {cn:'什么', py:'shén me'}, {cn:'手术吗', py:'shǒu shù ma'}, {cn:'没有', py:'méi yǒu'}, {cn:'做过', py:'zuò guò'}],
+  '最近有没有吃什么药？吃过小柴胡。': [{cn:'最近', py:'zuì jìn'}, {cn:'有没有', py:'yǒu méi yǒu'}, {cn:'吃什么', py:'chī shén me'}, {cn:'药', py:'yào'}, {cn:'吃过', py:'chī guò'}, {cn:'小柴胡', py:'xiǎo chái hú'}],
+  '小柴胡是感冒药，不影响麻醉。': [{cn:'小柴胡', py:'xiǎo chái hú'}, {cn:'是', py:'shì'}, {cn:'感冒药', py:'gǎn mào yào'}, {cn:'不影响', py:'bù yǐng xiǎng'}, {cn:'麻醉', py:'má zuì'}],
+  '今天早上量血压了吗？血压正常。': [{cn:'今天', py:'jīn tiān'}, {cn:'早上', py:'zǎo shàng'}, {cn:'量', py:'liàng'}, {cn:'血压了吗', py:'xuè yā le ma'}, {cn:'血压', py:'xuè yā'}, {cn:'正常', py:'zhèng cháng'}],
+  '今天吃早餐了吗？吃过了。': [{cn:'今天', py:'jīn tiān'}, {cn:'吃', py:'chī'}, {cn:'早餐了吗', py:'zǎo cān le ma'}, {cn:'吃过了', py:'chī guò le'}],
+  '麻药是局部麻，还是全身麻？': [{cn:'麻药', py:'má yào'}, {cn:'是', py:'shì'}, {cn:'局部麻', py:'jú bù má'}, {cn:'还是', py:'hái shì'}, {cn:'全身麻', py:'quán shēn má'}],
+  '局部麻，就是只麻嘴巴附近，人是清醒的。': [{cn:'局部麻', py:'jú bù má'}, {cn:'就是', py:'jiù shì'}, {cn:'只麻', py:'zhǐ má'}, {cn:'嘴巴', py:'zuǐ bā'}, {cn:'附近', py:'fù jìn'}, {cn:'人是', py:'rén shì'}, {cn:'清醒的', py:'qīng xǐng de'}],
+  '这是止痛药布洛芬，术前可以吃一颗。': [{cn:'这是', py:'zhè shì'}, {cn:'止痛药', py:'zhǐ tòng yào'}, {cn:'布洛芬', py:'bù luò fēn'}, {cn:'术前', py:'shù qián'}, {cn:'可以吃', py:'kě yǐ chī'}, {cn:'一颗', py:'yī kē'}],
+  '布洛芬，就是常用的止痛退烧药。': [{cn:'布洛芬', py:'bù luò fēn'}, {cn:'就是', py:'jiù shì'}, {cn:'常用的', py:'cháng yòng de'}, {cn:'止痛', py:'zhǐ tòng'}, {cn:'退烧药', py:'tuì shāo yào'}],
+  '现在一定要吃吗？还是回去痛了再吃？': [{cn:'现在', py:'xiàn zài'}, {cn:'一定要', py:'yí dìng yào'}, {cn:'吃吗', py:'chī ma'}, {cn:'还是', py:'hái shì'}, {cn:'回去', py:'huí qù'}, {cn:'痛了', py:'tòng le'}, {cn:'再吃', py:'zài chī'}],
+  '都可以，现在吃了麻药过了不会太痛。': [{cn:'都可以', py:'dōu kě yǐ'}, {cn:'现在', py:'xiàn zài'}, {cn:'吃了', py:'chī le'}, {cn:'麻药', py:'má yào'}, {cn:'过了', py:'guò le'}, {cn:'不会', py:'bú huì'}, {cn:'太痛', py:'tài tòng'}],
+  '做手术前，建议先去个厕所。': [{cn:'做', py:'zuò'}, {cn:'手术前', py:'shǒu shù qián'}, {cn:'建议', py:'jiàn yì'}, {cn:'先去个', py:'xiān qù gè'}, {cn:'厕所', py:'cè suǒ'}],
+  '进手术室要穿鞋套，不用脱鞋。': [{cn:'进', py:'jìn'}, {cn:'手术室', py:'shǒu shù shì'}, {cn:'要穿', py:'yào chuān'}, {cn:'鞋套', py:'xié tào'}, {cn:'不用', py:'bù yòng'}, {cn:'脱鞋', py:'tuō xié'}],
+  '还要戴帽子，把头发包起来。': [{cn:'还要', py:'hái yào'}, {cn:'戴', py:'dài'}, {cn:'帽子', py:'mào zi'}, {cn:'把', py:'bǎ'}, {cn:'头发', py:'tóu fà'}, {cn:'包起来', py:'bāo qǐ lái'}],
+  '手机可以带进去吗？放兜里就行。': [{cn:'手机', py:'shǒu jī'}, {cn:'可以', py:'kě yǐ'}, {cn:'带进去吗', py:'dài jìn qù ma'}, {cn:'放', py:'fàng'}, {cn:'兜里', py:'dōu lǐ'}, {cn:'就行', py:'jiù xíng'}],
+  '家属在外面等，有什么事会叫你们。': [{cn:'家属', py:'jiā shǔ'}, {cn:'在外面', py:'zài wài miàn'}, {cn:'等', py:'děng'}, {cn:'有什么事', py:'yǒu shén me shì'}, {cn:'会叫', py:'huì jiào'}, {cn:'你们', py:'nǐ men'}],
+  '手术中医生说白话，你听得懂的。': [{cn:'手术中', py:'shǒu shù zhōng'}, {cn:'医生', py:'yī shēng'}, {cn:'说', py:'shuō'}, {cn:'白话', py:'bái huà'}, {cn:'你', py:'nǐ'}, {cn:'听得懂的', py:'tīng de dǒng de'}],
+  '现在给你消毒，消完毒手不要摸脸。': [{cn:'现在', py:'xiàn zài'}, {cn:'给你', py:'gěi nǐ'}, {cn:'消毒', py:'xiāo dú'}, {cn:'消完毒', py:'xiāo wán dú'}, {cn:'手不要', py:'shǒu bú yào'}, {cn:'摸脸', py:'mō liǎn'}],
+  '脸上消过毒是干净的，摸了就污染了。': [{cn:'脸上', py:'liǎn shàng'}, {cn:'消过毒', py:'xiāo guò dú'}, {cn:'是', py:'shì'}, {cn:'干净的', py:'gān jìng de'}, {cn:'摸了', py:'mō le'}, {cn:'就', py:'jiù'}, {cn:'污染了', py:'wū rǎn le'}],
+  '手术中会有水，大部分帮你吸走。': [{cn:'手术中', py:'shǒu shù zhōng'}, {cn:'会有', py:'huì yǒu'}, {cn:'水', py:'shuǐ'}, {cn:'大部分', py:'dà bù fèn'}, {cn:'帮你', py:'bāng nǐ'}, {cn:'吸走', py:'xī zǒu'}],
+  '少部分水吞下去没事，是干净的盐水。': [{cn:'少部分', py:'shǎo bù fèn'}, {cn:'水', py:'shuǐ'}, {cn:'吞下去', py:'tūn xià qù'}, {cn:'没事', py:'méi shì'}, {cn:'是', py:'shì'}, {cn:'干净的', py:'gān jìng de'}, {cn:'盐水', py:'yán shuǐ'}],
+  '盐水，就是打吊针用的那种水，很干净。': [{cn:'盐水', py:'yán shuǐ'}, {cn:'就是', py:'jiù shì'}, {cn:'打吊针', py:'dǎ diào zhēn'}, {cn:'用的', py:'yòng de'}, {cn:'那种', py:'nà zhǒng'}, {cn:'水', py:'shuǐ'}, {cn:'很干净', py:'hěn gān jìng'}],
+  '尽量用鼻子呼吸，不要用嘴巴呼吸。': [{cn:'尽量', py:'jǐn liàng'}, {cn:'用', py:'yòng'}, {cn:'鼻子', py:'bí zi'}, {cn:'呼吸', py:'hū xī'}, {cn:'不要用', py:'bú yào yòng'}, {cn:'嘴巴', py:'zuǐ bā'}, {cn:'呼吸', py:'hū xī'}],
+  '用嘴巴呼吸，有水容易呛到自己。': [{cn:'用', py:'yòng'}, {cn:'嘴巴', py:'zuǐ bā'}, {cn:'呼吸', py:'hū xī'}, {cn:'有水', py:'yǒu shuǐ'}, {cn:'容易', py:'róng yì'}, {cn:'呛到', py:'qiàng dào'}, {cn:'自己', py:'zì jǐ'}],
+  '嘴巴张着，不要合上，也不要吐口水。': [{cn:'嘴巴', py:'zuǐ bā'}, {cn:'张着', py:'zhāng zhe'}, {cn:'不要', py:'bú yào'}, {cn:'合上', py:'hé shàng'}, {cn:'也不要', py:'yě bú yào'}, {cn:'吐口水', py:'tù kǒu shuǐ'}],
+  '手术中觉得痛，就动动脚。': [{cn:'手术中', py:'shǒu shù zhōng'}, {cn:'觉得', py:'jué de'}, {cn:'痛', py:'tòng'}, {cn:'就', py:'jiù'}, {cn:'动动', py:'dòng dòng'}, {cn:'脚', py:'jiǎo'}],
+  '你动脚，医生就会停下来问你。': [{cn:'你', py:'nǐ'}, {cn:'动脚', py:'dòng jiǎo'}, {cn:'医生', py:'yī shēng'}, {cn:'就会', py:'jiù huì'}, {cn:'停下来', py:'tíng xià lái'}, {cn:'问你', py:'wèn nǐ'}],
+  '痛了一定要说，不说医生不知道。': [{cn:'痛了', py:'tòng le'}, {cn:'一定要', py:'yí dìng yào'}, {cn:'说', py:'shuō'}, {cn:'不说', py:'bù shuō'}, {cn:'医生', py:'yī shēng'}, {cn:'不知道', py:'bù zhī dào'}],
+  '说了之后，医生会给你加麻药。': [{cn:'说了', py:'shuō le'}, {cn:'之后', py:'zhī hòu'}, {cn:'医生', py:'yī shēng'}, {cn:'会给你', py:'huì gěi nǐ'}, {cn:'加', py:'jiā'}, {cn:'麻药', py:'má yào'}],
+  '加了麻药就不痛了，不用担心。': [{cn:'加了', py:'jiā le'}, {cn:'麻药', py:'má yào'}, {cn:'就不痛了', py:'jiù bù tòng le'}, {cn:'不用', py:'bù yòng'}, {cn:'担心', py:'dān xīn'}],
+  '觉得恶心、头晕，也动动脚示意。': [{cn:'觉得', py:'jué de'}, {cn:'恶心、头晕', py:'ě xīn 、 tóu yūn'}, {cn:'也', py:'yě'}, {cn:'动动脚', py:'dòng dòng jiǎo'}, {cn:'示意', py:'shì yì'}],
+  '不要突然抬手或摇头，会影响医生。': [{cn:'不要', py:'bú yào'}, {cn:'突然', py:'tū rán'}, {cn:'抬手', py:'tái shǒu'}, {cn:'或', py:'huò'}, {cn:'摇头', py:'yáo tóu'}, {cn:'会影响', py:'huì yǐng xiǎng'}, {cn:'医生', py:'yī shēng'}],
+  '有什么不舒服，动脚就好，嘴巴不用动。': [{cn:'有什么', py:'yǒu shén me'}, {cn:'不舒服', py:'bù shū fú'}, {cn:'动脚', py:'dòng jiǎo'}, {cn:'就好', py:'jiù hǎo'}, {cn:'嘴巴', py:'zuǐ bā'}, {cn:'不用动', py:'bù yòng dòng'}],
+  '手术时间不长，配合好很快就做完。': [{cn:'手术', py:'shǒu shù'}, {cn:'时间', py:'shí jiān'}, {cn:'不长', py:'bù zhǎng'}, {cn:'配合好', py:'pèi hé hǎo'}, {cn:'很快', py:'hěn kuài'}, {cn:'就做完', py:'jiù zuò wán'}],
+  '做完手术，先在外面坐半个小时。': [{cn:'做完', py:'zuò wán'}, {cn:'手术', py:'shǒu shù'}, {cn:'先在', py:'xiān zài'}, {cn:'外面', py:'wài miàn'}, {cn:'坐', py:'zuò'}, {cn:'半个小时', py:'bàn gè xiǎo shí'}],
+  '半个小时后护士会来看伤口。': [{cn:'半个小时', py:'bàn gè xiǎo shí'}, {cn:'后', py:'hòu'}, {cn:'护士', py:'hù shì'}, {cn:'会来看', py:'huì lái kàn'}, {cn:'伤口', py:'shāng kǒu'}],
+  '伤口不出血，才可以回家。': [{cn:'伤口', py:'shāng kǒu'}, {cn:'不出血', py:'bù chū xiě'}, {cn:'才可以', py:'cái kě yǐ'}, {cn:'回家', py:'huí jiā'}],
+  '如果还出血，护士会再处理一下。': [{cn:'如果', py:'rú guǒ'}, {cn:'还出血', py:'hái chū xiě'}, {cn:'护士', py:'hù shì'}, {cn:'会再', py:'huì zài'}, {cn:'处理', py:'chǔ lǐ'}, {cn:'一下', py:'yī xià'}],
+  '家属去问护士：可以看伤口了吗？': [{cn:'家属', py:'jiā shǔ'}, {cn:'去问', py:'qù wèn'}, {cn:'护士', py:'hù shì'}, {cn:'可以看', py:'kě yǐ kàn'}, {cn:'伤口了吗', py:'shāng kǒu le ma'}],
+  '护士说不出血了，我们再走。': [{cn:'护士', py:'hù shì'}, {cn:'说不', py:'shuō bù'}, {cn:'出血了', py:'chū xiě le'}, {cn:'我们', py:'wǒ men'}, {cn:'再走', py:'zài zǒu'}],
+  '今天做完手术可能会感觉疲惫。': [{cn:'今天', py:'jīn tiān'}, {cn:'做完', py:'zuò wán'}, {cn:'手术', py:'shǒu shù'}, {cn:'可能会', py:'kě néng huì'}, {cn:'感觉', py:'gǎn jué'}, {cn:'疲惫', py:'pí bèi'}],
+  '回去多休息，不要做劳累的事。': [{cn:'回去', py:'huí qù'}, {cn:'多休息', py:'duō xiū xī'}, {cn:'不要做', py:'bú yào zuò'}, {cn:'劳累的', py:'láo lèi de'}, {cn:'事', py:'shì'}],
+  '路上慢一点，不要磕碰到嘴巴。': [{cn:'路上', py:'lù shàng'}, {cn:'慢一点', py:'màn yì diǎn'}, {cn:'不要', py:'bú yào'}, {cn:'磕碰', py:'kē pèng'}, {cn:'到嘴巴', py:'dào zuǐ bā'}],
+  '回去两个小时之内，不要吃东西。': [{cn:'回去', py:'huí qù'}, {cn:'两个小时', py:'liǎng gè xiǎo shí'}, {cn:'之内', py:'zhī nèi'}, {cn:'不要', py:'bú yào'}, {cn:'吃东西', py:'chī dōng xī'}],
+  '两个小时之内，水也不要喝。': [{cn:'两个小时', py:'liǎng gè xiǎo shí'}, {cn:'之内', py:'zhī nèi'}, {cn:'水也', py:'shuǐ yě'}, {cn:'不要喝', py:'bú yào hē'}],
+  '麻药还没过，吃东西怕咬到舌头。': [{cn:'麻药', py:'má yào'}, {cn:'还没过', py:'hái mò guò'}, {cn:'吃东西', py:'chī dōng xī'}, {cn:'怕', py:'pà'}, {cn:'咬到', py:'yǎo dào'}, {cn:'舌头', py:'shé tou'}],
+  '也怕咬到面颊，自己不知道痛。': [{cn:'也怕', py:'yě pà'}, {cn:'咬到', py:'yǎo dào'}, {cn:'面颊', py:'miàn jiá'}, {cn:'自己', py:'zì jǐ'}, {cn:'不知道', py:'bù zhī dào'}, {cn:'痛', py:'tòng'}],
+  '有口水要吞下去，不要吐出来。': [{cn:'有', py:'yǒu'}, {cn:'口水', py:'kǒu shuǐ'}, {cn:'要', py:'yào'}, {cn:'吞下去', py:'tūn xià qù'}, {cn:'不要', py:'bú yào'}, {cn:'吐出来', py:'tǔ chū lái'}],
+  '吐口水会弄掉伤口上的血块。': [{cn:'吐口水', py:'tù kǒu shuǐ'}, {cn:'会弄掉', py:'huì nòng diào'}, {cn:'伤口上的', py:'shāng kǒu shàng de'}, {cn:'血块', py:'xuè kuài'}],
+  '血块掉了，就会又出血。': [{cn:'血块', py:'xuè kuài'}, {cn:'掉了', py:'diào le'}, {cn:'就会', py:'jiù huì'}, {cn:'又出血', py:'yòu chū xiě'}],
+  '两天之内，都不要吐口水。': [{cn:'两天', py:'liǎng tiān'}, {cn:'之内', py:'zhī nèi'}, {cn:'都不要', py:'dōu bú yào'}, {cn:'吐口水', py:'tù kǒu shuǐ'}],
+  '不要用舌头去舔伤口。': [{cn:'不要用', py:'bú yào yòng'}, {cn:'舌头', py:'shé tou'}, {cn:'去舔', py:'qù tiǎn'}, {cn:'伤口', py:'shāng kǒu'}],
+  '止痛药术前吃了一粒，隔12小时再吃。': [{cn:'止痛药', py:'zhǐ tòng yào'}, {cn:'术前', py:'shù qián'}, {cn:'吃了', py:'chī le'}, {cn:'一粒', py:'yī lì'}, {cn:'隔12小时', py:'gé 12 xiǎo shí'}, {cn:'再吃', py:'zài chī'}],
+  '比如早上九点吃的，晚上九点后再吃。': [{cn:'比如', py:'bǐ rú'}, {cn:'早上', py:'zǎo shàng'}, {cn:'九点', py:'jiǔ diǎn'}, {cn:'吃的', py:'chī de'}, {cn:'晚上', py:'wǎn shàng'}, {cn:'九点后', py:'jiǔ diǎn hòu'}, {cn:'再吃', py:'zài chī'}],
+  '不痛可以不吃止痛药，痛了才吃。': [{cn:'不痛', py:'bù tòng'}, {cn:'可以', py:'kě yǐ'}, {cn:'不吃', py:'bù chī'}, {cn:'止痛药', py:'zhǐ tòng yào'}, {cn:'痛了', py:'tòng le'}, {cn:'才吃', py:'cái chī'}],
+  '这是消炎药，一定要饭后吃。': [{cn:'这是', py:'zhè shì'}, {cn:'消炎药', py:'xiāo yán yào'}, {cn:'一定要', py:'yí dìng yào'}, {cn:'饭后', py:'fàn hòu'}, {cn:'吃', py:'chī'}],
+  '空腹吃消炎药，胃会痛、会不舒服。': [{cn:'空腹', py:'kōng fù'}, {cn:'吃', py:'chī'}, {cn:'消炎药', py:'xiāo yán yào'}, {cn:'胃会', py:'wèi huì'}, {cn:'痛、会', py:'tòng 、 huì'}, {cn:'不舒服', py:'bù shū fú'}],
+  '就算只吃一点东西垫垫胃，也要先吃。': [{cn:'就算', py:'jiù suàn'}, {cn:'只吃', py:'zhǐ chī'}, {cn:'一点', py:'yì diǎn'}, {cn:'东西', py:'dōng xī'}, {cn:'垫垫胃', py:'diàn diàn wèi'}, {cn:'也要', py:'yě yào'}, {cn:'先吃', py:'xiān chī'}],
+  '消炎药一天吃两次，早上一次晚上一次。': [{cn:'消炎药', py:'xiāo yán yào'}, {cn:'一天', py:'yī tiān'}, {cn:'吃', py:'chī'}, {cn:'两次', py:'liǎng cì'}, {cn:'早上', py:'zǎo shàng'}, {cn:'一次', py:'yī cì'}, {cn:'晚上', py:'wǎn shàng'}, {cn:'一次', py:'yī cì'}],
+  '这个吃两片，那个吃一粒，别搞混了。': [{cn:'这个', py:'zhè ge'}, {cn:'吃', py:'chī'}, {cn:'两片', py:'liǎng piàn'}, {cn:'那个', py:'nà ge'}, {cn:'吃', py:'chī'}, {cn:'一粒', py:'yī lì'}, {cn:'别搞混了', py:'bié gǎo hùn le'}],
+  '维C和消炎药不要一起吃，隔开时间。': [{cn:'维C', py:'wéi C'}, {cn:'和', py:'hé'}, {cn:'消炎药', py:'xiāo yán yào'}, {cn:'不要', py:'bú yào'}, {cn:'一起吃', py:'yì qǐ chī'}, {cn:'隔开', py:'gé kāi'}, {cn:'时间', py:'shí jiān'}],
+  '这是漱口水，24小时之后才可以用。': [{cn:'这是', py:'zhè shì'}, {cn:'漱口水', py:'shù kǒu shuǐ'}, {cn:'24小时', py:'24 xiǎo shí'}, {cn:'之后', py:'zhī hòu'}, {cn:'才可以', py:'cái kě yǐ'}, {cn:'用', py:'yòng'}],
+  '比如今天上午做的，明天中午才开始用。': [{cn:'比如', py:'bǐ rú'}, {cn:'今天', py:'jīn tiān'}, {cn:'上午', py:'shàng wǔ'}, {cn:'做的', py:'zuò de'}, {cn:'明天', py:'míng tiān'}, {cn:'中午', py:'zhōng wǔ'}, {cn:'才开始', py:'cái kāi shǐ'}, {cn:'用', py:'yòng'}],
+  '太早用漱口水，会弄掉血块导致出血。': [{cn:'太早', py:'tài zǎo'}, {cn:'用', py:'yòng'}, {cn:'漱口水', py:'shù kǒu shuǐ'}, {cn:'会弄掉', py:'huì nòng diào'}, {cn:'血块', py:'xuè kuài'}, {cn:'导致', py:'dǎo zhì'}, {cn:'出血', py:'chū xiě'}],
+  '一天用三次，三餐吃完饭之后用。': [{cn:'一天', py:'yī tiān'}, {cn:'用', py:'yòng'}, {cn:'三次', py:'sān cì'}, {cn:'三餐', py:'sān cān'}, {cn:'吃完饭', py:'chī wán fàn'}, {cn:'之后', py:'zhī hòu'}, {cn:'用', py:'yòng'}],
+  '倒一盖子，含在嘴里轻轻漱。': [{cn:'倒', py:'dào'}, {cn:'一盖子', py:'yī gài zi'}, {cn:'含在', py:'hán zài'}, {cn:'嘴里', py:'zuǐ lǐ'}, {cn:'轻轻', py:'qīng qīng'}, {cn:'漱', py:'shù'}],
+  '含半分钟到一分钟，然后吐出来。': [{cn:'含', py:'hán'}, {cn:'半分钟', py:'bàn fēn zhōng'}, {cn:'到', py:'dào'}, {cn:'一分钟', py:'yì fēn zhōng'}, {cn:'然后', py:'rán hòu'}, {cn:'吐出来', py:'tǔ chū lái'}],
+  '吐完之后，不要再用清水漱口。': [{cn:'吐完', py:'tǔ wán'}, {cn:'之后', py:'zhī hòu'}, {cn:'不要再用', py:'bú yào zài yòng'}, {cn:'清水', py:'qīng shuǐ'}, {cn:'漱口', py:'shù kǒu'}],
+  '漱口水能帮伤口清洁，恢复得更快。': [{cn:'漱口水', py:'shù kǒu shuǐ'}, {cn:'能帮', py:'néng bāng'}, {cn:'伤口', py:'shāng kǒu'}, {cn:'清洁', py:'qīng jié'}, {cn:'恢复得', py:'huī fù dé'}, {cn:'更快', py:'gèng kuài'}],
+  '用的时候不要用力鼓漱，轻轻的就好。': [{cn:'用的', py:'yòng de'}, {cn:'时候', py:'shí hòu'}, {cn:'不要', py:'bú yào'}, {cn:'用力', py:'yòng lì'}, {cn:'鼓漱', py:'gǔ shù'}, {cn:'轻轻的', py:'qīng qīng de'}, {cn:'就好', py:'jiù hǎo'}],
+  '两个小时后可以吃东西了。': [{cn:'两个小时', py:'liǎng gè xiǎo shí'}, {cn:'后', py:'hòu'}, {cn:'可以', py:'kě yǐ'}, {cn:'吃东西了', py:'chī dōng xī le'}],
+  '吃常温或者偏凉的，不要吃热的。': [{cn:'吃', py:'chī'}, {cn:'常温', py:'cháng wēn'}, {cn:'或者', py:'huò zhě'}, {cn:'偏凉的', py:'piān liáng de'}, {cn:'不要吃', py:'bú yào chī'}, {cn:'热的', py:'rè de'}],
+  '热的会加速血液循环，可能又出血。': [{cn:'热的', py:'rè de'}, {cn:'会加速', py:'huì jiā sù'}, {cn:'血液', py:'xuè yè'}, {cn:'循环', py:'xún huán'}, {cn:'可能', py:'kě néng'}, {cn:'又出血', py:'yòu chū xiě'}],
+  '喝水也喝常温的，不要喝热水。': [{cn:'喝水', py:'hē shuǐ'}, {cn:'也喝', py:'yě hē'}, {cn:'常温的', py:'cháng wēn de'}, {cn:'不要喝', py:'bú yào hē'}, {cn:'热水', py:'rè shuǐ'}],
+  '吃软的、烂的，比如粥、面条、鸡蛋羹。': [{cn:'吃', py:'chī'}, {cn:'软的、烂的', py:'ruǎn de 、 làn de'}, {cn:'比如', py:'bǐ rú'}, {cn:'粥、面条、鸡蛋羹', py:'zhōu 、 miàn tiáo 、 jī dàn gēng'}],
+  '用另外一边嚼，不要碰到伤口那边。': [{cn:'用', py:'yòng'}, {cn:'另外一边', py:'lìng wài yī biān'}, {cn:'嚼', py:'jué'}, {cn:'不要', py:'bú yào'}, {cn:'碰到', py:'pèng dào'}, {cn:'伤口', py:'shāng kǒu'}, {cn:'那边', py:'nà biān'}],
+  '吃东西慢一点，不要急。': [{cn:'吃东西', py:'chī dōng xī'}, {cn:'慢一点', py:'màn yì diǎn'}, {cn:'不要', py:'bú yào'}, {cn:'急', py:'jí'}],
+  '太烫的东西放凉了再吃。': [{cn:'太烫的', py:'tài tàng de'}, {cn:'东西', py:'dōng xī'}, {cn:'放凉了', py:'fàng liáng le'}, {cn:'再吃', py:'zài chī'}],
+  '吃完东西，24小时后可以用漱口水。': [{cn:'吃完', py:'chī wán'}, {cn:'东西', py:'dōng xī'}, {cn:'24小时后', py:'24 xiǎo shí hòu'}, {cn:'可以用', py:'kě yǐ yòng'}, {cn:'漱口水', py:'shù kǒu shuǐ'}],
+  '两个星期要忌口，这些东西先别吃。': [{cn:'两个', py:'liǎng gè'}, {cn:'星期', py:'xīng qī'}, {cn:'要', py:'yào'}, {cn:'忌口', py:'jì kǒu'}, {cn:'这些', py:'zhè xiē'}, {cn:'东西', py:'dōng xī'}, {cn:'先别吃', py:'xiān bié chī'}],
+  '海鲜不能吃，比如虾、蟹、鱼。': [{cn:'海鲜', py:'hǎi xiān'}, {cn:'不能吃', py:'bù néng chī'}, {cn:'比如', py:'bǐ rú'}, {cn:'虾、蟹、鱼', py:'xiā 、 xiè 、 yú'}],
+  '牛肉、羊肉不能吃，容易上火。': [{cn:'牛肉、羊肉', py:'niú ròu 、 yáng ròu'}, {cn:'不能吃', py:'bù néng chī'}, {cn:'容易', py:'róng yì'}, {cn:'上火', py:'shàng huǒ'}],
+  '辣的不能吃，会刺激伤口。': [{cn:'辣的', py:'là de'}, {cn:'不能吃', py:'bù néng chī'}, {cn:'会', py:'huì'}, {cn:'刺激', py:'cì jī'}, {cn:'伤口', py:'shāng kǒu'}],
+  '太硬的东西不能吃，会碰到伤口。': [{cn:'太硬的', py:'tài yìng de'}, {cn:'东西', py:'dōng xī'}, {cn:'不能吃', py:'bù néng chī'}, {cn:'会', py:'huì'}, {cn:'碰到', py:'pèng dào'}, {cn:'伤口', py:'shāng kǒu'}],
+  '太烫的东西也不能吃。': [{cn:'太烫的', py:'tài tàng de'}, {cn:'东西', py:'dōng xī'}, {cn:'也不能', py:'yě bù néng'}, {cn:'吃', py:'chī'}],
+  '拆完线之后，再慢慢恢复正常饮食。': [{cn:'拆完线', py:'chāi wán xiàn'}, {cn:'之后', py:'zhī hòu'}, {cn:'再慢慢', py:'zài màn màn'}, {cn:'恢复', py:'huī fù'}, {cn:'正常', py:'zhèng cháng'}, {cn:'饮食', py:'yǐn shí'}],
+  '忌口是为了伤口好得快，别嫌麻烦。': [{cn:'忌口', py:'jì kǒu'}, {cn:'是为了', py:'shì wèi le'}, {cn:'伤口', py:'shāng kǒu'}, {cn:'好得快', py:'hǎo dé kuài'}, {cn:'别嫌', py:'bié xián'}, {cn:'麻烦', py:'má fán'}],
+  '实在想吃，等两个星期拆完线再吃。': [{cn:'实在', py:'shí zài'}, {cn:'想吃', py:'xiǎng chī'}, {cn:'等', py:'děng'}, {cn:'两个星期', py:'liǎng gè xīng qī'}, {cn:'拆完线', py:'chāi wán xiàn'}, {cn:'再吃', py:'zài chī'}],
+  '24小时之内，不要刷牙，也不要漱口。': [{cn:'24小时', py:'24 xiǎo shí'}, {cn:'之内', py:'zhī nèi'}, {cn:'不要', py:'bú yào'}, {cn:'刷牙', py:'shuā yá'}, {cn:'也不要', py:'yě bú yào'}, {cn:'漱口', py:'shù kǒu'}],
+  '刷牙漱口会弄掉血块，导致又出血。': [{cn:'刷牙', py:'shuā yá'}, {cn:'漱口', py:'shù kǒu'}, {cn:'会弄掉', py:'huì nòng diào'}, {cn:'血块', py:'xuè kuài'}, {cn:'导致', py:'dǎo zhì'}, {cn:'又出血', py:'yòu chū xiě'}],
+  '明天晚上，24小时之后才可以刷牙。': [{cn:'明天', py:'míng tiān'}, {cn:'晚上', py:'wǎn shàng'}, {cn:'24小时', py:'24 xiǎo shí'}, {cn:'之后', py:'zhī hòu'}, {cn:'才可以', py:'cái kě yǐ'}, {cn:'刷牙', py:'shuā yá'}],
+  '刷牙的时候，避开伤口那个位置。': [{cn:'刷牙的', py:'shuā yá de'}, {cn:'时候', py:'shí hòu'}, {cn:'避开', py:'bì kāi'}, {cn:'伤口', py:'shāng kǒu'}, {cn:'那个', py:'nà ge'}, {cn:'位置', py:'wèi zhì'}],
+  '其他牙齿正常刷，动作轻一点。': [{cn:'其他', py:'qí tā'}, {cn:'牙齿', py:'yá chǐ'}, {cn:'正常', py:'zhèng cháng'}, {cn:'刷', py:'shuā'}, {cn:'动作', py:'dòng zuò'}, {cn:'轻一点', py:'qīng yì diǎn'}],
+  '24小时后开始用漱口水，一天三次。': [{cn:'24小时后', py:'24 xiǎo shí hòu'}, {cn:'开始用', py:'kāi shǐ yòng'}, {cn:'漱口水', py:'shù kǒu shuǐ'}, {cn:'一天', py:'yī tiān'}, {cn:'三次', py:'sān cì'}],
+  '不要因为有伤口就完全不清洁。': [{cn:'不要', py:'bú yào'}, {cn:'因为有', py:'yīn wèi yǒu'}, {cn:'伤口', py:'shāng kǒu'}, {cn:'就完全', py:'jiù wán quán'}, {cn:'不清洁', py:'bù qīng jié'}],
+  '清洁好了，伤口才不容易发炎。': [{cn:'清洁', py:'qīng jié'}, {cn:'好了', py:'hǎo le'}, {cn:'伤口', py:'shāng kǒu'}, {cn:'才不容易', py:'cái bù róng yì'}, {cn:'发炎', py:'fā yán'}],
+  '有食物残渣，用漱口水轻轻漱掉。': [{cn:'有', py:'yǒu'}, {cn:'食物', py:'shí wù'}, {cn:'残渣', py:'cán zhā'}, {cn:'用', py:'yòng'}, {cn:'漱口水', py:'shù kǒu shuǐ'}, {cn:'轻轻', py:'qīng qīng'}, {cn:'漱掉', py:'shù diào'}],
+  '冰袋带回去，放冰箱冻结实了循环用。': [{cn:'冰袋', py:'bīng dài'}, {cn:'带回去', py:'dài huí qù'}, {cn:'放', py:'fàng'}, {cn:'冰箱', py:'bīng xiāng'}, {cn:'冻结实了', py:'dòng jié shí le'}, {cn:'循环用', py:'xún huán yòng'}],
+  '48小时之内，都可以冰敷。': [{cn:'48小时', py:'48 xiǎo shí'}, {cn:'之内', py:'zhī nèi'}, {cn:'都可以', py:'dōu kě yǐ'}, {cn:'冰敷', py:'bīng fū'}],
+  '冰敷，就是用冰袋隔着毛巾敷在脸上。': [{cn:'冰敷', py:'bīng fū'}, {cn:'就是用', py:'jiù shì yòng'}, {cn:'冰袋', py:'bīng dài'}, {cn:'隔着', py:'gé zhe'}, {cn:'毛巾', py:'máo jīn'}, {cn:'敷在', py:'fū zài'}, {cn:'脸上', py:'liǎn shàng'}],
+  '第二、第三、第四天是肿痛高峰期。': [{cn:'第二、第三、第四天', py:'dì èr 、 dì sān 、 dì sì tiān'}, {cn:'是', py:'shì'}, {cn:'肿痛', py:'zhǒng tòng'}, {cn:'高峰期', py:'gāo fēng qī'}],
+  '这几天冰敷，可以缓解肿痛。': [{cn:'这几天', py:'zhè jǐ tiān'}, {cn:'冰敷', py:'bīng fū'}, {cn:'可以', py:'kě yǐ'}, {cn:'缓解', py:'huǎn jiě'}, {cn:'肿痛', py:'zhǒng tòng'}],
+  '现在有麻药，可能感觉不到痛。': [{cn:'现在', py:'xiàn zài'}, {cn:'有', py:'yǒu'}, {cn:'麻药', py:'má yào'}, {cn:'可能', py:'kě néng'}, {cn:'感觉不到', py:'gǎn jué bú dào'}, {cn:'痛', py:'tòng'}],
+  '麻药过了之后，可能会慢慢痛起来。': [{cn:'麻药', py:'má yào'}, {cn:'过了', py:'guò le'}, {cn:'之后', py:'zhī hòu'}, {cn:'可能会', py:'kě néng huì'}, {cn:'慢慢', py:'màn màn'}, {cn:'痛起来', py:'tòng qǐ lái'}],
+  '48小时之后，如果还肿痛，可以热敷。': [{cn:'48小时', py:'48 xiǎo shí'}, {cn:'之后', py:'zhī hòu'}, {cn:'如果', py:'rú guǒ'}, {cn:'还肿痛', py:'hái zhǒng tòng'}, {cn:'可以', py:'kě yǐ'}, {cn:'热敷', py:'rè fū'}],
+  '不想敷也可以，敷了会舒服一点。': [{cn:'不想', py:'bù xiǎng'}, {cn:'敷也', py:'fū yě'}, {cn:'可以', py:'kě yǐ'}, {cn:'敷了', py:'fū le'}, {cn:'会舒服', py:'huì shū fú'}, {cn:'一点', py:'yì diǎn'}],
+  '两个星期之后回来拆线。': [{cn:'两个', py:'liǎng gè'}, {cn:'星期', py:'xīng qī'}, {cn:'之后', py:'zhī hòu'}, {cn:'回来', py:'huí lái'}, {cn:'拆线', py:'chāi xiàn'}],
+  '到时候医院会通知你。': [{cn:'到时候', py:'dào shí hòu'}, {cn:'医院', py:'yī yuàn'}, {cn:'会通知', py:'huì tōng zhī'}, {cn:'你', py:'nǐ'}],
+  '拆线可以迟，不能提前。': [{cn:'拆线', py:'chāi xiàn'}, {cn:'可以', py:'kě yǐ'}, {cn:'迟', py:'chí'}, {cn:'不能', py:'bù néng'}, {cn:'提前', py:'tí qián'}],
+  '迟几天、几个星期都没问题。': [{cn:'迟', py:'chí'}, {cn:'几天、几个星期', py:'jǐ tiān 、 jǐ gè xīng qī'}, {cn:'都没问题', py:'dōu méi wèn tí'}],
+  '甚至迟几个月拆线都可以。': [{cn:'甚至', py:'shèn zhì'}, {cn:'迟', py:'chí'}, {cn:'几个月', py:'jǐ gè yuè'}, {cn:'拆线', py:'chāi xiàn'}, {cn:'都可以', py:'dōu kě yǐ'}],
+  '就是有线头在那里，不影响。': [{cn:'就是有', py:'jiù shì yǒu'}, {cn:'线头', py:'xiàn tóu'}, {cn:'在那里', py:'zài nà lǐ'}, {cn:'不影响', py:'bù yǐng xiǎng'}],
+  '但不能提前拆，伤口还没长好。': [{cn:'但不能', py:'dàn bù néng'}, {cn:'提前', py:'tí qián'}, {cn:'拆', py:'chāi'}, {cn:'伤口', py:'shāng kǒu'}, {cn:'还没', py:'hái méi'}, {cn:'长好', py:'zhǎng hǎo'}],
+  '拆线的时候痛不痛？一般不痛。': [{cn:'拆线的', py:'chāi xiàn de'}, {cn:'时候', py:'shí hòu'}, {cn:'痛不痛', py:'tòng bù tòng'}, {cn:'一般', py:'yì bān'}, {cn:'不痛', py:'bù tòng'}],
+  '拆完线，就可以慢慢恢复正常饮食。': [{cn:'拆完线', py:'chāi wán xiàn'}, {cn:'就可以', py:'jiù kě yǐ'}, {cn:'慢慢', py:'màn màn'}, {cn:'恢复', py:'huī fù'}, {cn:'正常', py:'zhèng cháng'}, {cn:'饮食', py:'yǐn shí'}],
+  '我加了医院管家的微信，有问题随时问。': [{cn:'我加了', py:'wǒ jiā le'}, {cn:'医院', py:'yī yuàn'}, {cn:'管家的', py:'guǎn jiā de'}, {cn:'微信', py:'wēi xìn'}, {cn:'有问题', py:'yǒu wèn tí'}, {cn:'随时', py:'suí shí'}, {cn:'问', py:'wèn'}],
+  '管家，就是医院里负责跟进你的工作人员。': [{cn:'管家', py:'guǎn jiā'}, {cn:'就是', py:'jiù shì'}, {cn:'医院里', py:'yī yuàn lǐ'}, {cn:'负责', py:'fù zé'}, {cn:'跟进你的', py:'gēn jìn nǐ de'}, {cn:'工作人员', py:'gōng zuò rén yuán'}],
+  '护士说会把注意事项发到微信上。': [{cn:'护士', py:'hù shì'}, {cn:'说会', py:'shuō huì'}, {cn:'把', py:'bǎ'}, {cn:'注意事项', py:'zhù yì shì xiàng'}, {cn:'发到', py:'fā dào'}, {cn:'微信上', py:'wēi xìn shàng'}],
+  '收到之后，仔细看一遍，照着做。': [{cn:'收到', py:'shōu dào'}, {cn:'之后', py:'zhī hòu'}, {cn:'仔细', py:'zǐ xì'}, {cn:'看一遍', py:'kàn yī biàn'}, {cn:'照着做', py:'zhào zhe zuò'}],
+  '有什么不清楚的，直接微信问。': [{cn:'有什么', py:'yǒu shén me'}, {cn:'不清楚的', py:'bù qīng chǔ de'}, {cn:'直接', py:'zhí jiē'}, {cn:'微信', py:'wēi xìn'}, {cn:'问', py:'wèn'}],
+  '不要自己猜，也不要听别人说。': [{cn:'不要', py:'bú yào'}, {cn:'自己', py:'zì jǐ'}, {cn:'猜', py:'cāi'}, {cn:'也不要', py:'yě bú yào'}, {cn:'听', py:'tīng'}, {cn:'别人说', py:'bié rén shuō'}],
+  '把用药时间、拆线时间记在手机上。': [{cn:'把', py:'bǎ'}, {cn:'用药', py:'yòng yào'}, {cn:'时间、拆线', py:'shí jiān 、 chāi xiàn'}, {cn:'时间', py:'shí jiān'}, {cn:'记在', py:'jì zài'}, {cn:'手机上', py:'shǒu jī shàng'}],
+  '拍一下药盒，发给家人帮忙提醒。': [{cn:'拍一下', py:'pāi yī xià'}, {cn:'药盒', py:'yào hé'}, {cn:'发给', py:'fā gěi'}, {cn:'家人', py:'jiā rén'}, {cn:'帮忙', py:'bāng máng'}, {cn:'提醒', py:'tí xǐng'}],
+  '手术的单据、包装盒都收好。': [{cn:'手术的', py:'shǒu shù de'}, {cn:'单据、包装盒', py:'dān jù 、 bāo zhuāng hé'}, {cn:'都收好', py:'dōu shōu hǎo'}],
+  '伤口有少量渗血，属于正常。': [{cn:'伤口', py:'shāng kǒu'}, {cn:'有少量', py:'yǒu shǎo liàng'}, {cn:'渗血', py:'shèn xuè'}, {cn:'属于', py:'shǔ yú'}, {cn:'正常', py:'zhèng cháng'}],
+  '脸部轻微肿胀，也是正常的。': [{cn:'脸部', py:'liǎn bù'}, {cn:'轻微', py:'qīng wēi'}, {cn:'肿胀', py:'zhǒng zhàng'}, {cn:'也是', py:'yě shì'}, {cn:'正常的', py:'zhèng cháng de'}],
+  '有点痛，但还可以忍受，正常。': [{cn:'有点', py:'yǒu diǎn'}, {cn:'痛', py:'tòng'}, {cn:'但还可以', py:'dàn hái kě yǐ'}, {cn:'忍受', py:'rěn shòu'}, {cn:'正常', py:'zhèng cháng'}],
+  '嘴巴有点张不开，过几天会好。': [{cn:'嘴巴', py:'zuǐ bā'}, {cn:'有点', py:'yǒu diǎn'}, {cn:'张不开', py:'zhāng bù kāi'}, {cn:'过几天', py:'guò jǐ tiān'}, {cn:'会好', py:'huì hǎo'}],
+  '伤口有点发痒，是在长新肉。': [{cn:'伤口', py:'shāng kǒu'}, {cn:'有点', py:'yǒu diǎn'}, {cn:'发痒', py:'fā yǎng'}, {cn:'是在', py:'shì zài'}, {cn:'长新肉', py:'zhǎng xīn ròu'}],
+  '脸上出现一点淤青，也算正常。': [{cn:'脸上', py:'liǎn shàng'}, {cn:'出现', py:'chū xiàn'}, {cn:'一点', py:'yì diǎn'}, {cn:'淤青', py:'yū qīng'}, {cn:'也算', py:'yě suàn'}, {cn:'正常', py:'zhèng cháng'}],
+  '这些情况，不用太担心。': [{cn:'这些', py:'zhè xiē'}, {cn:'情况', py:'qíng kuàng'}, {cn:'不用', py:'bù yòng'}, {cn:'太担心', py:'tài dān xīn'}],
+  '按照注意事项做，慢慢会好。': [{cn:'按照', py:'àn zhào'}, {cn:'注意事项', py:'zhù yì shì xiàng'}, {cn:'做', py:'zuò'}, {cn:'慢慢', py:'màn màn'}, {cn:'会好', py:'huì hǎo'}],
+  '如果不放心，微信问一下护士。': [{cn:'如果', py:'rú guǒ'}, {cn:'不放心', py:'bù fàng xīn'}, {cn:'微信', py:'wēi xìn'}, {cn:'问一下', py:'wèn yī xià'}, {cn:'护士', py:'hù shì'}],
+  '如果出血不止，先用纱布咬住。': [{cn:'如果', py:'rú guǒ'}, {cn:'出血', py:'chū xiě'}, {cn:'不止', py:'bù zhǐ'}, {cn:'先用', py:'xiān yòng'}, {cn:'纱布', py:'shā bù'}, {cn:'咬住', py:'yǎo zhù'}],
+  '纱布，就是医院给的备用止血纱布。': [{cn:'纱布', py:'shā bù'}, {cn:'就是', py:'jiù shì'}, {cn:'医院给的', py:'yī yuàn gěi de'}, {cn:'备用', py:'bèi yòng'}, {cn:'止血', py:'zhǐ xuè'}, {cn:'纱布', py:'shā bù'}],
+  '咬住30到40分钟，不要松口。': [{cn:'咬住', py:'yǎo zhù'}, {cn:'30到40分钟', py:'30 dào 40 fēn zhōng'}, {cn:'不要', py:'bú yào'}, {cn:'松口', py:'sōng kǒu'}],
+  '咬完轻轻拿掉，看还出不出血。': [{cn:'咬完', py:'yǎo wán'}, {cn:'轻轻', py:'qīng qīng'}, {cn:'拿掉', py:'ná diào'}, {cn:'看还', py:'kàn hái'}, {cn:'出不', py:'chū bù'}, {cn:'出血', py:'chū xiě'}],
+  '如果还止不住，马上联系医院。': [{cn:'如果', py:'rú guǒ'}, {cn:'还', py:'hái'}, {cn:'止不住', py:'zhǐ bú zhù'}, {cn:'马上', py:'mǎ shàng'}, {cn:'联系', py:'lián xì'}, {cn:'医院', py:'yī yuàn'}],
+  '脸越肿越大，眼睛都睁不开，要去急诊。': [{cn:'脸', py:'liǎn'}, {cn:'越肿', py:'yuè zhǒng'}, {cn:'越大', py:'yuè dà'}, {cn:'眼睛', py:'yǎn jīng'}, {cn:'都睁不开', py:'dōu zhēng bù kāi'}, {cn:'要去', py:'yào qù'}, {cn:'急诊', py:'jí zhěn'}],
+  '发烧超过38度，要尽快去医院。': [{cn:'发烧', py:'fā shāo'}, {cn:'超过', py:'chāo guò'}, {cn:'38度', py:'38 dù'}, {cn:'要尽快', py:'yào jǐn kuài'}, {cn:'去医院', py:'qù yī yuàn'}],
+  '痛得特别厉害，吃止痛药也没用，要联系医生。': [{cn:'痛得', py:'tòng dé'}, {cn:'特别', py:'tè bié'}, {cn:'厉害', py:'lì hài'}, {cn:'吃', py:'chī'}, {cn:'止痛药', py:'zhǐ tòng yào'}, {cn:'也没用', py:'yě méi yòng'}, {cn:'要联系', py:'yào lián xì'}, {cn:'医生', py:'yī shēng'}],
+  '伤口有臭味、流脓，要马上看医生。': [{cn:'伤口', py:'shāng kǒu'}, {cn:'有臭味、流脓', py:'yǒu chòu wèi 、 liú nóng'}, {cn:'要马上', py:'yào mǎ shàng'}, {cn:'看医生', py:'kàn yī shēng'}],
+  '一期手术做完，多久做二期？': [{cn:'一期', py:'yī qī'}, {cn:'手术', py:'shǒu shù'}, {cn:'做完', py:'zuò wán'}, {cn:'多久', py:'duō jiǔ'}, {cn:'做', py:'zuò'}, {cn:'二期', py:'èr qī'}],
+  '一般等三到六个月，骨头长好。': [{cn:'一般', py:'yì bān'}, {cn:'等', py:'děng'}, {cn:'三到六个月', py:'sān dào liù gè yuè'}, {cn:'骨头', py:'gǔ tou'}, {cn:'长好', py:'zhǎng hǎo'}],
+  '骨结合，就是种植体和骨头长在一起。': [{cn:'骨结合', py:'gǔ jié hé'}, {cn:'就是', py:'jiù shì'}, {cn:'种植体', py:'zhòng zhí tǐ'}, {cn:'和骨头', py:'hé gǔ tou'}, {cn:'长在一起', py:'zhǎng zài yì qǐ'}],
+  '骨头长好了，才能装基台。': [{cn:'骨头', py:'gǔ tou'}, {cn:'长好了', py:'zhǎng hǎo le'}, {cn:'才能', py:'cái néng'}, {cn:'装', py:'zhuāng'}, {cn:'基台', py:'jī tái'}],
+  '医生会拍片，看骨头长好了没有。': [{cn:'医生', py:'yī shēng'}, {cn:'会', py:'huì'}, {cn:'拍片', py:'pāi piàn'}, {cn:'看', py:'kàn'}, {cn:'骨头', py:'gǔ tou'}, {cn:'长好了', py:'zhǎng hǎo le'}, {cn:'没有', py:'méi yǒu'}],
+  '拍片，就是照X光，看里面的情况。': [{cn:'拍片', py:'pāi piàn'}, {cn:'就是', py:'jiù shì'}, {cn:'照', py:'zhào'}, {cn:'X光', py:'X guāng'}, {cn:'看', py:'kàn'}, {cn:'里面的', py:'lǐ miàn de'}, {cn:'情况', py:'qíng kuàng'}],
+  '骨头长好了，就可以约二期手术。': [{cn:'骨头', py:'gǔ tou'}, {cn:'长好了', py:'zhǎng hǎo le'}, {cn:'就可以', py:'jiù kě yǐ'}, {cn:'约', py:'yuē'}, {cn:'二期', py:'èr qī'}, {cn:'手术', py:'shǒu shù'}],
+  '如果骨头长得慢，可能要多等一段时间。': [{cn:'如果', py:'rú guǒ'}, {cn:'骨头', py:'gǔ tou'}, {cn:'长得慢', py:'zhǎng dé màn'}, {cn:'可能要', py:'kě néng yào'}, {cn:'多等', py:'duō děng'}, {cn:'一段时间', py:'yī duàn shí jiān'}],
+  '到时候医院会通知，或者自己打电话问。': [{cn:'到时候', py:'dào shí hòu'}, {cn:'医院', py:'yī yuàn'}, {cn:'会通知', py:'huì tōng zhī'}, {cn:'或者', py:'huò zhě'}, {cn:'自己', py:'zì jǐ'}, {cn:'打电话', py:'dǎ diàn huà'}, {cn:'问', py:'wèn'}],
+  '做二期之前，要先复查拍片。': [{cn:'做', py:'zuò'}, {cn:'二期', py:'èr qī'}, {cn:'之前', py:'zhī qián'}, {cn:'要先', py:'yào xiān'}, {cn:'复查', py:'fù chá'}, {cn:'拍片', py:'pāi piàn'}],
+  '今天拍片，看种植体长稳了没有。': [{cn:'今天', py:'jīn tiān'}, {cn:'拍片', py:'pāi piàn'}, {cn:'看', py:'kàn'}, {cn:'种植体', py:'zhòng zhí tǐ'}, {cn:'长稳了', py:'zhǎng wěn le'}, {cn:'没有', py:'méi yǒu'}],
+  '种植体，就是一期种进去的人工牙根。': [{cn:'种植体', py:'zhòng zhí tǐ'}, {cn:'就是', py:'jiù shì'}, {cn:'一期', py:'yī qī'}, {cn:'种进去的', py:'zhòng jìn qù de'}, {cn:'人工', py:'rén gōng'}, {cn:'牙根', py:'yá gēn'}],
+  '长稳了，就可以安排二期手术。': [{cn:'长稳了', py:'zhǎng wěn le'}, {cn:'就可以', py:'jiù kě yǐ'}, {cn:'安排', py:'ān pái'}, {cn:'二期', py:'èr qī'}, {cn:'手术', py:'shǒu shù'}],
+  '二期手术的费用，包含在之前交的钱里吗？': [{cn:'二期', py:'èr qī'}, {cn:'手术的', py:'shǒu shù de'}, {cn:'费用', py:'fèi yòng'}, {cn:'包含在', py:'bāo hán zài'}, {cn:'之前交的', py:'zhī qián jiāo de'}, {cn:'钱里吗', py:'qián lǐ ma'}],
+  '如果还要加钱，能不能先告诉我？': [{cn:'如果', py:'rú guǒ'}, {cn:'还要', py:'hái yào'}, {cn:'加钱', py:'jiā qián'}, {cn:'能不能', py:'néng bù néng'}, {cn:'先', py:'xiān'}, {cn:'告诉我', py:'gào sù wǒ'}],
+  '今天的项目，都写在单子上了吗？': [{cn:'今天的', py:'jīn tiān de'}, {cn:'项目', py:'xiàng mù'}, {cn:'都写在', py:'dōu xiě zài'}, {cn:'单子上了', py:'dān zi shàng le'}, {cn:'吗', py:'ma'}],
+  '麻烦出示单据，我看一下费用明细。': [{cn:'麻烦', py:'má fán'}, {cn:'出示', py:'chū shì'}, {cn:'单据', py:'dān jù'}, {cn:'我看', py:'wǒ kàn'}, {cn:'一下', py:'yī xià'}, {cn:'费用', py:'fèi yòng'}, {cn:'明细', py:'míng xì'}],
+  '主刀医生还是之前那位吗？': [{cn:'主刀', py:'zhǔ dāo'}, {cn:'医生', py:'yī shēng'}, {cn:'还是', py:'hái shì'}, {cn:'之前', py:'zhī qián'}, {cn:'那位吗', py:'nà wèi ma'}],
+  '二期手术，就是装一个基台。': [{cn:'二期', py:'èr qī'}, {cn:'手术', py:'shǒu shù'}, {cn:'就是', py:'jiù shì'}, {cn:'装一个', py:'zhuāng yí gè'}, {cn:'基台', py:'jī tái'}],
+  '基台，就是连接牙根和假牙的小零件。': [{cn:'基台', py:'jī tái'}, {cn:'就是', py:'jiù shì'}, {cn:'连接', py:'lián jiē'}, {cn:'牙根', py:'yá gēn'}, {cn:'和假牙的', py:'hé jiǎ yá de'}, {cn:'小零件', py:'xiǎo líng jiàn'}],
+  '也叫愈合基台，或者牙龈成型器。': [{cn:'也叫', py:'yě jiào'}, {cn:'愈合', py:'yù hé'}, {cn:'基台', py:'jī tái'}, {cn:'或者', py:'huò zhě'}, {cn:'牙龈', py:'yá yín'}, {cn:'成型器', py:'chéng xíng qì'}],
+  '它的作用，是把牙龈撑出一个形状。': [{cn:'它的', py:'tā de'}, {cn:'作用', py:'zuò yòng'}, {cn:'是把', py:'shì bǎ'}, {cn:'牙龈', py:'yá yín'}, {cn:'撑出', py:'chēng chū'}, {cn:'一个', py:'yí gè'}, {cn:'形状', py:'xíng zhuàng'}],
+  '以后戴牙冠，就从这个位置戴进去。': [{cn:'以后', py:'yǐ hòu'}, {cn:'戴', py:'dài'}, {cn:'牙冠', py:'yá guān'}, {cn:'就从', py:'jiù cóng'}, {cn:'这个', py:'zhè ge'}, {cn:'位置', py:'wèi zhì'}, {cn:'戴进去', py:'dài jìn qù'}],
+  '手术时，医生把牙龈切开一个小口。': [{cn:'手术时', py:'shǒu shù shí'}, {cn:'医生', py:'yī shēng'}, {cn:'把', py:'bǎ'}, {cn:'牙龈', py:'yá yín'}, {cn:'切开', py:'qiè kāi'}, {cn:'一个', py:'yí gè'}, {cn:'小口', py:'xiǎo kǒu'}],
+  '把基台拧在种植体上面。': [{cn:'把', py:'bǎ'}, {cn:'基台', py:'jī tái'}, {cn:'拧在', py:'níng zài'}, {cn:'种植体', py:'zhòng zhí tǐ'}, {cn:'上面', py:'shàng miàn'}],
+  '然后缝一两针，或者不用缝。': [{cn:'然后', py:'rán hòu'}, {cn:'缝', py:'fèng'}, {cn:'一两针', py:'yī liǎng zhēn'}, {cn:'或者', py:'huò zhě'}, {cn:'不用', py:'bù yòng'}, {cn:'缝', py:'fèng'}],
+  '手术比一期小，时间也短，不用太紧张。': [{cn:'手术', py:'shǒu shù'}, {cn:'比一期', py:'bǐ yī qī'}, {cn:'小', py:'xiǎo'}, {cn:'时间', py:'shí jiān'}, {cn:'也短', py:'yě duǎn'}, {cn:'不用', py:'bù yòng'}, {cn:'太紧张', py:'tài jǐn zhāng'}],
+  '手术前，先量血压，确认身体没问题。': [{cn:'手术前', py:'shǒu shù qián'}, {cn:'先量', py:'xiān liàng'}, {cn:'血压', py:'xuè yā'}, {cn:'确认', py:'què rèn'}, {cn:'身体', py:'shēn tǐ'}, {cn:'没问题', py:'méi wèn tí'}],
+  '要打麻药，局部麻，嘴巴附近麻。': [{cn:'要打', py:'yào dǎ'}, {cn:'麻药', py:'má yào'}, {cn:'局部麻', py:'jú bù má'}, {cn:'嘴巴', py:'zuǐ bā'}, {cn:'附近', py:'fù jìn'}, {cn:'麻', py:'má'}],
+  '局部麻，就是只麻嘴巴，人是清醒的。': [{cn:'局部麻', py:'jú bù má'}, {cn:'就是', py:'jiù shì'}, {cn:'只麻', py:'zhǐ má'}, {cn:'嘴巴', py:'zuǐ bā'}, {cn:'人是', py:'rén shì'}, {cn:'清醒的', py:'qīng xǐng de'}],
+  '手术中嘴巴张开，不要合上。': [{cn:'手术中', py:'shǒu shù zhōng'}, {cn:'嘴巴', py:'zuǐ bā'}, {cn:'张开', py:'zhāng kāi'}, {cn:'不要', py:'bú yào'}, {cn:'合上', py:'hé shàng'}],
+  '手不要摸脸，脸上消过毒是干净的。': [{cn:'手不要', py:'shǒu bú yào'}, {cn:'摸脸', py:'mō liǎn'}, {cn:'脸上', py:'liǎn shàng'}, {cn:'消过毒', py:'xiāo guò dú'}, {cn:'是', py:'shì'}, {cn:'干净的', py:'gān jìng de'}],
+  '手术中觉得痛，就动动脚。': [{cn:'手术中', py:'shǒu shù zhōng'}, {cn:'觉得', py:'jué de'}, {cn:'痛', py:'tòng'}, {cn:'就', py:'jiù'}, {cn:'动动', py:'dòng dòng'}, {cn:'脚', py:'jiǎo'}],
+  '医生会停下来，给你加麻药。': [{cn:'医生', py:'yī shēng'}, {cn:'会停下来', py:'huì tíng xià lái'}, {cn:'给你', py:'gěi nǐ'}, {cn:'加', py:'jiā'}, {cn:'麻药', py:'má yào'}],
+  '有什么不舒服，动脚就好，不要摇头。': [{cn:'有什么', py:'yǒu shén me'}, {cn:'不舒服', py:'bù shū fú'}, {cn:'动脚', py:'dòng jiǎo'}, {cn:'就好', py:'jiù hǎo'}, {cn:'不要', py:'bú yào'}, {cn:'摇头', py:'yáo tóu'}],
+  '手术时间不长，配合好很快就做完。': [{cn:'手术', py:'shǒu shù'}, {cn:'时间', py:'shí jiān'}, {cn:'不长', py:'bù zhǎng'}, {cn:'配合好', py:'pèi hé hǎo'}, {cn:'很快', py:'hěn kuài'}, {cn:'就做完', py:'jiù zuò wán'}],
+  '二期伤口比一期小，出血也少。': [{cn:'二期', py:'èr qī'}, {cn:'伤口', py:'shāng kǒu'}, {cn:'比一期', py:'bǐ yī qī'}, {cn:'小', py:'xiǎo'}, {cn:'出血', py:'chū xiě'}, {cn:'也少', py:'yě shǎo'}],
+  '做完先坐一会儿，护士看了不出血再走。': [{cn:'做完', py:'zuò wán'}, {cn:'先坐', py:'xiān zuò'}, {cn:'一会儿', py:'yī huì er'}, {cn:'护士', py:'hù shì'}, {cn:'看了', py:'kàn le'}, {cn:'不出血', py:'bù chū xiě'}, {cn:'再走', py:'zài zǒu'}],
+  '两个小时之内，不要吃东西，不要喝水。': [{cn:'两个小时', py:'liǎng gè xiǎo shí'}, {cn:'之内', py:'zhī nèi'}, {cn:'不要', py:'bú yào'}, {cn:'吃东西', py:'chī dōng xī'}, {cn:'不要', py:'bú yào'}, {cn:'喝水', py:'hē shuǐ'}],
+  '两个小时后，可以吃常温或偏凉的。': [{cn:'两个小时', py:'liǎng gè xiǎo shí'}, {cn:'后', py:'hòu'}, {cn:'可以吃', py:'kě yǐ chī'}, {cn:'常温', py:'cháng wēn'}, {cn:'或', py:'huò'}, {cn:'偏凉的', py:'piān liáng de'}],
+  '吃软的，比如粥、面条、鸡蛋羹。': [{cn:'吃', py:'chī'}, {cn:'软的', py:'ruǎn de'}, {cn:'比如', py:'bǐ rú'}, {cn:'粥、面条、鸡蛋羹', py:'zhōu 、 miàn tiáo 、 jī dàn gēng'}],
+  '用另外一边嚼，不要碰到伤口。': [{cn:'用', py:'yòng'}, {cn:'另外一边', py:'lìng wài yī biān'}, {cn:'嚼', py:'jué'}, {cn:'不要', py:'bú yào'}, {cn:'碰到', py:'pèng dào'}, {cn:'伤口', py:'shāng kǒu'}],
+  '24小时之内，不要刷牙，不要漱口。': [{cn:'24小时', py:'24 xiǎo shí'}, {cn:'之内', py:'zhī nèi'}, {cn:'不要', py:'bú yào'}, {cn:'刷牙', py:'shuā yá'}, {cn:'不要', py:'bú yào'}, {cn:'漱口', py:'shù kǒu'}],
+  '有口水吞下去，不要吐出来。': [{cn:'有', py:'yǒu'}, {cn:'口水', py:'kǒu shuǐ'}, {cn:'吞下去', py:'tūn xià qù'}, {cn:'不要', py:'bú yào'}, {cn:'吐出来', py:'tǔ chū lái'}],
+  '不要用舌头去舔基台那个位置。': [{cn:'不要用', py:'bú yào yòng'}, {cn:'舌头', py:'shé tou'}, {cn:'去舔', py:'qù tiǎn'}, {cn:'基台', py:'jī tái'}, {cn:'那个', py:'nà ge'}, {cn:'位置', py:'wèi zhì'}],
+  '伤口轻微肿痛，属于正常。': [{cn:'伤口', py:'shāng kǒu'}, {cn:'轻微', py:'qīng wēi'}, {cn:'肿痛', py:'zhǒng tòng'}, {cn:'属于', py:'shǔ yú'}, {cn:'正常', py:'zhèng cháng'}],
+  '第二第三天是肿痛高峰期。': [{cn:'第二', py:'dì èr'}, {cn:'第三天', py:'dì sān tiān'}, {cn:'是', py:'shì'}, {cn:'肿痛', py:'zhǒng tòng'}, {cn:'高峰期', py:'gāo fēng qī'}],
+  '48小时内可以冰敷，之后热敷。': [{cn:'48小时内', py:'48 xiǎo shí nèi'}, {cn:'可以', py:'kě yǐ'}, {cn:'冰敷', py:'bīng fū'}, {cn:'之后', py:'zhī hòu'}, {cn:'热敷', py:'rè fū'}],
+  '如果出血不止，用纱布咬住30分钟。': [{cn:'如果', py:'rú guǒ'}, {cn:'出血', py:'chū xiě'}, {cn:'不止', py:'bù zhǐ'}, {cn:'用', py:'yòng'}, {cn:'纱布', py:'shā bù'}, {cn:'咬住', py:'yǎo zhù'}, {cn:'30分钟', py:'30 fēn zhōng'}],
+  '还止不住，马上联系医院。': [{cn:'还', py:'hái'}, {cn:'止不住', py:'zhǐ bú zhù'}, {cn:'马上', py:'mǎ shàng'}, {cn:'联系', py:'lián xì'}, {cn:'医院', py:'yī yuàn'}],
+  '基台松动了，或者掉下来了，要联系医生。': [{cn:'基台', py:'jī tái'}, {cn:'松动了', py:'sōng dòng le'}, {cn:'或者', py:'huò zhě'}, {cn:'掉下来了', py:'diào xià lái le'}, {cn:'要联系', py:'yào lián xì'}, {cn:'医生', py:'yī shēng'}],
+  '基台，就是装在牙根上面的小帽子。': [{cn:'基台', py:'jī tái'}, {cn:'就是', py:'jiù shì'}, {cn:'装在', py:'zhuāng zài'}, {cn:'牙根', py:'yá gēn'}, {cn:'上面的', py:'shàng miàn de'}, {cn:'小帽子', py:'xiǎo mào zi'}],
+  '发烧超过38度，要尽快去医院。': [{cn:'发烧', py:'fā shāo'}, {cn:'超过', py:'chāo guò'}, {cn:'38度', py:'38 dù'}, {cn:'要尽快', py:'yào jǐn kuài'}, {cn:'去医院', py:'qù yī yuàn'}],
+  '痛得特别厉害，吃止痛药也没用，要联系医生。': [{cn:'痛得', py:'tòng dé'}, {cn:'特别', py:'tè bié'}, {cn:'厉害', py:'lì hài'}, {cn:'吃', py:'chī'}, {cn:'止痛药', py:'zhǐ tòng yào'}, {cn:'也没用', py:'yě méi yòng'}, {cn:'要联系', py:'yào lián xì'}, {cn:'医生', py:'yī shēng'}],
+  '基台装了一到两周，牙龈就成型了。': [{cn:'基台', py:'jī tái'}, {cn:'装了', py:'zhuāng le'}, {cn:'一到两周', py:'yī dào liǎng zhōu'}, {cn:'牙龈', py:'yá yín'}, {cn:'就成型了', py:'jiù chéng xíng le'}],
+  '牙龈成型了，就可以取模了。': [{cn:'牙龈', py:'yá yín'}, {cn:'成型了', py:'chéng xíng le'}, {cn:'就可以', py:'jiù kě yǐ'}, {cn:'取模了', py:'qǔ mó le'}],
+  '取模，就是取一个牙齿的模型。': [{cn:'取模', py:'qǔ mó'}, {cn:'就是', py:'jiù shì'}, {cn:'取一个', py:'qǔ yí gè'}, {cn:'牙齿的', py:'yá chǐ de'}, {cn:'模型', py:'mó xíng'}],
+  '就像做鞋要先量脚的尺寸一样。': [{cn:'就像', py:'jiù xiàng'}, {cn:'做鞋', py:'zuò xié'}, {cn:'要先', py:'yào xiān'}, {cn:'量脚的', py:'liàng jiǎo de'}, {cn:'尺寸', py:'chǐ cùn'}, {cn:'一样', py:'yī yàng'}],
+  '医生用一种软的材料，放在牙齿上。': [{cn:'医生', py:'yī shēng'}, {cn:'用一种', py:'yòng yī zhǒng'}, {cn:'软的', py:'ruǎn de'}, {cn:'材料', py:'cái liào'}, {cn:'放在', py:'fàng zài'}, {cn:'牙齿上', py:'yá chǐ shàng'}],
+  '等材料硬了，拿下来就是牙齿的模型。': [{cn:'等', py:'děng'}, {cn:'材料', py:'cái liào'}, {cn:'硬了', py:'yìng le'}, {cn:'拿下来', py:'ná xià lái'}, {cn:'就是', py:'jiù shì'}, {cn:'牙齿的', py:'yá chǐ de'}, {cn:'模型', py:'mó xíng'}],
+  '这个模型送到加工厂，做牙冠。': [{cn:'这个', py:'zhè ge'}, {cn:'模型', py:'mó xíng'}, {cn:'送到', py:'sòng dào'}, {cn:'加工厂', py:'jiā gōng chǎng'}, {cn:'做', py:'zuò'}, {cn:'牙冠', py:'yá guān'}],
+  '牙冠，就是最后戴在嘴里的假牙。': [{cn:'牙冠', py:'yá guān'}, {cn:'就是', py:'jiù shì'}, {cn:'最后', py:'zuì hòu'}, {cn:'戴在', py:'dài zài'}, {cn:'嘴里的', py:'zuǐ lǐ de'}, {cn:'假牙', py:'jiǎ yá'}],
+  '取模不痛，就是嘴巴里有点东西，有点恶心。': [{cn:'取模', py:'qǔ mó'}, {cn:'不痛', py:'bù tòng'}, {cn:'就是', py:'jiù shì'}, {cn:'嘴巴里', py:'zuǐ bā lǐ'}, {cn:'有点', py:'yǒu diǎn'}, {cn:'东西', py:'dōng xī'}, {cn:'有点', py:'yǒu diǎn'}, {cn:'恶心', py:'ě xīn'}],
+  '取模之前，医生会先检查牙龈情况。': [{cn:'取模', py:'qǔ mó'}, {cn:'之前', py:'zhī qián'}, {cn:'医生', py:'yī shēng'}, {cn:'会先', py:'huì xiān'}, {cn:'检查', py:'jiǎn chá'}, {cn:'牙龈', py:'yá yín'}, {cn:'情况', py:'qíng kuàng'}],
+  '牙龈长好了，没有发炎，就可以取模。': [{cn:'牙龈', py:'yá yín'}, {cn:'长好了', py:'zhǎng hǎo le'}, {cn:'没有', py:'méi yǒu'}, {cn:'发炎', py:'fā yán'}, {cn:'就可以', py:'jiù kě yǐ'}, {cn:'取模', py:'qǔ mó'}],
+  '取模时，嘴巴张大，不要动。': [{cn:'取模时', py:'qǔ mó shí'}, {cn:'嘴巴', py:'zuǐ bā'}, {cn:'张大', py:'zhāng dà'}, {cn:'不要', py:'bú yào'}, {cn:'动', py:'dòng'}],
+  '材料放进去的时候，会有点凉，有点恶心。': [{cn:'材料', py:'cái liào'}, {cn:'放进去的', py:'fàng jìn qù de'}, {cn:'时候', py:'shí hòu'}, {cn:'会有点', py:'huì yǒu diǎn'}, {cn:'凉', py:'liáng'}, {cn:'有点', py:'yǒu diǎn'}, {cn:'恶心', py:'ě xīn'}],
+  '恶心的话，用鼻子深呼吸，不要吞。': [{cn:'恶心的话', py:'ě xīn de huà'}, {cn:'用', py:'yòng'}, {cn:'鼻子', py:'bí zi'}, {cn:'深呼吸', py:'shēn hū xī'}, {cn:'不要', py:'bú yào'}, {cn:'吞', py:'tūn'}],
+  '等一两分钟，材料硬了就拿出来。': [{cn:'等', py:'děng'}, {cn:'一两分钟', py:'yī liǎng fēn zhōng'}, {cn:'材料', py:'cái liào'}, {cn:'硬了', py:'yìng le'}, {cn:'就拿出来', py:'jiù ná chū lái'}],
+  '取完模，医生会确认模型清不清楚。': [{cn:'取完', py:'qǔ wán'}, {cn:'模', py:'mó'}, {cn:'医生', py:'yī shēng'}, {cn:'会确认', py:'huì què rèn'}, {cn:'模型', py:'mó xíng'}, {cn:'清不清楚', py:'qīng bù qīng chǔ'}],
+  '如果不清楚，可能要重新取一次。': [{cn:'如果', py:'rú guǒ'}, {cn:'不清楚', py:'bù qīng chǔ'}, {cn:'可能要', py:'kě néng yào'}, {cn:'重新', py:'chóng xīn'}, {cn:'取一次', py:'qǔ yī cì'}],
+  '取完模，大概一两周牙冠就做好了。': [{cn:'取完', py:'qǔ wán'}, {cn:'模', py:'mó'}, {cn:'大概', py:'dà gài'}, {cn:'一两周', py:'yī liǎng zhōu'}, {cn:'牙冠', py:'yá guān'}, {cn:'就做好了', py:'jiù zuò hǎo le'}],
+  '牙冠做好了，今天来试戴。': [{cn:'牙冠', py:'yá guān'}, {cn:'做好了', py:'zuò hǎo le'}, {cn:'今天', py:'jīn tiān'}, {cn:'来', py:'lái'}, {cn:'试戴', py:'shì dài'}],
+  '先看看颜色、形状，满不满意。': [{cn:'先看看', py:'xiān kàn kàn'}, {cn:'颜色、形状', py:'yán sè 、 xíng zhuàng'}, {cn:'满不', py:'mǎn bù'}, {cn:'满意', py:'mǎn yì'}],
+  '牙冠的材料是什么？是全瓷的吗？': [{cn:'牙冠的', py:'yá guān de'}, {cn:'材料', py:'cái liào'}, {cn:'是什么', py:'shì shén me'}, {cn:'是', py:'shì'}, {cn:'全瓷的', py:'quán cí de'}, {cn:'吗', py:'ma'}],
+  '全瓷，就是整个牙冠都是陶瓷做的。': [{cn:'全瓷', py:'quán cí'}, {cn:'就是', py:'jiù shì'}, {cn:'整个', py:'zhěng gè'}, {cn:'牙冠', py:'yá guān'}, {cn:'都是', py:'dōu shì'}, {cn:'陶瓷', py:'táo cí'}, {cn:'做的', py:'zuò de'}],
+  '是什么牌子的？有没有合格证？': [{cn:'是什么', py:'shì shén me'}, {cn:'牌子的', py:'pái zi de'}, {cn:'有没有', py:'yǒu méi yǒu'}, {cn:'合格证', py:'hé gé zhèng'}],
+  '然后戴到嘴里，试试咬合高不高。': [{cn:'然后', py:'rán hòu'}, {cn:'戴到', py:'dài dào'}, {cn:'嘴里', py:'zuǐ lǐ'}, {cn:'试试', py:'shì shì'}, {cn:'咬合', py:'yǎo hé'}, {cn:'高不高', py:'gāo bù gāo'}],
+  '咬合，就是上下牙咬在一起的感觉。': [{cn:'咬合', py:'yǎo hé'}, {cn:'就是', py:'jiù shì'}, {cn:'上下牙', py:'shàng xià yá'}, {cn:'咬在一起的', py:'yǎo zài yì qǐ de'}, {cn:'感觉', py:'gǎn jué'}],
+  '咬起来太高，或者太低，医生会调。': [{cn:'咬起来', py:'yǎo qǐ lái'}, {cn:'太高', py:'tài gāo'}, {cn:'或者', py:'huò zhě'}, {cn:'太低', py:'tài dī'}, {cn:'医生', py:'yī shēng'}, {cn:'会调', py:'huì diào'}],
+  '调到咬着舒服，就可以粘牢了。': [{cn:'调到', py:'diào dào'}, {cn:'咬着', py:'yǎo zhe'}, {cn:'舒服', py:'shū fú'}, {cn:'就可以', py:'jiù kě yǐ'}, {cn:'粘牢了', py:'zhān láo le'}],
+  '调好之后，医生用胶水把牙冠粘牢。': [{cn:'调好', py:'diào hǎo'}, {cn:'之后', py:'zhī hòu'}, {cn:'医生', py:'yī shēng'}, {cn:'用', py:'yòng'}, {cn:'胶水', py:'jiāo shuǐ'}, {cn:'把', py:'bǎ'}, {cn:'牙冠', py:'yá guān'}, {cn:'粘牢', py:'zhān láo'}],
+  '粘的时候，嘴巴不要动，不要咽口水。': [{cn:'粘的', py:'zhān de'}, {cn:'时候', py:'shí hòu'}, {cn:'嘴巴', py:'zuǐ bā'}, {cn:'不要动', py:'bú yào dòng'}, {cn:'不要', py:'bú yào'}, {cn:'咽口水', py:'yàn kǒu shuǐ'}],
+  '粘完等胶水干了，就可以了。': [{cn:'粘完', py:'zhān wán'}, {cn:'等', py:'děng'}, {cn:'胶水', py:'jiāo shuǐ'}, {cn:'干了', py:'gàn le'}, {cn:'就可以了', py:'jiù kě yǐ le'}],
+  '刚粘完，两个小时不要吃东西。': [{cn:'刚', py:'gāng'}, {cn:'粘完', py:'zhān wán'}, {cn:'两个小时', py:'liǎng gè xiǎo shí'}, {cn:'不要', py:'bú yào'}, {cn:'吃东西', py:'chī dōng xī'}],
+  '24小时之内，不要用这边咬硬的。': [{cn:'24小时', py:'24 xiǎo shí'}, {cn:'之内', py:'zhī nèi'}, {cn:'不要用', py:'bú yào yòng'}, {cn:'这边', py:'zhè biān'}, {cn:'咬硬的', py:'yǎo yìng de'}],
+  '胶水还没完全干，咬硬的可能会掉。': [{cn:'胶水', py:'jiāo shuǐ'}, {cn:'还没', py:'hái méi'}, {cn:'完全', py:'wán quán'}, {cn:'干', py:'gàn'}, {cn:'咬硬的', py:'yǎo yìng de'}, {cn:'可能会', py:'kě néng huì'}, {cn:'掉', py:'diào'}],
+  '粘完之后，再拍个片，确认戴到位了。': [{cn:'粘完', py:'zhān wán'}, {cn:'之后', py:'zhī hòu'}, {cn:'再拍个', py:'zài pāi gè'}, {cn:'片', py:'piàn'}, {cn:'确认', py:'què rèn'}, {cn:'戴到位了', py:'dài dào wèi le'}],
+  '有哪里不舒服，马上告诉医生。': [{cn:'有哪里', py:'yǒu nǎ lǐ'}, {cn:'不舒服', py:'bù shū fú'}, {cn:'马上', py:'mǎ shàng'}, {cn:'告诉', py:'gào sù'}, {cn:'医生', py:'yī shēng'}],
+  '当天不要用这边嚼东西，明天开始慢慢用。': [{cn:'当天', py:'dàng tiān'}, {cn:'不要用', py:'bú yào yòng'}, {cn:'这边', py:'zhè biān'}, {cn:'嚼东西', py:'jué dōng xī'}, {cn:'明天', py:'míng tiān'}, {cn:'开始', py:'kāi shǐ'}, {cn:'慢慢用', py:'màn màn yòng'}],
+  '牙冠戴好了，平时要好好清洁。': [{cn:'牙冠', py:'yá guān'}, {cn:'戴好了', py:'dài hǎo le'}, {cn:'平时', py:'píng shí'}, {cn:'要好好', py:'yào hǎo hǎo'}, {cn:'清洁', py:'qīng jié'}],
+  '每天刷牙，早晚各一次，用软毛牙刷。': [{cn:'每天', py:'měi tiān'}, {cn:'刷牙', py:'shuā yá'}, {cn:'早晚', py:'zǎo wǎn'}, {cn:'各一次', py:'gè yī cì'}, {cn:'用', py:'yòng'}, {cn:'软毛', py:'ruǎn máo'}, {cn:'牙刷', py:'yá shuā'}],
+  '牙冠和真牙之间，要用牙线清理。': [{cn:'牙冠', py:'yá guān'}, {cn:'和', py:'hé'}, {cn:'真牙', py:'zhēn yá'}, {cn:'之间', py:'zhī jiān'}, {cn:'要用', py:'yào yòng'}, {cn:'牙线', py:'yá xiàn'}, {cn:'清理', py:'qīng lǐ'}],
+  '牙线，就是一根细线，清理牙缝的。': [{cn:'牙线', py:'yá xiàn'}, {cn:'就是', py:'jiù shì'}, {cn:'一根', py:'yī gēn'}, {cn:'细线', py:'xì xiàn'}, {cn:'清理', py:'qīng lǐ'}, {cn:'牙缝的', py:'yá fèng de'}],
+  '也可以用冲牙器，冲水清理牙缝。': [{cn:'也可以', py:'yě kě yǐ'}, {cn:'用', py:'yòng'}, {cn:'冲牙器', py:'chōng yá qì'}, {cn:'冲水', py:'chōng shuǐ'}, {cn:'清理', py:'qīng lǐ'}, {cn:'牙缝', py:'yá fèng'}],
+  '冲牙器，就是用水柱冲牙齿的小机器。': [{cn:'冲牙器', py:'chōng yá qì'}, {cn:'就是用', py:'jiù shì yòng'}, {cn:'水柱', py:'shuǐ zhù'}, {cn:'冲', py:'chōng'}, {cn:'牙齿的', py:'yá chǐ de'}, {cn:'小机器', py:'xiǎo jī qì'}],
+  '每半年回医院复查一次，拍片看看。': [{cn:'每半年', py:'měi bàn nián'}, {cn:'回医院', py:'huí yī yuàn'}, {cn:'复查', py:'fù chá'}, {cn:'一次', py:'yī cì'}, {cn:'拍片', py:'pāi piàn'}, {cn:'看看', py:'kàn kàn'}],
+  '复查时，医生会检查种植体稳不稳。': [{cn:'复查时', py:'fù chá shí'}, {cn:'医生', py:'yī shēng'}, {cn:'会检查', py:'huì jiǎn chá'}, {cn:'种植体', py:'zhòng zhí tǐ'}, {cn:'稳不稳', py:'wěn bù wěn'}],
+  '也要定期洗牙，保持口腔卫生。': [{cn:'也要', py:'yě yào'}, {cn:'定期', py:'dìng qī'}, {cn:'洗牙', py:'xǐ yá'}, {cn:'保持', py:'bǎo chí'}, {cn:'口腔', py:'kǒu qiāng'}, {cn:'卫生', py:'wèi shēng'}],
+  '种植牙保养得好，可以用十几年甚至更久。': [{cn:'种植牙', py:'zhòng zhí yá'}, {cn:'保养得好', py:'bǎo yǎng dé hǎo'}, {cn:'可以用', py:'kě yǐ yòng'}, {cn:'十几年', py:'shí jǐ nián'}, {cn:'甚至', py:'shèn zhì'}, {cn:'更久', py:'gèng jiǔ'}],
+  '不好好清洁，会发炎，种植体会松。': [{cn:'不好好', py:'bù hǎo hǎo'}, {cn:'清洁', py:'qīng jié'}, {cn:'会', py:'huì'}, {cn:'发炎', py:'fā yán'}, {cn:'种植体', py:'zhòng zhí tǐ'}, {cn:'会松', py:'huì sōng'}],
+  '种植牙没有神经，不会感觉疼。': [{cn:'种植牙', py:'zhòng zhí yá'}, {cn:'没有', py:'méi yǒu'}, {cn:'神经', py:'shén jīng'}, {cn:'不会', py:'bú huì'}, {cn:'感觉', py:'gǎn jué'}, {cn:'疼', py:'téng'}],
+  '所以有问题，可能自己感觉不到。': [{cn:'所以', py:'suǒ yǐ'}, {cn:'有问题', py:'yǒu wèn tí'}, {cn:'可能', py:'kě néng'}, {cn:'自己', py:'zì jǐ'}, {cn:'感觉不到', py:'gǎn jué bú dào'}],
+  '定期复查，才能早发现问题。': [{cn:'定期', py:'dìng qī'}, {cn:'复查', py:'fù chá'}, {cn:'才能', py:'cái néng'}, {cn:'早发现', py:'zǎo fā xiàn'}, {cn:'问题', py:'wèn tí'}],
+  '牙冠松动了，或者掉了，要联系医生。': [{cn:'牙冠', py:'yá guān'}, {cn:'松动了', py:'sōng dòng le'}, {cn:'或者', py:'huò zhě'}, {cn:'掉了', py:'diào le'}, {cn:'要联系', py:'yào lián xì'}, {cn:'医生', py:'yī shēng'}],
+  '牙龈红肿、出血、流脓，要马上看医生。': [{cn:'牙龈', py:'yá yín'}, {cn:'红肿、出血、流脓', py:'hóng zhǒng 、 chū xiě 、 liú nóng'}, {cn:'要马上', py:'yào mǎ shàng'}, {cn:'看医生', py:'kàn yī shēng'}],
+  '咬东西疼，或者感觉牙冠高了，要调整。': [{cn:'咬东西', py:'yǎo dōng xī'}, {cn:'疼', py:'téng'}, {cn:'或者', py:'huò zhě'}, {cn:'感觉', py:'gǎn jué'}, {cn:'牙冠', py:'yá guān'}, {cn:'高了', py:'gāo le'}, {cn:'要调整', py:'yào tiáo zhěng'}],
+  '不要用种植牙咬硬骨头、坚果壳这些。': [{cn:'不要用', py:'bú yào yòng'}, {cn:'种植牙', py:'zhòng zhí yá'}, {cn:'咬', py:'yǎo'}, {cn:'硬骨头、坚果壳', py:'yìng gǔ tou 、 jiān guǒ ké'}, {cn:'这些', py:'zhè xiē'}]
 };
 
 const wordDict = [
